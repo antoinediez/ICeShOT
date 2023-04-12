@@ -1,5 +1,29 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[rgb,dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary {arrows.meta,bending,positioning} 
+\usepackage{standalone}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage[lofdepth,lotdepth]{subfig}
+\usepackage{authblk}
+
+% \usepackage{setspace}
+% \onehalfspacing
+% \usepackage{lineno}
+% \linenumbers
+
+\usepackage[style=ext-numeric,giveninits,doi=true,isbn=false,url=false,eprint=false,clearlang=true,sorting=nyt,maxbibnames=99,articlein=false,defernumbers=true,date=year]{biblatex}
+\addbibresource{biblio.bib}
+
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\dd}{\mathrm{d}}
+\DeclareMathOperator{\Tr}{Tr}
 
 \title{ICeShOT}
 \author{}
@@ -9,6 +33,10 @@
 
 \maketitle
 
-\section{Fluid }
+\section{Fluid}
+
+\cite{brenierCombinatorialAlgorithmEuler1989}
+
+\printbibliography
 
 \end{document}
