@@ -15,6 +15,22 @@
   file = {/Users/antoine/Zotero/storage/QCQC296I/Bardsley et al. - 2017 - Towards a gradient flow for microstructure.pdf}
 }
 
+@misc{bourne_semi-discrete_2018,
+  title = {Semi-Discrete Unbalanced Optimal Transport and Quantization},
+  author = {Bourne, David P. and Schmitzer, Bernhard and Wirth, Benedikt},
+  year = {2018},
+  month = aug,
+  number = {arXiv:1808.01962},
+  eprint = {arXiv:1808.01962},
+  publisher = {{arXiv}},
+  urldate = {2023-04-12},
+  abstract = {In this paper we study the class of optimal entropy-transport problems introduced by Liero, Mielke and Savar\textasciiacute e in Inventiones Mathematicae 211 in 2018. This class of unbalanced transport metrics allows for transport between measures of different total mass, unlike classical optimal transport where both measures must have the same total mass. In particular, we develop the theory for the important subclass of semi-discrete unbalanced transport problems, where one of the measures is diffuse (absolutely continuous with respect to the Lebesgue measure) and the other is discrete (a sum of Dirac masses). We characterize the optimal solutions and show they can be written in terms of generalized Laguerre diagrams. We use this to develop an efficient method for solving the semi-discrete unbalanced transport problem numerically. As an application we study the unbalanced quantization problem, where one looks for the best approximation of a diffuse measure by a discrete measure with respect to an unbalanced transport metric. We prove a type of crystallization result in two dimensions \textendash{} optimality of the triangular lattice \textendash and compute the asymptotic quantization error as the number of Dirac masses tends to infinity.},
+  archiveprefix = {arxiv},
+  langid = {english},
+  keywords = {Mathematics - Optimization and Control},
+  file = {/Users/antoine/Zotero/storage/5LFRKWGR/Bourne et al. - 2018 - Semi-discrete unbalanced optimal transport and qua.pdf}
+}
+
 @article{brenier_combinatorial_1989-1,
   title = {A Combinatorial Algorithm for the {{Euler}} Equations of Incompressible Flows},
   author = {Brenier, Yann},
@@ -117,4 +133,38 @@
   urldate = {2023-04-12},
   abstract = {As V. I. Arnold observed in the 1960s, the Euler equations of incompressible fluid flow correspond formally to geodesic equations in a group of volume-preserving diffeomorphisms. Working in an Eulerian framework, we study incompressible flows of shapes as critical paths for action (kinetic energy) along transport paths constrained to have characteristic-function densities. The formal geodesic equations for this problem are Euler equations for incompressible, inviscid potential flow of fluid with zero pressure and surface tension on the free boundary. The problem of minimizing this action exhibits an instability associated with microdroplet formation, with the following outcomes: any two shapes of equal volume can be approximately connected by an Euler spray\textemdash a countable superposition of ellipsoidal geodesics. The infimum of the action is the Wasserstein distance squared, and is almost never attained except in dimension 1. Every Wasserstein geodesic between bounded densities of compact support provides a solution of the (compressible) pressureless Euler system that is a weak limit of (incompressible) Euler sprays.},
   file = {/Users/antoine/Zotero/storage/72UPKT9X/Liu et al. - 2019 - Least action principles for incompressible flows a.pdf}
+}
+
+@misc{merigot_non-asymptotic_2021,
+  title = {Non-Asymptotic Convergence Bounds for {{Wasserstein}} Approximation Using Point Clouds},
+  author = {Merigot, Quentin and Santambrogio, Filippo and Sarrazin, Cl{\'e}ment},
+  year = {2021},
+  month = jun,
+  number = {arXiv:2106.07911},
+  eprint = {arXiv:2106.07911},
+  publisher = {{arXiv}},
+  urldate = {2023-04-12},
+  abstract = {Several issues in machine learning and inverse problems require to generate discrete data, as if sampled from a model probability distribution. A common way to do so relies on the construction of a uniform probability distribution over a set of N points which minimizes the Wasserstein distance to the model distribution. This minimization problem, where the unknowns are the positions of the atoms, is non-convex. Yet, in most cases, a suitably adjusted version of Lloyd's algorithm \textemdash in which Voronoi cells are replaced by Power cells \textemdash{} leads to configurations with small Wasserstein error. This is surprising because, again, of the non-convex nature of the problem, as well as the existence of spurious critical points. We provide explicit upper bounds for the convergence speed of this Lloyd-type algorithm, starting from a cloud of points sufficiently far from each other. This already works after one step of the iteration procedure, and similar bounds can be deduced, for the corresponding gradient descent. These bounds naturally lead to a modified Poliak-\L ojasiewicz inequality for the Wasserstein distance cost, with an error term depending on the distances between Dirac masses in the discrete distribution.},
+  archiveprefix = {arxiv},
+  langid = {english},
+  keywords = {Mathematics - Optimization and Control,Statistics - Machine Learning},
+  file = {/Users/antoine/Zotero/storage/4B5QG3C7/Merigot et al. - 2021 - Non-asymptotic convergence bounds for Wasserstein .pdf}
+}
+
+@article{xin_centroidal_2016,
+  title = {Centroidal Power Diagrams with Capacity Constraints: Computation, Applications, and Extension},
+  shorttitle = {Centroidal Power Diagrams with Capacity Constraints},
+  author = {Xin, Shi-Qing and L{\'e}vy, Bruno and Chen, Zhonggui and Chu, Lei and Yu, Yaohui and Tu, Changhe and Wang, Wenping},
+  year = {2016},
+  month = nov,
+  journal = {ACM Transactions on Graphics},
+  volume = {35},
+  number = {6},
+  pages = {1--12},
+  issn = {0730-0301, 1557-7368},
+  doi = {10.1145/2980179.2982428},
+  urldate = {2023-04-12},
+  abstract = {This article presents a new method to optimally partition a geometric domain with capacity constraints on the partitioned regions. It is an important problem in many fields, ranging from engineering to economics. It is known that a capacity-constrained partition can be obtained as a power diagram with the squared L2 metric. We present a method with super-linear convergence for computing optimal partition with capacity constraints that outperforms the state-of-the-art in an order of magnitude. We demonstrate the efficiency of our method in the context of three different applications in computer graphics and geometric processing: displacement interpolation of function distribution, blue-noise point sampling, and optimal convex decomposition of 2D domains. Furthermore, the proposed method is extended to capacity-constrained optimal partition with respect to general cost functions beyond the squared Euclidean distance.},
+  langid = {english},
+  file = {/Users/antoine/Zotero/storage/D4XIA6D9/Xin et al. - 2016 - Centroidal power diagrams with capacity constraint.pdf}
 }
