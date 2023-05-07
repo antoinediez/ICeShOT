@@ -73,6 +73,7 @@
   month = aug,
   journal = {arXiv:1808.01962},
   eprint = {1808.01962},
+  primaryclass = {math},
   urldate = {2023-04-12},
   abstract = {In this paper we study the class of optimal entropy-transport problems introduced by Liero, Mielke and Savar\textasciiacute e in Inventiones Mathematicae 211 in 2018. This class of unbalanced transport metrics allows for transport between measures of different total mass, unlike classical optimal transport where both measures must have the same total mass. In particular, we develop the theory for the important subclass of semi-discrete unbalanced transport problems, where one of the measures is diffuse (absolutely continuous with respect to the Lebesgue measure) and the other is discrete (a sum of Dirac masses). We characterize the optimal solutions and show they can be written in terms of generalized Laguerre diagrams. We use this to develop an efficient method for solving the semi-discrete unbalanced transport problem numerically. As an application we study the unbalanced quantization problem, where one looks for the best approximation of a diffuse measure by a discrete measure with respect to an unbalanced transport metric. We prove a type of crystallization result in two dimensions \textendash{} optimality of the triangular lattice \textendash and compute the asymptotic quantization error as the number of Dirac masses tends to infinity.},
   archiveprefix = {arxiv},
@@ -117,6 +118,7 @@
   month = dec,
   journal = {arXiv:1609.04006},
   eprint = {1609.04006},
+  primaryclass = {math},
   urldate = {2023-04-12},
   abstract = {The group of diffeomorphisms of a compact manifold endowed with the L2 metric acting on the space of probability densities gives a unifying framework for the incompressible Euler equation and the theory of optimal mass transport. Recently, several authors have extended optimal transport to the space of positive Radon measures where the Wasserstein-Fisher-Rao distance is a natural extension of the classical L2-Wasserstein distance. In this paper, we show a similar relation between this unbalanced optimal transport problem and the Hdiv right-invariant metric on the group of diffeomorphisms, which corresponds to the Camassa-Holm (CH) equation in one dimension. Geometrically, we present an isometric embedding of the group of diffeomorphisms endowed with this right-invariant metric in the automorphisms group of the fiber bundle of half densities endowed with an L2 type of cone metric. This leads to a new formulation of the (generalized) CH equation as a geodesic equation on an isotropy subgroup of this automorphisms group; On S1, solutions to the standard CH thus give radially 1-homogeneous solutions of the incompressible Euler equation on R2 which preserves a radial density that has a singularity at 0. An other application consists in proving that smooth solutions of the Euler-Arnold equation for the Hdiv right-invariant metric are length minimizing geodesics for sufficiently short times.},
   archiveprefix = {arxiv},
@@ -131,6 +133,7 @@
   month = dec,
   journal = {arXiv:2105.12605},
   eprint = {2105.12605},
+  primaryclass = {cs, math},
   urldate = {2023-04-12},
   abstract = {When expressed in Lagrangian variables, the equations of motion for compressible (barotropic) fluids have the structure of a classical Hamiltonian system in which the potential energy is given by the internal energy of the fluid. The dissipative counterpart of such a system coincides with the porous medium equation, which can be cast in the form of a gradient flow for the same internal energy. Motivated by these related variational structures, we propose a particle method for both problems in which the internal energy is replaced by its Moreau-Yosida regularization in the L2 sense, which can be efficiently computed as a semi-discrete optimal transport problem. Using a modulated energy argument which exploits the convexity of the problem in Eulerian variables, we prove quantitative convergence estimates towards smooth solutions. We verify such estimates by means of several numerical tests.},
   archiveprefix = {arxiv},
@@ -151,7 +154,6 @@
   doi = {10.1007/s10208-017-9355-y},
   urldate = {2023-04-12},
   abstract = {We approximate the regular solutions of the incompressible Euler equations by the solution of ODEs on finite-dimensional spaces. Our approach combines Arnold's interpretation of the solution of the Euler equations for incompressible and inviscid fluids as geodesics in the space of measure-preserving diffeomorphisms, and an extrinsic approximation of the equations of geodesics due to Brenier. Using recently developed semi-discrete optimal transport solvers, this approach yields a numerical scheme which is able to handle problems of realistic size in 2D. Our purpose in this article is to establish the convergence of this scheme towards regular solutions of the incompressible Euler equations, and to provide numerical experiments on a few simple test cases in 2D.},
-  langid = {english},
   file = {/Users/antoine/Zotero/storage/37JUSTY5/Gallouët and Mérigot - 2018 - A Lagrangian Scheme à la Brenier for the Incompres.pdf}
 }
 
@@ -162,6 +164,7 @@
   month = apr,
   journal = {arXiv:1905.08507},
   eprint = {1905.08507},
+  primaryclass = {cs, math},
   urldate = {2023-04-12},
   abstract = {We study a model of crowd motion following a gradient vector field, with possibly additional interaction terms such as attraction/repulsion, and we present a numerical scheme for its solution through a Lagrangian discretization. The density constraint of the resulting particles is enforced by means of a partial optimal transport problem at each time step. We prove the convergence of the discrete measures to a solution of the continuous PDE describing the crowd motion in dimension one. In a second part, we show how a similar approach can be used to construct a Lagrangian discretization of a linear advection-diffusion equation. Both discretizations rely on the interpretation of the two equations (crowd motion and linear diffusion) as gradient flows in Wasserstein space. We provide also a numerical implementation in 2D to demonstrate the feasibility of the computations.},
   archiveprefix = {arxiv},
@@ -192,6 +195,7 @@
   month = jun,
   journal = {arXiv:2106.07911},
   eprint = {2106.07911},
+  primaryclass = {math, stat},
   urldate = {2023-04-12},
   abstract = {Several issues in machine learning and inverse problems require to generate discrete data, as if sampled from a model probability distribution. A common way to do so relies on the construction of a uniform probability distribution over a set of N points which minimizes the Wasserstein distance to the model distribution. This minimization problem, where the unknowns are the positions of the atoms, is non-convex. Yet, in most cases, a suitably adjusted version of Lloyd's algorithm \textemdash in which Voronoi cells are replaced by Power cells \textemdash{} leads to configurations with small Wasserstein error. This is surprising because, again, of the non-convex nature of the problem, as well as the existence of spurious critical points. We provide explicit upper bounds for the convergence speed of this Lloyd-type algorithm, starting from a cloud of points sufficiently far from each other. This already works after one step of the iteration procedure, and similar bounds can be deduced, for the corresponding gradient descent. These bounds naturally lead to a modified Poliak-\L ojasiewicz inequality for the Wasserstein distance cost, with an error term depending on the distances between Dirac masses in the discrete distribution.},
   archiveprefix = {arxiv},
