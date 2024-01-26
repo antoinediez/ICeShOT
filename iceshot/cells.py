@@ -105,7 +105,7 @@ class Cells(DataPoints):
             vols = A.sum(1)
         vols = vols.reshape((self.N_crystals,1))
         XY = self.lazy_XY()
-        center = self.x + (A * XY).sum(1)/vols
+        center = utils.apply_bc_inside(self.x + (A * XY).sum(1)/vols,bc=self.bc,L=self.L)
         X_i = LazyTensor(center[:,None,:])    # (N,1,D)
         Y_j = LazyTensor(self.y[None,:,:])    # (1,M,D)
         Z = utils.apply_bc(Y_j - X_i,bc=self.bc,L=self.L)    # (N,M,D)
