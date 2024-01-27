@@ -5,7 +5,7 @@ def sample_uniform(N,d,dtype=torch.float32,device="cuda"):
     return torch.rand((N,d),dtype=dtype,device=device)
 
 def sample_grid(n, dim=2,dtype=torch.float32,device="cuda"):
-    grid_points = torch.linspace(0,1,n,dtype=dtype,device=device)
+    grid_points = torch.linspace(0.5/n,1-0.5/n,n,dtype=dtype,device=device)
     grid_points = torch.stack(
         torch.meshgrid((grid_points,) * dim, indexing="ij"), dim=-1
     )
