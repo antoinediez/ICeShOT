@@ -9,13 +9,7 @@ def l2_cost(data,scaling=None,R=1.0,C=1.0,**kwargs):
         sc = C/R**2
     elif scaling=="volume":
         # The integral of the cost on a ball of radius `R` is equal to the volume of the ball times `C`
-        if data.d==2:
-            vol = math.pi*(R**2)
-        elif data.d==3:
-            vol = 4./3.*math.pi*(R**3)
-        else:
-            raise NotImplementedError()
-        sc = 1.0/(2.0*math.pi/(2+data.d) * R**(2+data.d)) * vol * C
+        sc = C / (data.d/(2+data.d) * (R**2))
     elif scaling=="constant":
         sc = C
     else:
@@ -33,13 +27,7 @@ def power_cost(data,p=2.0,scaling=None,R=1.0,C=1.0,**kwargs):
         sc = C/R**p
     elif scaling=="volume":
         # The integral of the cost on a ball of radius `R` is equal to the volume of the ball times `C`
-        if data.d==2:
-            vol = math.pi*(R**2)
-        elif data.d==3:
-            vol = 4./3.*math.pi*(R**3)
-        else:
-            raise NotImplementedError()
-        sc = 1.0/(2.0*math.pi/(p+data.d) * R**(p+data.d)) * vol * C
+        sc = C / (data.d/(p+data.d) * (R**p))
     elif scaling=="constant":
         sc = C
     else:
