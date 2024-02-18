@@ -32,7 +32,7 @@ N1 = 123
 N2 = 123
 N = N1+N2
 
-M = 512 
+M = 600 
 
 seeds = torch.rand((N,2))
 r2 = torch.rand((N1+N2,1)) * 0.12
@@ -40,7 +40,7 @@ th = 2*math.pi*torch.rand((N1+N2,1))
 seeds[:(N1+N2),:] = 0.5 + torch.sqrt(r2) * torch.cat((torch.cos(th),torch.sin(th)),dim=1)
 source = sample.sample_grid(M)
 vol_x = torch.ones(N)
-vol_x *= 0.5/vol_x.sum()
+vol_x *= 0.4/vol_x.sum()
 
 R0 = math.sqrt(vol_x[-1].item()/math.pi)
 # eps_ifc=None
@@ -67,8 +67,6 @@ solver = OT_solver(
     cost_function=costs.l2_cost,cost_params=cost_params
 )
 sinkhorn_algo = OT.sinkhorn_zerolast
-# sinkhorn_algo = OT.sinkhorn
-
 
 T = 10.0
 dt = 0.0005
@@ -77,7 +75,6 @@ t = 0.0
 t_iter = 0
 t_plot = 0
 cap = None
-# cap = 20.0
 
 Finc0 = 0.5
 F0_jct = 1.0 / 7.0
