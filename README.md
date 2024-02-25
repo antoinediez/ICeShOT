@@ -10,6 +10,6 @@ The documentation is still in progres...
 
 ## Licence
 
-The videos and the (modest) code can be freely used and modified, with proper citation, under the permissive MIT licence. 
+The code and the videos can be freely used and modified, with proper citation, under the permissive MIT licence. 
 
 **Authors:** [Antoine Diez](https://antoinediez.gitlab.io/), [Jean Feydy](https://www.jeanfeydy.com/)
