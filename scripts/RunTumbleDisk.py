@@ -20,14 +20,14 @@ from pykeops.torch import LazyTensor
 from tqdm import tqdm 
 
 use_cuda = torch.cuda.is_available()
+print(use_cuda)
 if use_cuda:
     torch.set_default_tensor_type("torch.cuda.FloatTensor")
     device = "cuda"
     
 simu_name = "simu_RunTumbleDisk"
-os.mkdir(simu_name)
-os.mkdir(simu_name+"/frames")
-os.mkdir(simu_name+"/data")
+os.makedirs(simu_name+"/frames", exist_ok=True)
+os.makedirs(simu_name+"/data", exist_ok=True)
 
 N = 126
 M = 512 

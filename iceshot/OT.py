@@ -4,7 +4,7 @@ from pykeops.torch import LazyTensor
 from tqdm import tqdm
 from . import utils
 
-def annealing_schedule(n_iter,M_grid,s0=4.0,device="cuda",dtype=torch.float32):
+def annealing_schedule(n_iter,M_grid,*, device, s0=4.0,dtype=torch.float32):
     # We start from s0 (> diameter of the unit cube) and decrease to the sampling length:
     log_scales = torch.linspace(np.log(s0),np.log(1/M_grid),n_iter,device=device,dtype=dtype)
     scales = log_scales.exp()
@@ -12,7 +12,51 @@ def annealing_schedule(n_iter,M_grid,s0=4.0,device="cuda",dtype=torch.float32):
     scales = torch.cat((scales, 1 / M_grid * torch.ones(10,device=device,dtype=dtype)))
     return scales
 
+
+def sinkhorn(C_xy,scales,f_x,g_y,a=None,b=None,default_init=True,show_progress=False,**kwargs):
+    """Use L-BFGS instead of Sinkhorn iterations."""
+    N, M = C_xy.shape
+    assert f_x.shape == (N,), f"`f_x` must be of size {N}"
+    assert g_y.shape == (M,), f"`g_y` must be of size {M}"
     
+    if a is None:
+        a = torch.ones(N,device=scales.device,dtype=scales.dtype)/N
+    if b is None:
+        b = torch.ones(M,device=scales.device,dtype=scales.dtype)/M
+    
+    assert a.shape == (N,), f"`a` must be of size {N}"
+    assert b.shape == (M,), f"`b` must be of size {M}"
+
+    f_i = LazyTensor(f_x.view(N, 1, 1))  # (N, 1, 1)
+    g_j = LazyTensor(g_y.view(1, M, 1))  # (1, M, 1)
+
+    g_j = (C_xy - f_i).min(dim=0)
+    assert f_i.shape == (self.n_cells,)
+    assert g_j.shape == (self.n_pixels,)
+    res = (a_i * f_i).sum() + (b_j * g_j).sum()
+    return res
+
+    f_x_ = f_x.clone()
+    f_x_.requires_grad = True
+    
+    optimizer = torch.optim.LBFGS(
+        [f_x_], max_iter=20, line_search_fn="strong_wolfe"
+    )
+
+    def closure():
+        optimizer.zero_grad()
+        loss = - dual_cost(seed_potentials)
+        loss.backward()
+        return loss
+    
+    for _ in range(n_iter):
+        optimizer.step(closure)
+
+    f_i = torch.cat([torch.zeros(1), seed_potentials])
+    g_j = (C_ij - f_i.view(self.n_cells, 1)).min(dim=0).values
+
+
+
 def sinkhorn(C_xy,scales,f_x,g_y,a=None,b=None,default_init=True,show_progress=False,**kwargs):
     N, M = C_xy.shape
     assert f_x.shape == (N,), f"`f_x` must be of size {N}"
@@ -135,7 +179,7 @@ class OT_solver:
         cost, grad_cost = self.cost_matrix(data,masks=masks) if cost_matrix is None else cost_matrix
         if cap is not None:
             cost = cost.clamp(0.0,cap)
-        scales = annealing_schedule(self.n_sinkhorn,M_grid=int(data.y.shape[0] ** (1/data.d)),s0=self.s0)
+        scales = annealing_schedule(self.n_sinkhorn,M_grid=int(data.y.shape[0] ** (1/data.d)),device=data.f_x.device, s0=self.s0)
         sinkhorn_algo(cost,scales,
                       data.f_x,data.g_y,
                       a=data.volumes,b=b,default_init=default_init,show_progress=show_progress,**kwargs)
