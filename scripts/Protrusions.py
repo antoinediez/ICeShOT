@@ -23,6 +23,9 @@ if use_cuda:
     torch.set_default_tensor_type("torch.cuda.FloatTensor")
     device = "cuda"
     
+# ot_algo = OT.sinkhorn_zerolast
+ot_algo = OT.LBFGSB
+    
 simu_name = "simu_Protrusions"
 os.mkdir(simu_name)
 os.mkdir(simu_name+"/frames")
@@ -55,7 +58,6 @@ solver = OT_solver(
     n_sinkhorn=300,n_sinkhorn_last=1000,n_lloyds=10,s0=2.0,
     cost_function=costs.l2_cost,cost_params=cost_params
 )
-sinkhorn_algo = OT.sinkhorn_zerolast
 
 K_circ = 6
 dth = 2*math.pi/K_circ
@@ -81,7 +83,7 @@ diff = 14.0
 
 tau0 = 1.0
 solver.solve(simu,
-             sinkhorn_algo=sinkhorn_algo,cap=None,
+             sinkhorn_algo=ot_algo,cap=None,
              tau=tau0,
              to_bary=True,
              show_progress=False)
@@ -133,7 +135,7 @@ while t<T:
     
     F_inc = solver.lloyd_step(simu,
             cost_matrix=(cost*bias_lazy,grad_cost),
-            sinkhorn_algo=sinkhorn_algo,cap=None,
+            sinkhorn_algo=ot_algo,cap=None,
             tau=1.0/simu.R_mean,
             to_bary=False,
             show_progress=False,

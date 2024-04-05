@@ -20,6 +20,9 @@ if use_cuda:
     torch.set_default_tensor_type("torch.cuda.FloatTensor")
     device = "cuda"
     
+# ot_algo = OT.sinkhorn_zerolast
+ot_algo = OT.LBFGSB
+    
 simu_name = "simu_RodShape"
 os.mkdir(simu_name)
 os.mkdir(simu_name+"/frames")
@@ -70,7 +73,7 @@ cmap = utils.cmap_from_list(N,0,0,color_names=["tab:blue","tab:blue","tab:blue"]
 #======================= INITIALISE ========================#
 
 solver.solve(simu,
-             sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+             sinkhorn_algo=ot_algo,cap=cap,
              tau=1.0,
              to_bary=True,
              show_progress=False,weight=1.0)
@@ -117,7 +120,7 @@ while t<T:
         solver.s0 = simu.R_mean
     
     F_inc = solver.lloyd_step(simu,
-                sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+                sinkhorn_algo=ot_algo,cap=cap,
                 tau=tau,
                 to_bary=False,
                 show_progress=False,

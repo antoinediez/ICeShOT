@@ -20,7 +20,9 @@ use_cuda = torch.cuda.is_available()
 if use_cuda:
     torch.set_default_tensor_type("torch.cuda.FloatTensor")
     device = "cuda"
-    
+
+# ot_algo = OT.sinkhorn_zerolast
+ot_algo = OT.LBFGSB
     
 simu_name = "simu_Micropipette"
 os.mkdir(simu_name)
@@ -107,7 +109,7 @@ for iv0 in range(len(v_all)):
         dt = 0.005
 
         solver.solve(simu,
-             sinkhorn_algo=OT.sinkhorn_zerolast,cap=None,
+             sinkhorn_algo=ot_algo,cap=None,
              tau=0.0,
              to_bary=True,
              show_progress=False)
@@ -147,7 +149,7 @@ for iv0 in range(len(v_all)):
             print(solver.cost_params)
             
             F_inc = solver.lloyd_step(simu,
-                sinkhorn_algo=OT.sinkhorn_zerolast,cap=None,
+                sinkhorn_algo=ot_algo,cap=None,
                 tau=0.3/radius * vol_grid_true/simu.vol_grid,
                 to_bary=False,
                 show_progress=False,

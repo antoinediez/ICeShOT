@@ -24,6 +24,9 @@ if use_cuda:
     torch.set_default_tensor_type("torch.cuda.FloatTensor")
     device = "cuda"
     
+# ot_algo = OT.sinkhorn_zerolast
+ot_algo = OT.LBFGSB
+    
 simu_name = "simu_RunTumbleDisk"
 os.mkdir(simu_name)
 os.mkdir(simu_name+"/frames")
@@ -85,7 +88,7 @@ solver = OT_solver(
 cap = None
 
 solver.solve(simu,
-             sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+             sinkhorn_algo=ot_algo,cap=cap,
              tau=1.0,
              to_bary=True,
              show_progress=False)
@@ -105,7 +108,7 @@ solver = OT_solver(
 cap = None
 
 solver.solve(simu,
-             sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+             sinkhorn_algo=ot_algo,cap=cap,
              tau=1.0,
              to_bary=True,
              show_progress=False,
@@ -160,7 +163,7 @@ while t<T:
         di = False
         
     F_inc = solver.lloyd_step(simu,
-            sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+            sinkhorn_algo=ot_algo,cap=cap,
             tau=1.0/simu.R_mean,
             to_bary=False,
             show_progress=False,

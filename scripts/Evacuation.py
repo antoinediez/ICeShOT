@@ -20,6 +20,9 @@ if use_cuda:
     torch.set_default_tensor_type("torch.cuda.FloatTensor")
     device = "cuda"
 
+# ot_algo = OT.sinkhorn_zerolast
+ot_algo = OT.LBFGSB
+
 p = 8
 
 simu_name = "simu_Evacuation" + "_" + str(p)
@@ -87,7 +90,7 @@ simu.axis = (exit - simu.x)/torch.norm(exit - simu.x,dim=1).reshape((simu.N_cell
 #======================= INITIALISE ========================#
 
 solver.solve(simu,
-             sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+             sinkhorn_algo=ot_algo,cap=cap,
              tau=1.0,
              to_bary=True,
              show_progress=False)
@@ -139,7 +142,7 @@ while t<T:
         solver.s0 = 2*simu.R_mean
     
     F_inc = solver.lloyd_step(simu,
-                sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+                sinkhorn_algo=ot_algo,cap=cap,
                 tau=tau,
                 to_bary=False,
                 show_progress=False,
