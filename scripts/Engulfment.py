@@ -21,7 +21,10 @@ use_cuda = torch.cuda.is_available()
 if use_cuda:
     torch.set_default_tensor_type("torch.cuda.FloatTensor")
     device = "cuda"
-    
+
+# ot_algo = OT.sinkhorn_zerolast
+ot_algo = OT.LBFGSB
+
 simu_name = "simu_Engulfment"
 os.mkdir(simu_name)
 os.mkdir(simu_name+"/frames")
@@ -264,7 +267,7 @@ def compute_triplejunction_force(cells,y_junction,ind_x,N1=1,N2=1,g11=1.0,g22=1.
 tau0 = torch.ones(N)
 tau0[:(N1+N2)] = 0.14
 solver.solve(simu,
-             sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+             sinkhorn_algo=ot_algo,cap=cap,
              tau=tau0,
              to_bary=True,
              show_progress=False)
@@ -312,7 +315,7 @@ while t<T:
         solver.n_sinkhorn_last = 2000
         solver.n_sinkhorn = 2000
         solver.s0 = 1.5
-        di = True
+        di = False
     else:
         print("I do not plot.",flush=True)
         solver.n_sinkhorn_last = 300
@@ -321,7 +324,7 @@ while t<T:
         di = False
     
     F_inc = solver.lloyd_step(simu,
-            sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+            sinkhorn_algo=ot_algo,cap=cap,
             tau=1.0/simu.R_mean,
             to_bary=False,
             show_progress=False,

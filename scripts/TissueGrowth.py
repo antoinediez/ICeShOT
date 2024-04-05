@@ -22,6 +22,9 @@ if use_cuda:
 
 p = 2
 
+# ot_algo = OT.sinkhorn_zerolast
+ot_algo = OT.LBFGSB
+
 simu_name = "simu_TissueGrowth"
 os.mkdir(simu_name)
 os.mkdir(simu_name+"/frames")
@@ -111,7 +114,7 @@ exit = torch.tensor([[0.5,0.5]])
 #======================= INITIALISE ========================#
 
 solver.solve(simu,
-             sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+             sinkhorn_algo=ot_algo,cap=cap,
              tau=0.0,
              to_bary=True,
              show_progress=False)
@@ -171,7 +174,7 @@ while t<T:
                 growth_rate_factor = insert(growth_rate_factor,ind,growth_rate_factor[ind],0.5+1.5*torch.rand(1))
     
     F_inc = solver.lloyd_step(simu,
-                sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+                sinkhorn_algo=ot_algo,cap=cap,
                 tau=1.0/torch.sqrt(simu.volumes[:-1]/math.pi),
                 to_bary=False,
                 show_progress=False,

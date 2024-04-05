@@ -19,6 +19,9 @@ if use_cuda:
     torch.set_default_tensor_type("torch.cuda.FloatTensor")
     device = "cuda"
 
+# ot_algo = OT.sinkhorn_zerolast
+ot_algo = OT.LBFGSB
+
 p_b = 10
 tau_b = 1.5
 p_o = 1
@@ -85,7 +88,7 @@ cap = None
 #======================= INITIALISE ========================#
 
 solver.solve(simu,
-             sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+             sinkhorn_algo=ot_algo,cap=cap,
              tau=1.0,
              to_bary=True,
              show_progress=False)
@@ -133,7 +136,7 @@ while t<T:
         solver.s0 = 2.3*simu.R_mean
     
     F_inc = solver.lloyd_step(simu,
-                sinkhorn_algo=OT.sinkhorn_zerolast,cap=cap,
+                sinkhorn_algo=ot_algo,cap=cap,
                 tau=tau,
                 to_bary=False,
                 show_progress=False,

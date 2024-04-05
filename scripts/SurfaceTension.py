@@ -22,6 +22,9 @@ use_cuda = torch.cuda.is_available()
 if use_cuda:
     torch.set_default_tensor_type("torch.cuda.FloatTensor")
     device = "cuda"
+
+# ot_algo = OT.sinkhorn_zerolast
+ot_algo = OT.LBFGSB
     
 simu_name = "simu_SurfaceTension"
 os.mkdir(simu_name)
@@ -66,7 +69,6 @@ solver = OT_solver(
     n_sinkhorn=300,n_sinkhorn_last=1000,n_lloyds=10,s0=2.0,
     cost_function=costs.l2_cost,cost_params=cost_params
 )
-sinkhorn_algo = OT.sinkhorn_zerolast
 
 T = 10.0
 dt = 0.0005
@@ -271,7 +273,7 @@ tau0[:(N1+N2)] = 1.0
 # tau0[:(N1+N2)] = 0.5
 # tau0[:(N1+N2)] = 0.25
 solver.solve(simu,
-             sinkhorn_algo=sinkhorn_algo,cap=cap,
+             sinkhorn_algo=ot_algo,cap=cap,
              tau=tau0,
              to_bary=True,
              show_progress=False)
@@ -318,7 +320,7 @@ while t<T:
         di = False
     
     F_inc = solver.lloyd_step(simu,
-                sinkhorn_algo=sinkhorn_algo,cap=cap,
+                sinkhorn_algo=ot_algo,cap=cap,
                 tau=1.0/simu.R_mean,
                 to_bary=False,
                 show_progress=False,
