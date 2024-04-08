@@ -59,8 +59,7 @@ class Cells(DataPoints):
                 # self.x = torch.cat((self.x,self.x_void),dim=0)
                 # self.volumes = torch.cat((vol_x,self.vol_void*torch.ones(self.N_void,device=self.device,dtype=self.dtype)))
                     
-        self.R_mean = (self.volumes[:self.N_cells]/math.pi).sqrt().mean().item()
-        
+        self.R_mean = (self.volumes[:self.N_cells]/math.pi).sqrt().mean().item() if self.d==2 else ((self.volumes[:self.N_cells]/(4./3.*math.pi))**(1./3.)).mean().item()        
 
         if axis is None:
             axis = torch.randn((self.N_crystals,self.d),device=self.device,dtype=self.dtype)
