@@ -25,27 +25,25 @@ def LBFGSB(C_xy,scales,f_x,g_y,a=None,b=None,default_init=False,show_progress=Fa
             [seed_potentials, torch.zeros_like(seed_potentials[:1])]
         )
         mat = C_xy - f_x[:-1].view(N,1,1)
-        # KeOps does not support backpropagation through the min reduction yet... ugly workaround...
-        yi = mat.argmin(axis=0).reshape(M)
-        lazy_x = LazyTensor(torch.arange(N,device=f_x.device,dtype=f_x.dtype)[:,None,None])
-        lazy_labels = LazyTensor(yi[None,:,None].float())
-        alloc = (-(lazy_x - lazy_labels).abs()).step()
-        g_y = (mat * alloc).sum(0).reshape(M)
+        g_y, yi = mat.min_argmin(axis=0)
+        g_y = g_y.reshape(M)
         g_y = torch.min(g_y,torch.zeros_like(g_y))
+        yi = yi.reshape(M)
+        yi[g_y==0.0] = N
         res = (a * f_x).sum() + (b * g_y).sum()
-        return res
+        return res, yi
 
     seed_potentials = torch.zeros_like(a[:-1]) if default_init else f_x[:-1]
-    seed_potentials.requires_grad = True
     optimizer = torch.optim.LBFGS(
         [seed_potentials], max_iter=n_iter, line_search_fn="strong_wolfe"
     )
 
     def closure():
         optimizer.zero_grad()
-        loss = - dual_cost(seed_potentials)
-        loss.backward()
-        return loss
+        loss, yi = dual_cost(seed_potentials)
+        volumes = torch.bincount(yi)[:-1] / M
+        seed_potentials.grad = volumes - a[:-1]
+        return -loss
     
     for epoch in range(max_epoch):
         print(f"\nepoch = {epoch}",flush=True)
