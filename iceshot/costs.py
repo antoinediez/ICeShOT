@@ -45,11 +45,12 @@ def anisotropic_power_cost(data,p=2.0,scaling=None,b=1.0,ar=None,C=1.0,**kwargs)
         ar = data.ar
     if scaling=="level_set":
         # `c(x,y) = C` is the equation of an ellipse with aspect ratio `ar` and short axis `b`. 
-        sc = (1.0/(ar * b**2))**(p/2.0) * C
+        sc = (1.0/((ar**(1./(data.d - 1))) * b**2))**(p/2.0) * C
     elif scaling=="volume":
         # The integral of the cost on an ellipse of aspect ratio `ar` and short axis `b` is equal to the volume of the ellipse times `C`
-        vol = math.pi*ar*(b**2)
-        sc = 1.0/(2.0*math.pi/(p+data.d) * (b*(ar**0.5))**(p+data.d)) * vol * C
+        vol = math.pi*ar*(b**2) if data.d==2 else 4./3.*math.pi*ar*(b**3)
+        unit_surface = 2*math.pi if data.d==2 else 4*math.pi
+        sc = 1.0/(unit_surface/(p+data.d) * (b*(ar**(1./data.d)))**(p+data.d)) * vol * C
     elif scaling=="constant":
         sc = C
     else:

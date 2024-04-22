@@ -88,14 +88,35 @@ class Cells(DataPoints):
         return self.x.shape[0]
     
     def orientation_from_axis(self):
-        th = torch.atan2(self.axis[:,1],self.axis[:,0])
-        c = torch.cos(th)
-        s = torch.sin(th)
-        a11 = (1/self.ar*(c**2) + self.ar*(s**2)).reshape((self.N_crystals,1,1))
-        a12 = ((1/self.ar - self.ar)*c*s).reshape((self.N_crystals,1,1))
-        a21 = ((1/self.ar - self.ar)*c*s).reshape((self.N_crystals,1,1))
-        a22 = (1/self.ar*(s**2) + self.ar*(c**2)).reshape((self.N_crystals,1,1))
-        A = torch.cat((torch.cat((a11,a21),dim=1),torch.cat((a12,a22),dim=1)),dim=2)
+        if self.d==2:
+            th = torch.atan2(self.axis[:,1],self.axis[:,0])
+            c = torch.cos(th)
+            s = torch.sin(th)
+            a11 = (1/self.ar*(c**2) + self.ar*(s**2)).reshape((self.N_crystals,1,1))
+            a12 = ((1/self.ar - self.ar)*c*s).reshape((self.N_crystals,1,1))
+            a21 = ((1/self.ar - self.ar)*c*s).reshape((self.N_crystals,1,1))
+            a22 = (1/self.ar*(s**2) + self.ar*(c**2)).reshape((self.N_crystals,1,1))
+            A = torch.cat((torch.cat((a11,a21),dim=1),torch.cat((a12,a22),dim=1)),dim=2)
+        elif self.d==3:
+            ar = self.ar.reshape((self.N_crystals,1,1))
+            z = torch.zeros_like(ar)
+            th = torch.acos(self.axis[:,2])
+            ct = torch.cos(th).reshape((self.N_crystals,1,1))
+            st = torch.sin(th).reshape((self.N_crystals,1,1))
+            phi = torch.atan2(self.axis[:,1],self.axis[:,0])
+            cp = torch.cos(phi).reshape((self.N_crystals,1,1))
+            sp = torch.sin(phi).reshape((self.N_crystals,1,1))
+            R = torch.cat((torch.cat((cp*st,cp*ct,-sp),dim=1),
+                           torch.cat((sp*st,sp*ct,cp),dim=1),
+                           torch.cat((ct,-st,z),dim=1)),
+                           dim=2)
+            D = torch.cat((torch.cat((1.0/ar,z,z),dim=1),
+                           torch.cat((z,ar**0.5,z),dim=1),
+                           torch.cat((z,z,ar**0.5),dim=1)),
+                           dim=2)
+            A = torch.matmul(R,torch.matmul(D,torch.transpose(R,1,2)))
+        else:
+            raise NotImplementedError()
         return A
     
     def covariance_matrix(self,vols=None,**kwargs):
