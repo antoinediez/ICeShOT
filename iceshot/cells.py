@@ -106,14 +106,14 @@ class Cells(DataPoints):
             phi = torch.atan2(self.axis[:,1],self.axis[:,0])
             cp = torch.cos(phi).reshape((self.N_crystals,1,1))
             sp = torch.sin(phi).reshape((self.N_crystals,1,1))
-            R = torch.cat((torch.cat((cp*st,cp*ct,-sp),dim=1),
-                           torch.cat((sp*st,sp*ct,cp),dim=1),
-                           torch.cat((ct,-st,z),dim=1)),
-                           dim=2)
-            D = torch.cat((torch.cat((1.0/ar,z,z),dim=1),
-                           torch.cat((z,ar**0.5,z),dim=1),
-                           torch.cat((z,z,ar**0.5),dim=1)),
-                           dim=2)
+            R = torch.cat((torch.cat((cp*st,-sp,-cp*ct),dim=2),
+                           torch.cat((sp*st,cp,-sp*ct),dim=2),
+                           torch.cat((ct,z,st),dim=2)),
+                           dim=1)
+            D = torch.cat((torch.cat((1.0/ar,z,z),dim=2),
+                           torch.cat((z,ar**0.5,z),dim=2),
+                           torch.cat((z,z,ar**0.5),dim=2)),
+                           dim=1)
             A = torch.matmul(R,torch.matmul(D,torch.transpose(R,1,2)))
         else:
             raise NotImplementedError()
