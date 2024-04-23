@@ -41,7 +41,7 @@ def LBFGSB(C_xy,scales,f_x,g_y,a=None,b=None,default_init=False,show_progress=Fa
     def closure():
         optimizer.zero_grad()
         loss, yi = dual_cost(seed_potentials)
-        volumes = torch.bincount(yi)[:-1] / M
+        volumes = torch.bincount(yi,minlength=N+1)[:-1] / M
         seed_potentials.grad = volumes - a[:-1]
         return -loss
     
