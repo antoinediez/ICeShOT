@@ -1,0 +1,172 @@
+import os 
+import sys
+sys.path.append("..")
+import time
+import pickle
+import math
+import torch
+import numpy as np
+from matplotlib import colors
+from matplotlib.colors import ListedColormap
+from iceshot import cells
+from iceshot import costs
+from iceshot import OT
+from iceshot.OT import OT_solver
+from iceshot import plot_cells
+from iceshot import sample
+from iceshot import utils
+import tifffile as tif
+
+use_cuda = torch.cuda.is_available()
+if use_cuda:
+    torch.set_default_tensor_type("torch.cuda.FloatTensor")
+    device = "cuda"
+    
+ot_algo = OT.LBFGSB
+
+def benchmark(N,M):
+    simu_name = f"simu_Benchmark_3D_{N}_{M}"
+    os.mkdir(simu_name)
+    os.mkdir(simu_name+"/frames")
+    os.mkdir(simu_name+"/data")
+
+    d = 3
+    
+    seeds = torch.rand(N,d)
+    source = sample.sample_grid(M,dim=d)
+
+    vol_x = 0.2 + 0.8*torch.rand(N)
+    vol_x *= 0.8/vol_x.sum()
+
+    simu = cells.Cells(
+    seeds=seeds,source=source,
+    vol_x=vol_x,extra_space="void",ar=torch.ones(N),
+    bc=None
+    )
+
+    simu.orientation = simu.orientation_from_axis()
+
+    min_ar = 1.0
+    max_ar = 4.0
+    min_ar = torch.tensor([min_ar],dtype=simu.x.dtype,device=simu.x.device)
+    max_ar = torch.tensor([max_ar],dtype=simu.x.dtype,device=simu.x.device)
+
+    # p = torch.linspace(1.0,3.0,N)
+    p = 2
+    eng = torch.linspace(3.0,4.0,N)
+
+    
+    cost_params = {
+    "p" : p,
+    "scaling" : "volume",
+    "R" : simu.R_mean,
+    "C" : eng
+    }
+
+    solver = OT_solver(
+    n_sinkhorn=300,n_sinkhorn_last=2000,n_lloyds=5,s0=2.0,
+    cost_function=costs.anisotropic_power_cost,cost_params=cost_params
+    )
+
+
+    T = 10.0
+    dt = 0.005
+    # plot_every = 2
+    plot_every = 100
+    t = 0.0
+    t_iter = 0
+    t_plot = 0
+
+    v0 = 0.3
+
+    data = {"pos" : [],
+        "axis" : [],
+        "ar" : []}
+
+    #======================================================#
+
+    solver.solve(simu,
+                sinkhorn_algo=OT.LBFGSB,cap=None,
+                tau=1.0,
+                to_bary=True,
+                show_progress=False,
+                default_init=False)
+
+    t += dt
+    t_iter += 1
+    t_plot += 1
+
+    solver.n_lloyds = 1
+
+    #======================================================#
+
+
+
+    while t<T:
+        print("--------------------------",flush=True)
+        print(f"t={t}",flush=True)
+        print("--------------------------",flush=True)
+
+        plotting_time = t_iter%plot_every==0
+
+        if plotting_time:
+            print("I plot.",flush=True)
+            solver.n_sinkhorn_last = 250
+            solver.n_sinkhorn = 250
+            solver.s0 = 2.0
+        else:
+            print("I do not plot.",flush=True)
+            solver.n_sinkhorn_last = 250
+            solver.n_sinkhorn = 250
+            solver.s0 = 2*simu.R_mean
+            
+        R = (simu.volumes[:-1]/(4./3.*math.pi)) ** (1./3.)
+
+        F_inc = solver.lloyd_step(simu,
+                sinkhorn_algo=ot_algo,cap=None,
+                tau=42.0/(R**2),
+                to_bary=False,
+                show_progress=False,
+                default_init=False,
+                stopping_criterion="average",
+                tol=0.01)
+
+        simu.x += v0*simu.axis*dt + F_inc*dt
+
+        print(f"Mean incompressiblity force: {torch.norm(F_inc,dim=1).mean().item()}")
+        # print(f"Axis: {simu.axis}")
+
+        cov = simu.covariance_matrix()
+        cov /= (torch.det(cov) ** (1./3.)).reshape((simu.N_cells,1,1))
+        L,Q = torch.linalg.eigh(cov)
+        ar = (L[:,2]/torch.sqrt(L[:,0]*L[:,1])) ** (2./3.)
+        axis = Q[:,:,-1]
+        axis = (axis * simu.axis).sum(1).sign().reshape((simu.N_cells,1)) * axis
+
+        simu.axis = axis
+        simu.ar = ar
+
+        simu.ar = torch.max(min_ar,torch.min(max_ar,simu.ar))
+        simu.orientation = simu.orientation_from_axis()
+
+        simu.labels[simu.labels==torch.max(simu.labels)] = -100.0
+
+        if plotting_time:
+            data = {"pos" : simu.x,
+                    "axis" : simu.axis,
+                    "ar" : simu.ar}
+            with open(simu_name + f"/data/data_{t_plot}.pkl",'wb') as file:
+                pickle.dump(data,file)
+            tif.imsave(simu_name + "/frames/"+f"t_{t_plot}.tif", simu.labels.reshape(M,M,M).cpu().numpy(), bigtiff=True)
+            t_plot += 1
+        t += dt
+        t_iter += 1
+
+    with open(simu_name + "/data/data_final.pkl",'wb') as file:
+        pickle.dump(simu,file)
+
+start_time = time.time()
+
+benchmark(1000,256)
+
+print(f"Total computation time: {time.time() - start_time} seconds.")
