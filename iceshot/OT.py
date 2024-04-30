@@ -48,21 +48,10 @@ def LBFGSB(C_xy,scales,f_x,g_y,a=None,b=None,default_init=False,show_progress=Fa
     for epoch in range(max_epoch):
         print(f"\nepoch = {epoch}",flush=True)
         optimizer.step(closure)
-        
-        # Compute the (lazy) allocation matrix
-        mat = C_xy - f_x[:-1].view(N,1,1)
-        m, am = mat.min_argmin(axis=0)
-        m = m.squeeze()
-        am = am.squeeze().float()
-        labels = torch.zeros_like(am)
-        labels[m<=-f_x[-1]] = am[m<=-f_x[-1]]
-        labels[m>-f_x[-1]] = N + 42.0
-        lazy_x = LazyTensor(torch.arange(N,device=f_x.device,dtype=f_x.dtype)[:,None,None])
-        lazy_labels = LazyTensor(labels[None,:,None].float())
-        alloc = (-(lazy_x - lazy_labels).abs()).step()
 
         # Compute the volume deviation 
-        vols = alloc.sum(1).squeeze().reshape(N) * 1/M
+        _, yi = dual_cost(seed_potentials)
+        vols = torch.bincount(yi,minlength=N+1)[:-1] / M
         vol_dev = (vols - a[:-1]).abs()/a[:-1]
         vol_dev_max = vol_dev.max()
         vol_dev_mean = vol_dev.mean()
@@ -227,7 +216,7 @@ class OT_solver:
         
         self.Laguerre_allocation(data,cost)
         
-        vols = data.allocation_matrix().sum(1).squeeze().reshape(data.N_crystals) * data.vol_grid
+        vols = torch.bincount(data.labels.int()) * data.vol_grid
         vol_dev = (vols[:data.N_cells] - data.volumes[:data.N_cells]).abs()/data.volumes[:data.N_cells]
         vol_dev_max = vol_dev.max()
         vol_dev_mean = vol_dev.mean()
