@@ -16,6 +16,8 @@ from iceshot import plot_cells
 from iceshot import sample
 from iceshot import utils
 import tifffile as tif
+import pyvista as pv
+from pyvista import themes
 
 use_cuda = torch.cuda.is_available()
 if use_cuda:
@@ -24,7 +26,7 @@ if use_cuda:
     
 ot_algo = OT.LBFGSB
 
-def benchmark(N,M):
+def benchmark(N,M,T=10,dt=0.005,plot_every=2):
     simu_name = f"simu_Benchmark_3D_{N}_{M}"
     os.mkdir(simu_name)
     os.mkdir(simu_name+"/frames")
@@ -51,7 +53,6 @@ def benchmark(N,M):
     min_ar = torch.tensor([min_ar],dtype=simu.x.dtype,device=simu.x.device)
     max_ar = torch.tensor([max_ar],dtype=simu.x.dtype,device=simu.x.device)
 
-    # p = torch.linspace(1.0,3.0,N)
     p = 2
     eng = torch.linspace(3.0,4.0,N)
 
@@ -68,11 +69,6 @@ def benchmark(N,M):
     cost_function=costs.anisotropic_power_cost,cost_params=cost_params
     )
 
-
-    T = 10.0
-    dt = 0.005
-    # plot_every = 2
-    plot_every = 100
     t = 0.0
     t_iter = 0
     t_plot = 0
@@ -82,6 +78,25 @@ def benchmark(N,M):
     data = {"pos" : [],
         "axis" : [],
         "ar" : []}
+    
+    #==================== Plot config ======================#
+    pv.global_theme.volume_mapper = 'fixed_point'
+    pv.global_theme.render_lines_as_tubes = True
+    
+    off_screen = True
+    plotter = pv.Plotter(lighting='three lights', off_screen=off_screen, image_scale=2)
+    newcolors = np.zeros((N+1, 4))
+    for n in range(N):
+        newcolors[n+1,:3] = 0.1 + 0.8*np.random.rand(3)
+        newcolors[n+1,3] = 1.0
+
+    cmap = ListedColormap(newcolors)
+    
+    def plot_cells(p,img,**kwargs):
+        img = np.pad(img,1,mode='constant',constant_values=-1.0)
+        p.add_volume(img,shade=True,cmap=cmap,opacity='foreground',clim=(0,N-1),diffuse=0.85,**kwargs)
+
+    box = pv.Cube(center=(M/2,M/2,M/2),x_length=M+2,y_length=M+2,z_length=M+2)
 
     #======================================================#
 
@@ -91,16 +106,21 @@ def benchmark(N,M):
                 to_bary=True,
                 show_progress=False,
                 default_init=False)
+    
+    simu.labels[simu.labels==torch.max(simu.labels)] = -1.0
+    plot_cells(plotter,simu.labels.reshape(M,M,M).cpu().numpy())
+    plotter.add_mesh(box, color='k', style='wireframe', line_width=5)
+    plotter.remove_scalar_bar()
+    plotter.screenshot(simu_name + f'/frames/t_{t_plot}.png')
+    plotter.clear_actors()
 
     t += dt
     t_iter += 1
     t_plot += 1
 
     solver.n_lloyds = 1
-
+    
     #======================================================#
-
-
 
     while t<T:
         print("--------------------------",flush=True)
@@ -134,7 +154,6 @@ def benchmark(N,M):
         simu.x += v0*simu.axis*dt + F_inc*dt
 
         print(f"Mean incompressiblity force: {torch.norm(F_inc,dim=1).mean().item()}")
-        # print(f"Axis: {simu.axis}")
 
         cov = simu.covariance_matrix()
         cov /= (torch.det(cov) ** (1./3.)).reshape((simu.N_cells,1,1))
@@ -149,15 +168,20 @@ def benchmark(N,M):
         simu.ar = torch.max(min_ar,torch.min(max_ar,simu.ar))
         simu.orientation = simu.orientation_from_axis()
 
-        simu.labels[simu.labels==torch.max(simu.labels)] = -100.0
+        simu.labels[simu.labels==torch.max(simu.labels)] = -1.0
 
         if plotting_time:
+            plot_cells(plotter,simu.labels.reshape(M,M,M).cpu().numpy())
+            plotter.add_mesh(box, color='black', style='wireframe', line_width=5)
+            plotter.remove_scalar_bar()
+            plotter.screenshot(simu_name + f'/frames/t_{t_plot}.png')
+            plotter.clear_actors()
             data = {"pos" : simu.x,
                     "axis" : simu.axis,
                     "ar" : simu.ar}
             with open(simu_name + f"/data/data_{t_plot}.pkl",'wb') as file:
                 pickle.dump(data,file)
-            tif.imsave(simu_name + "/frames/"+f"t_{t_plot}.tif", simu.labels.reshape(M,M,M).cpu().numpy(), bigtiff=True)
+            # tif.imsave(simu_name + "/frames/"+f"t_{t_plot}.tif", simu.labels.reshape(M,M,M).cpu().numpy(), bigtiff=True)
             t_plot += 1
         t += dt
         t_iter += 1
@@ -165,8 +189,12 @@ def benchmark(N,M):
     with open(simu_name + "/data/data_final.pkl",'wb') as file:
         pickle.dump(simu,file)
 
+    utils.make_video(simu_name=simu_name,video_name=simu_name)
+
+
+
 start_time = time.time()
 
-benchmark(1000,256)
+benchmark(N=1000,M=512,T=10,dt=0.005,plot_every=2)
 
 print(f"Total computation time: {time.time() - start_time} seconds.")
