@@ -26,7 +26,7 @@ if use_cuda:
     
 ot_algo = OT.LBFGSB
 
-def benchmark(N,M,T=10,dt=0.005,plot_every=2):
+def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
     simu_name = f"simu_Benchmark_3D_{N}_{M}"
     os.mkdir(simu_name)
     os.mkdir(simu_name+"/frames")
@@ -105,7 +105,9 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2):
                 tau=1.0,
                 to_bary=True,
                 show_progress=False,
-                default_init=False)
+                default_init=False,
+                weight=1.0,
+                bsr=True)
     
     simu.labels[simu.labels==torch.max(simu.labels)] = -1.0
     plot_cells(plotter,simu.labels.reshape(M,M,M).cpu().numpy())
@@ -149,7 +151,8 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2):
                 show_progress=False,
                 default_init=False,
                 stopping_criterion="average",
-                tol=0.01)
+                tol=0.01,
+                bsr=bsr)
 
         simu.x += v0*simu.axis*dt + F_inc*dt
 
@@ -195,6 +198,6 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2):
 
 start_time = time.time()
 
-benchmark(N=1000,M=512,T=10,dt=0.005,plot_every=2)
+benchmark(N=100,M=256,T=10,dt=0.005,plot_every=2,bsr=True)
 
 print(f"Total computation time: {time.time() - start_time} seconds.")

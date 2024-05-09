@@ -204,7 +204,7 @@ class OT_solver:
                    cap=None,
                    sinkhorn_algo=sinkhorn,
                    b=None,default_init=False,show_progress=False,
-                   tau=0.0,to_bary=False,weight=None,**kwargs):
+                   tau=0.0,to_bary=False,weight=None,bsr=False,**kwargs):
         
         cost, grad_cost = self.cost_matrix(data,masks=masks) if cost_matrix is None else cost_matrix
         if cap is not None:
@@ -223,14 +223,14 @@ class OT_solver:
         print(f"Maximum volume deviation = {vol_dev_max}",flush=True)
         print(f"Mean volume deviation = {vol_dev_mean}",flush=True)
             
-        return self.incompressibility_force(data,grad_cost,tau=tau,to_bary=to_bary,weight=weight)
+        return self.incompressibility_force(data,grad_cost,tau=tau,to_bary=to_bary,weight=weight,bsr=bsr,masks=masks)
         
     def solve(self,
               data,cost_matrix=None,masks=None,
               cap=None,
               sinkhorn_algo=sinkhorn,
               b=None,default_init=False,show_progress=False,
-              tau=0.0,to_bary=False,weight=None,**kwargs):
+              tau=0.0,to_bary=False,weight=None,bsr=False,**kwargs):
         
         self.n_sinkhorn = self.n_sinkhorn0
         
@@ -244,7 +244,7 @@ class OT_solver:
                 cap=cap,
                 sinkhorn_algo=sinkhorn_algo,
                 b=b,default_init=default_init,show_progress=show_progress,
-                tau=tau,to_bary=to_bary,weight=weight,**kwargs)
+                tau=tau,to_bary=to_bary,weight=weight,bsr=bsr,**kwargs)
             
             data.x[:] = utils.apply_bc_inside(data.x+F,bc=data.bc,L=data.L)
 
@@ -260,16 +260,37 @@ class OT_solver:
             data.labels[m<=-data.f_x[-1]] = am[m<=-data.f_x[-1]]
             data.labels[m>-data.f_x[-1]] = data.x.shape[0] + 42.0
         
-    def incompressibility_force(self,data,grad_cost,tau=0.0,to_bary=False,weight=None):
+    def incompressibility_force(self,data,grad_cost,tau=0.0,to_bary=False,weight=None,bsr=False,masks=None):
         if isinstance(tau,torch.Tensor):
             tau = tau.view(data.x.shape[0],1)
         A = data.allocation_matrix()
         if to_bary:
-            if weight is None:
-                XY = data.lazy_XY()
-                weight = (grad_cost * XY).sum(-1) / ((XY ** 2).sum(-1) + 1e-8)
-            bary = data.barycenters(weight=weight)
+            if bsr:
+                if weight is None:
+                    y, ranges_ij = data.sort_y()
+                    XY = data.lazy_XY()
+                    XY.ranges = ranges_ij
+                    _, grad_sorted = self.cost_matrix(data,masks=masks)
+                    grad_sorted.ranges = ranges_ij
+                    weight = (grad_sorted * XY).sum(-1) / ((XY ** 2).sum(-1) + 1e-8)
+                bary = data.barycenters(weight=weight,bsr=True)
+            else:
+                if weight is None:
+                    XY = data.lazy_XY()
+                    weight = (grad_cost * XY).sum(-1) / ((XY ** 2).sum(-1) + 1e-8)
+                bary = data.barycenters(weight=weight,bsr=False)
             return tau*(bary - data.x)
         else:
-            F = (A * grad_cost).sum(1) * data.vol_grid
+            if bsr:
+                grad_sorted, y = self.compute_sorted_grad(data,masks=masks)
+                F = grad_sorted.sum(1) * data.vol_grid
+                data.y = y
+            else:
+                F = (A * grad_cost).sum(1) * data.vol_grid
             return -tau*F
+        
+    def compute_sorted_grad(self,data,masks=None):        
+        y, ranges_ij = data.sort_y()
+        _, grad_sorted = self.cost_matrix(data,masks=masks)
+        grad_sorted.ranges = ranges_ij
+        return grad_sorted, y

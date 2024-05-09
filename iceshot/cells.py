@@ -157,14 +157,22 @@ class Cells(DataPoints):
         XY = utils.apply_bc(y_j - y_i,self.bc,self.L)
         return ((r**2) - (XY **2).sum(-1)).step()
     
-    def barycenters(self,weight=None):
+    def barycenters(self,weight=None,bsr=False):
         if weight is None:
             weight = 1.0
         if isinstance(weight,torch.Tensor):
             weight = weight.view(self.x.shape[0],1,1)
-        A = self.allocation_matrix()
-        XY = self.lazy_XY()
-        bary = self.x + (weight*A*XY).sum(1)/((weight*A).sum(1)+1e-8).view(self.x.shape[0],1)
+        if bsr:
+            y, ranges_ij = self.sort_y()
+            XY = self.lazy_XY()
+            XY.ranges = ranges_ij
+            vols = torch.bincount(self.labels.int())
+            bary = self.x + (weight*XY).sum(1)/(vols[:self.N_cells]+1e-8).view(self.x.shape[0],1)
+            self.y = y
+        else:
+            A = self.allocation_matrix()
+            XY = self.lazy_XY()
+            bary = self.x + (weight*A*XY).sum(1)/((weight*A).sum(1)+1e-8).view(self.x.shape[0],1)
         return bary
     
     def junctions(self,r=None,K=10):
@@ -204,3 +212,27 @@ class Cells(DataPoints):
         uq_output = utils.unique(cluster_pos)
         return uq_output[0], ind_x[uq_output[-1],:]    
     
+    def sort_y(self):
+        sorted_labels, sorting_indices = torch.sort(self.labels)
+        y = self.y.detach().clone()
+        y_sorted = y[sorting_indices]
+        self.y = y_sorted
+        diff_labels = sorted_labels[:-1] - sorted_labels[1:]
+        end_j = (torch.nonzero(diff_labels) + 1).squeeze()
+        
+        i = torch.arange(self.N_crystals,device=self.x.device,dtype=end_j.dtype).reshape((self.N_crystals,1))
+        ranges_i = torch.cat((i,i+1),dim=1)
+        slices_i = (i+1).squeeze()
+        redranges_i = torch.zeros((len(end_j),2),device=end_j.device,dtype=end_j.dtype)
+        redranges_i[1:,0] = end_j[:-1]
+        redranges_i[:,1] = end_j
+        
+        j = torch.arange(self.M_grid,device=self.x.device,dtype=end_j.dtype).reshape((self.M_grid,1))
+        ranges_j = torch.cat((j,j+1),dim=1)
+        slices_j = (j+1).squeeze()
+        
+        ranges_ij = ranges_i.type(torch.int32), slices_i.type(torch.int32), redranges_i.type(torch.int32), ranges_j.type(torch.int32), slices_j.type(torch.int32), ranges_i.type(torch.int32)
+        
+        torch.cuda.synchronize()
+        
+        return y, ranges_ij
