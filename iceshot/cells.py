@@ -119,13 +119,17 @@ class Cells(DataPoints):
             raise NotImplementedError()
         return A
     
-    def covariance_matrix(self,vols=None,**kwargs):
-        A = self.allocation_matrix()    #(N,M)
+    def covariance_matrix(self,vols=None,bsr=False,**kwargs):
+
+        center = self.barycenters(weight=1.0,bsr=bsr)
+        
         if vols is None:
-            vols = A.sum(1)
-        vols = vols.reshape((self.N_crystals,1))
-        XY = self.lazy_XY()
-        center = utils.apply_bc_inside(self.x + (A * XY).sum(1)/vols,bc=self.bc,L=self.L)
+            vols = torch.bincount(self.labels.int())
+        vols = vols[:self.N_cells].reshape((self.N_cells,1))
+        
+        if bsr:
+            y, ranges_ij = self.sort_y() 
+        
         X_i = LazyTensor(center[:,None,:])    # (N,1,D)
         Y_j = LazyTensor(self.y[None,:,:])    # (1,M,D)
         Z = utils.apply_bc(Y_j - X_i,bc=self.bc,L=self.L)    # (N,M,D)
@@ -135,7 +139,15 @@ class Cells(DataPoints):
             cov_vec = LazyTensor.cat((Z[:,:,0]*Z, Z[:,:,1]*Z, Z[:,:,2]*Z),-1)
         else:
             raise NotImplementedError()
-        cov = ((A * cov_vec).sum(1) / (vols - 1)).reshape((self.N_crystals,self.d,self.d))
+        
+        if bsr:
+            cov_vec.ranges = ranges_ij
+            cov = (cov_vec.sum(1)/(vols - 1)).reshape((self.N_crystals,self.d,self.d))
+            self.y = y
+        else:
+            A = self.allocation_matrix()    #(N,M)
+            cov = ((A * cov_vec).sum(1) / (vols - 1)).reshape((self.N_crystals,self.d,self.d))
+        
         return cov
     
     def allocation_matrix(self,type="lazy"):
@@ -173,7 +185,7 @@ class Cells(DataPoints):
             A = self.allocation_matrix()
             XY = self.lazy_XY()
             bary = self.x + (weight*A*XY).sum(1)/((weight*A).sum(1)+1e-8).view(self.x.shape[0],1)
-        return bary
+        return utils.apply_bc_inside(bary,bc=self.bc,L=self.L)
     
     def junctions(self,r=None,K=10):
         # Return a matrix of size MxK containing the cell labels of K neighbours of each pixel

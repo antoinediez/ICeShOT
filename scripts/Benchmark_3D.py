@@ -144,6 +144,7 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
             
         R = (simu.volumes[:-1]/(4./3.*math.pi)) ** (1./3.)
 
+        stime = time.time()
         F_inc = solver.lloyd_step(simu,
                 sinkhorn_algo=ot_algo,cap=None,
                 tau=42.0/(R**2),
@@ -153,12 +154,16 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
                 stopping_criterion="average",
                 tol=0.01,
                 bsr=bsr)
-
+        print(f"Solving incompressibility: {time.time()-stime} seconds",flush=True)
+        print(f"Mean incompressiblity force: {torch.norm(F_inc,dim=1).mean().item()}",flush=True)
+        
         simu.x += v0*simu.axis*dt + F_inc*dt
 
-        print(f"Mean incompressiblity force: {torch.norm(F_inc,dim=1).mean().item()}")
+        stime = time.time()
+        cov = simu.covariance_matrix(bsr=bsr)
+        print(f"Computing covariance matrix: {time.time()-stime} seconds",flush=True)
 
-        cov = simu.covariance_matrix()
+        stime = time.time()
         cov /= (torch.det(cov) ** (1./3.)).reshape((simu.N_cells,1,1))
         L,Q = torch.linalg.eigh(cov)
         ar = (L[:,2]/torch.sqrt(L[:,0]*L[:,1])) ** (2./3.)
@@ -172,7 +177,8 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
         simu.orientation = simu.orientation_from_axis()
 
         simu.labels[simu.labels==torch.max(simu.labels)] = -1.0
-
+        print(f"Update parameters: {time.time()-stime} seconds",flush=True)
+        
         if plotting_time:
             plot_cells(plotter,simu.labels.reshape(M,M,M).cpu().numpy())
             plotter.add_mesh(box, color='black', style='wireframe', line_width=5)
@@ -192,12 +198,13 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
     with open(simu_name + "/data/data_final.pkl",'wb') as file:
         pickle.dump(simu,file)
 
-    utils.make_video(simu_name=simu_name,video_name=simu_name)
+    # utils.make_video(simu_name=simu_name,video_name=simu_name)
 
 
 
 start_time = time.time()
 
-benchmark(N=100,M=256,T=10,dt=0.005,plot_every=2,bsr=True)
+benchmark(N=10000,M=512,T=10,dt=0.005,plot_every=1000000,bsr=True)
 
-print(f"Total computation time: {time.time() - start_time} seconds.")
+print(f"--------------",flush=True)
+print(f"Total computation time: {time.time() - start_time} seconds.",flush=True)
