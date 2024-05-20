@@ -107,3 +107,4 @@ venv.bak/
 # other
 _*
 simu*
+.DS_Store
