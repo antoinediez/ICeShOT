@@ -209,7 +209,7 @@ class OT_solver:
         cost, grad_cost = self.cost_matrix(data,masks=masks) if cost_matrix is None else cost_matrix
         if cap is not None:
             cost = cost.clamp(0.0,cap)
-        scales = annealing_schedule(self.n_sinkhorn,M_grid=int(data.y.shape[0] ** (1/data.d)),s0=self.s0)
+        scales = annealing_schedule(self.n_sinkhorn,M_grid=int(data.y.shape[0] ** (1/data.d)),s0=self.s0,device=data.x.device)
         sinkhorn_algo(cost,scales,
                       data.f_x,data.g_y,
                       a=data.volumes,b=b,default_init=default_init,show_progress=show_progress,**kwargs)

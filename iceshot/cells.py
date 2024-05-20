@@ -245,6 +245,7 @@ class Cells(DataPoints):
         
         ranges_ij = ranges_i.type(torch.int32), slices_i.type(torch.int32), redranges_i.type(torch.int32), ranges_j.type(torch.int32), slices_j.type(torch.int32), ranges_i.type(torch.int32)
         
-        torch.cuda.synchronize()
+        if self.x.device=="cuda":
+            torch.cuda.synchronize()
         
         return y, ranges_ij
