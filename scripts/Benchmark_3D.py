@@ -204,7 +204,7 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
 
 start_time = time.time()
 
-benchmark(N=10000,M=256,T=10,dt=0.005,plot_every=1000000,bsr=True)
+benchmark(N=1000,M=256,T=10,dt=0.005,plot_every=1000000,bsr=True)
 
 print(f"--------------",flush=True)
 print(f"Total computation time: {time.time() - start_time} seconds.",flush=True)
