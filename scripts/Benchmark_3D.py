@@ -6,6 +6,7 @@ import pickle
 import math
 import torch
 import numpy as np
+from matplotlib import pyplot as plt
 from matplotlib import colors
 from matplotlib.colors import ListedColormap
 from iceshot import cells
@@ -35,7 +36,7 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
     d = 3
     
     seeds = torch.rand(N,d)
-    source = sample.sample_grid(M,dim=d)
+    source = sample.sample_grid(M,dim=d,device=seeds.device)
 
     vol_x = 0.2 + 0.8*torch.rand(N)
     vol_x *= 0.8/vol_x.sum()
@@ -60,7 +61,6 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
     cost_params = {
     "p" : p,
     "scaling" : "volume",
-    "R" : simu.R_mean,
     "C" : eng
     }
 
@@ -82,12 +82,14 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
     #==================== Plot config ======================#
     pv.global_theme.volume_mapper = 'fixed_point'
     pv.global_theme.render_lines_as_tubes = True
+    cmap0 = plt.cm.hsv
     
     off_screen = True
     plotter = pv.Plotter(lighting='three lights', off_screen=off_screen, image_scale=2)
     newcolors = np.zeros((N+1, 4))
     for n in range(N):
-        newcolors[n+1,:3] = 0.1 + 0.8*np.random.rand(3)
+        # newcolors[n+1,:3] = 0.1 + 0.8*np.random.rand(3)
+        newcolors[n,:] = np.array(cmap0(n/N))
         newcolors[n+1,3] = 1.0
 
     cmap = ListedColormap(newcolors)
@@ -204,7 +206,7 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
 
 start_time = time.time()
 
-benchmark(N=1000,M=256,T=10,dt=0.005,plot_every=1000000,bsr=True)
+benchmark(N=101,M=128,T=10,dt=0.005,plot_every=2,bsr=True)
 
 print(f"--------------",flush=True)
 print(f"Total computation time: {time.time() - start_time} seconds.",flush=True)
