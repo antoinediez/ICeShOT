@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Incompressible Cell Shapes via Optimal Transport &mdash; iceshot  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="_auto_examples/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            iceshot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_auto_examples/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/cells.html">Cells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/costs.html">Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/OT.html">Optimal Transport</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">iceshot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Incompressible Cell Shapes via Optimal Transport</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="incompressible-cell-shapes-via-optimal-transport">
+<h1>Incompressible Cell Shapes via Optimal Transport<a class="headerlink" href="#incompressible-cell-shapes-via-optimal-transport" title="Link to this heading"></a></h1>
+<a class="reference internal image-reference" href="_images/fallingstuff.gif"><img alt="Falling Soft Spheres" class="align-center" src="_images/fallingstuff.gif" style="width: 400.0px; height: 300.0px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Many biological systems such as cell aggregates, tissues or bacterial colonies behave as unconventional systems of particles that are strongly constrained by volume exclusion and shape interactions. Understanding how these constraints lead to macroscopic self-organized structures is a fundamental question in e.g. developmental biology. To this end, various types of computational models have been developed: phase fields, cellular automata, vertex models, level-set, finite element simulations, etc. We introduce a new framework based on optimal transport theory to model particle systems with arbitrary dynamical shapes and deformability. Our method builds upon the pioneering work of Brenier on incompressible fluids and its recent applications to materials science. It lets us specify the shapes of individual cells and supports a wide range of interaction mechanisms, while automatically taking care of the volume exclusion constraint at an affordable numerical cost.</p>
+<p>The project is hosted on <a class="reference external" href="https://github.com/antoinediez/ICeShOT">GitHub</a>, under the permissive <a class="reference external" href="https://en.wikipedia.org/wiki/MIT_License">MIT license</a>.</p>
+<section id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Link to this heading"></a></h2>
+<p>If you use ICeShOT in a research paper, please cite the <a class="reference external" href="https://arxiv.org/abs/2402.17086">arXiv preprint</a> :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@misc</span><span class="p">{</span><span class="n">diez2024optimaltransportmodeldynamical</span><span class="p">,</span>
+<span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="n">An</span> <span class="n">optimal</span> <span class="n">transport</span> <span class="n">model</span> <span class="k">for</span> <span class="n">dynamical</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">collective</span> <span class="n">motion</span> <span class="ow">and</span> <span class="n">cellular</span> <span class="n">aggregates</span><span class="p">},</span>
+<span class="n">author</span><span class="o">=</span><span class="p">{</span><span class="n">Antoine</span> <span class="n">Diez</span> <span class="ow">and</span> <span class="n">Jean</span> <span class="n">Feydy</span><span class="p">},</span>
+<span class="n">year</span><span class="o">=</span><span class="p">{</span><span class="mi">2024</span><span class="p">},</span>
+<span class="n">eprint</span><span class="o">=</span><span class="p">{</span><span class="mf">2402.17086</span><span class="p">},</span>
+<span class="n">archivePrefix</span><span class="o">=</span><span class="p">{</span><span class="n">arXiv</span><span class="p">},</span>
+<span class="n">primaryClass</span><span class="o">=</span><span class="p">{</span><span class="n">q</span><span class="o">-</span><span class="n">bio</span><span class="o">.</span><span class="n">QM</span><span class="p">},</span>
+<span class="n">url</span><span class="o">=</span><span class="p">{</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">arxiv</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="nb">abs</span><span class="o">/</span><span class="mf">2402.17086</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Diez A., Feydy J., An optimal transport model for dynamical shapes, collective motion and cellular aggregates, arXiv preprint: arXiv2402.17086, 2024</p>
+</section>
+<section id="authors">
+<h2>Authors<a class="headerlink" href="#authors" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://antoinediez.gitlab.io/">Antoine Diez</a>, Kyoto University Institute for the Advanced Study of Human Biology (ASHBi)</p>
+<p><a class="reference external" href="https://www.jeanfeydy.com/">Jean Feydy</a>, Inria Paris, HeKA team</p>
+</section>
+<section id="table-of-contents">
+<h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_auto_examples/index.html">Examples</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/cells.html">Cells</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/cells.html#iceshot.cells.DataPoints"><code class="docutils literal notranslate"><span class="pre">DataPoints</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cells.html#iceshot.cells.Cells"><code class="docutils literal notranslate"><span class="pre">Cells</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/costs.html">Costs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/costs.html#iceshot.costs.l2_cost"><code class="docutils literal notranslate"><span class="pre">l2_cost()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/costs.html#iceshot.costs.power_cost"><code class="docutils literal notranslate"><span class="pre">power_cost()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/costs.html#iceshot.costs.anisotropic_power_cost"><code class="docutils literal notranslate"><span class="pre">anisotropic_power_cost()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/costs.html#iceshot.costs.spherocylinders_2_cost"><code class="docutils literal notranslate"><span class="pre">spherocylinders_2_cost()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/OT.html">Optimal Transport</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/OT.html#iceshot.OT.LBFGSB"><code class="docutils literal notranslate"><span class="pre">LBFGSB()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/OT.html#iceshot.OT.sinkhorn"><code class="docutils literal notranslate"><span class="pre">sinkhorn()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/OT.html#iceshot.OT.sinkhorn_zerolast"><code class="docutils literal notranslate"><span class="pre">sinkhorn_zerolast()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/OT.html#iceshot.OT.OT_solver"><code class="docutils literal notranslate"><span class="pre">OT_solver</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_auto_examples/index.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Antoine Diez, Jean Feydy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

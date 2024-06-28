@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Micropipette experiment &mdash; iceshot  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Random protrusions" href="Protrusions.html" />
+    <link rel="prev" title="Falling soft spheres in a 3D hourglass domain" href="FallingStuff.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            iceshot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ActiveBrownian.html">Active Brownian Particles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Benchmark_3D.html">Benchmark: 3D Run-and-Tumble with deformations.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ChemoDeformation.html">Chemotaxis induced by deformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Engulfment.html">Engulfment due to surface tension effects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Evacuation.html">Crowd evacuation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="FallingSpheres.html">Falling soft spheres in 2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="FallingStuff.html">Falling soft spheres in a 3D hourglass domain</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Micropipette experiment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Protrusions.html">Random protrusions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RodShape.html">Emergence of alignment in a system of active rod-shaped particles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RunTumble3D.html">Run-and-tumble in 3D with soft spheres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RunTumbleDisk.html">Run-and-tumble in 2D with soft spheres in a disk domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SurfaceTension.html">Sorting due to surface tension effects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TissueGrowth.html">Growth of a 2D cell aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TissueGrowth_3D.html">Growth of a 3D cell aggregate</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/cells.html">Cells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/costs.html">Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/OT.html">Optimal Transport</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">iceshot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Examples</a></li>
+      <li class="breadcrumb-item active">Micropipette experiment</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_auto_examples/Micropipette.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-micropipette-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="micropipette-experiment">
+<span id="sphx-glr-auto-examples-micropipette-py"></span><h1>Micropipette experiment<a class="headerlink" href="#micropipette-experiment" title="Link to this heading"></a></h1>
+<video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV10_Micropipette.mp4" type="video/mp4"></video><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_path = &#39;_static/Micropipette_eq.png&#39;</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">cells</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">costs</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">OT</span>
+<span class="kn">from</span> <span class="nn">iceshot.OT</span> <span class="kn">import</span> <span class="n">OT_solver</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">plot_cells</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">sample</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">utils</span>
+
+<span class="n">use_cuda</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">use_cuda</span><span class="p">:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">set_default_tensor_type</span><span class="p">(</span><span class="s2">&quot;torch.cuda.FloatTensor&quot;</span><span class="p">)</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span>
+
+<span class="c1"># ot_algo = OT.sinkhorn_zerolast</span>
+<span class="n">ot_algo</span> <span class="o">=</span> <span class="n">OT</span><span class="o">.</span><span class="n">LBFGSB</span>
+
+<span class="n">simu_name</span> <span class="o">=</span> <span class="s2">&quot;simu_Micropipette&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">simu_name</span><span class="p">)</span>
+
+<span class="n">radius</span> <span class="o">=</span> <span class="mf">0.08</span>
+<span class="n">vol0</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">h_tube</span> <span class="o">=</span> <span class="n">radius</span><span class="o">/</span><span class="mf">2.0</span>
+<span class="n">l_tube</span> <span class="o">=</span> <span class="n">vol0</span><span class="o">/</span><span class="n">h_tube</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">l_tube</span>
+
+<span class="k">def</span> <span class="nf">crop_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">l_tube</span><span class="p">))</span><span class="o">&lt;=</span><span class="mf">0.5</span><span class="o">*</span><span class="n">l_tube</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">*</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">&lt;=</span><span class="mf">0.5</span><span class="o">*</span><span class="n">h_tube</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">&lt;=</span><span class="mf">3.0</span><span class="o">*</span><span class="n">radius</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">*</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">l_tube</span> <span class="o">-</span> <span class="mf">1.05</span><span class="o">*</span><span class="n">radius</span><span class="p">))</span><span class="o">&lt;=</span><span class="mf">1.05</span><span class="o">*</span><span class="n">radius</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+
+<span class="n">scale</span> <span class="o">=</span> <span class="n">l_tube</span><span class="o">*</span><span class="n">h_tube</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="mf">1.05</span><span class="o">*</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="mf">3.0</span><span class="o">*</span><span class="n">radius</span>
+
+<span class="n">N_cells</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">M_grid</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="n">vol_grid_true</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">M_grid</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample_cropped_domain</span><span class="p">(</span><span class="n">crop_function</span><span class="p">,</span><span class="n">M_grid</span><span class="p">)</span>
+<span class="n">seeds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">l_tube</span><span class="o">-</span><span class="n">radius</span><span class="p">,</span><span class="mf">0.5</span><span class="p">],</span>
+        <span class="p">])</span>
+
+<span class="n">vol</span> <span class="o">=</span> <span class="n">vol0</span><span class="o">/</span><span class="n">scale</span>
+<span class="n">vol_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">vol</span><span class="p">])</span>
+
+<span class="n">p_all</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">2.5</span><span class="p">,</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">]</span>
+<span class="n">v_all</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">cmap_from_list</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="n">color_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">])</span>
+
+
+<span class="k">for</span> <span class="n">iv0</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v_all</span><span class="p">)):</span>
+    <span class="n">v0</span> <span class="o">=</span> <span class="n">v_all</span><span class="p">[</span><span class="n">iv0</span><span class="p">]</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">simu_name</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;/v0_</span><span class="si">{</span><span class="n">v0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">T</span> <span class="o">=</span> <span class="n">l_tube</span><span class="o">/</span><span class="n">v0</span>
+    <span class="n">fig_graph</span><span class="p">,</span> <span class="n">ax_graph</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax_graph</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">ax_graph</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p_all</span><span class="p">)):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">p_all</span><span class="p">[</span><span class="n">ip</span><span class="p">]</span>
+        <span class="n">dir_name</span> <span class="o">=</span> <span class="n">simu_name</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;/v0_</span><span class="si">{</span><span class="n">v0</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;/p_</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dir_name</span> <span class="o">+</span> <span class="s2">&quot;/frames&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===================================================&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;p=</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;v0=</span><span class="si">{</span><span class="n">v0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===================================================&quot;</span><span class="p">)</span>
+
+        <span class="n">simu</span> <span class="o">=</span> <span class="n">cells</span><span class="o">.</span><span class="n">Cells</span><span class="p">(</span>
+            <span class="n">seeds</span><span class="o">=</span><span class="n">seeds</span><span class="p">,</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+            <span class="n">vol_x</span><span class="o">=</span><span class="n">vol_x</span><span class="p">,</span><span class="n">extra_space</span><span class="o">=</span><span class="s2">&quot;void&quot;</span>
+        <span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">vol_grid_true</span><span class="o">/</span><span class="n">simu</span><span class="o">.</span><span class="n">vol_grid</span><span class="p">)</span>
+
+        <span class="n">cost_params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;p&quot;</span> <span class="p">:</span> <span class="n">p</span><span class="p">,</span>
+            <span class="s2">&quot;scaling&quot;</span> <span class="p">:</span> <span class="s2">&quot;volume&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;R&quot;</span> <span class="p">:</span> <span class="n">radius</span><span class="p">,</span>
+            <span class="s2">&quot;C&quot;</span> <span class="p">:</span> <span class="mf">1.0</span>
+        <span class="p">}</span>
+
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">OT_solver</span><span class="p">(</span>
+            <span class="n">n_sinkhorn</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span><span class="n">n_sinkhorn_last</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span><span class="n">n_lloyds</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">cost_function</span><span class="o">=</span><span class="n">costs</span><span class="o">.</span><span class="n">power_cost</span><span class="p">,</span><span class="n">cost_params</span><span class="o">=</span><span class="n">cost_params</span>
+        <span class="p">)</span>
+
+        <span class="n">simu</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">])</span>
+
+        <span class="n">t_all</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">x_all</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">t_iter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">t_plot</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="mf">0.005</span>
+
+        <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span>
+             <span class="n">sinkhorn_algo</span><span class="o">=</span><span class="n">ot_algo</span><span class="p">,</span><span class="n">cap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">tau</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+             <span class="n">to_bary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+             <span class="n">show_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">t_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">x_all</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">/</span><span class="n">l_tube</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;t&quot;</span> <span class="p">:</span> <span class="n">t_all</span><span class="p">,</span>
+                     <span class="s2">&quot;x&quot;</span> <span class="p">:</span> <span class="n">x_all</span><span class="p">,</span>
+                     <span class="s2">&quot;p&quot;</span> <span class="p">:</span> <span class="n">p</span><span class="p">,</span>
+                     <span class="s2">&quot;v0&quot;</span> <span class="p">:</span> <span class="n">v0</span><span class="p">}</span>
+                    <span class="p">)</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="nb">open</span><span class="p">(</span><span class="n">simu_name</span><span class="o">+</span><span class="s2">&quot;/data.p&quot;</span><span class="p">,</span><span class="s2">&quot;wb&quot;</span><span class="p">))</span>
+        <span class="n">graph</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax_graph</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_all</span><span class="p">,</span><span class="n">x_all</span><span class="p">,</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+        <span class="n">fig_graph</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">simu_name</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;/v0_</span><span class="si">{</span><span class="n">v0</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;/graph.png&quot;</span><span class="p">)</span>
+
+        <span class="n">simu_plot</span> <span class="o">=</span> <span class="n">plot_cells</span><span class="o">.</span><span class="n">CellPlot</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+            <span class="n">plot_pixels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_scat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_quiv</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_boundary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">scat_size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">scat_color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+            <span class="n">r</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">boundary_color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+            <span class="n">plot_type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span><span class="n">void_color</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">bone</span><span class="p">(</span><span class="mf">0.75</span><span class="p">),</span><span class="n">M_grid</span><span class="o">=</span><span class="n">M_grid</span><span class="p">)</span>
+
+        <span class="n">simu_plot</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">dir_name</span> <span class="o">+</span> <span class="s2">&quot;/frames/&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;t_</span><span class="si">{</span><span class="n">t_plot</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+
+        <span class="n">t</span> <span class="o">+=</span> <span class="n">dt</span>
+        <span class="n">t_iter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">t_plot</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">t</span><span class="o">&lt;=</span><span class="n">T</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;t=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">solver</span><span class="o">.</span><span class="n">n_sinkhorn_last</span> <span class="o">=</span> <span class="mi">2000</span>
+            <span class="n">solver</span><span class="o">.</span><span class="n">n_sinkhorn</span> <span class="o">=</span> <span class="mi">2000</span>
+            <span class="n">solver</span><span class="o">.</span><span class="n">s0</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">cost</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">cost_params</span><span class="p">)</span>
+
+            <span class="n">F_inc</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">lloyd_step</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span>
+                <span class="n">sinkhorn_algo</span><span class="o">=</span><span class="n">ot_algo</span><span class="p">,</span><span class="n">cap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">tau</span><span class="o">=</span><span class="mf">0.3</span><span class="o">/</span><span class="n">radius</span> <span class="o">*</span> <span class="n">vol_grid_true</span><span class="o">/</span><span class="n">simu</span><span class="o">.</span><span class="n">vol_grid</span><span class="p">,</span>
+                <span class="n">to_bary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">show_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">default_init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">simu</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">v0</span><span class="o">*</span><span class="n">simu</span><span class="o">.</span><span class="n">axis</span><span class="o">*</span><span class="n">dt</span> <span class="o">+</span> <span class="n">F_inc</span><span class="o">*</span><span class="n">dt</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximal incompressibility force: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_inc</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">t_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="n">T</span><span class="p">)</span>
+            <span class="n">x_all</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">/</span><span class="n">l_tube</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span> <span class="p">:</span> <span class="n">t_all</span><span class="p">,</span>
+                        <span class="s2">&quot;x&quot;</span> <span class="p">:</span> <span class="n">x_all</span><span class="p">,</span>
+                        <span class="s2">&quot;p&quot;</span> <span class="p">:</span> <span class="n">p</span><span class="p">,</span>
+                        <span class="s2">&quot;v0&quot;</span> <span class="p">:</span> <span class="n">v0</span><span class="p">}</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="nb">open</span><span class="p">(</span><span class="n">simu_name</span><span class="o">+</span><span class="s2">&quot;/data.p&quot;</span><span class="p">,</span><span class="s2">&quot;wb&quot;</span><span class="p">))</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">set_xdata</span><span class="p">(</span><span class="n">t_all</span><span class="p">)</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">set_ydata</span><span class="p">(</span><span class="n">x_all</span><span class="p">)</span>
+            <span class="n">fig_graph</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">simu_name</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;/v0_</span><span class="si">{</span><span class="n">v0</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;/graph.png&quot;</span><span class="p">)</span>
+
+            <span class="n">simu_plot</span><span class="o">.</span><span class="n">update_plot</span><span class="p">(</span><span class="n">simu</span><span class="p">)</span>
+            <span class="n">simu_plot</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">dir_name</span> <span class="o">+</span> <span class="s2">&quot;/frames/&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;t_</span><span class="si">{</span><span class="n">t_plot</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+            <span class="n">t_plot</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c1"># if (len(x_all)&gt;101):</span>
+            <span class="c1">#     if (abs((x_all[-1] - x_all[-100])) &lt; 0.001):</span>
+            <span class="c1">#         break</span>
+            <span class="n">t</span> <span class="o">+=</span> <span class="n">dt</span>
+            <span class="n">t_iter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">utils</span><span class="o">.</span><span class="n">make_video</span><span class="p">(</span><span class="n">simu_name</span><span class="o">=</span><span class="n">dir_name</span><span class="p">,</span><span class="n">video_name</span><span class="o">=</span><span class="s2">&quot;v0_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_p_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-micropipette-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/79fedcc8d2c881dd8b07bf622683dace/Micropipette.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">Micropipette.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/b88c88453aa588ad97b365a6e8e46502/Micropipette.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">Micropipette.py</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="FallingStuff.html" class="btn btn-neutral float-left" title="Falling soft spheres in a 3D hourglass domain" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Protrusions.html" class="btn btn-neutral float-right" title="Random protrusions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Antoine Diez, Jean Feydy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

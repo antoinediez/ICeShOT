@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cells &mdash; iceshot  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Costs" href="costs.html" />
+    <link rel="prev" title="Growth of a 3D cell aggregate" href="../_auto_examples/TissueGrowth_3D.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            iceshot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_auto_examples/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cells</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#iceshot.cells.DataPoints"><code class="docutils literal notranslate"><span class="pre">DataPoints</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.DataPoints.__init__"><code class="docutils literal notranslate"><span class="pre">DataPoints.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.DataPoints.lazy_XY"><code class="docutils literal notranslate"><span class="pre">DataPoints.lazy_XY()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#iceshot.cells.Cells"><code class="docutils literal notranslate"><span class="pre">Cells</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.__init__"><code class="docutils literal notranslate"><span class="pre">Cells.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.orientation_from_axis"><code class="docutils literal notranslate"><span class="pre">Cells.orientation_from_axis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.covariance_matrix"><code class="docutils literal notranslate"><span class="pre">Cells.covariance_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.allocation_matrix"><code class="docutils literal notranslate"><span class="pre">Cells.allocation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.barycenters"><code class="docutils literal notranslate"><span class="pre">Cells.barycenters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.lazy_XY"><code class="docutils literal notranslate"><span class="pre">Cells.lazy_XY()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.sort_y"><code class="docutils literal notranslate"><span class="pre">Cells.sort_y()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="costs.html">Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OT.html">Optimal Transport</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">iceshot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Cells</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/cells.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cells">
+<h1>Cells<a class="headerlink" href="#cells" title="Link to this heading"></a></h1>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#iceshot.cells.DataPoints" title="iceshot.cells.DataPoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataPoints</span></code></a>(seeds, source[, bc, box_size])</p></td>
+<td><p>Main class for seeds/source data points.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#iceshot.cells.Cells" title="iceshot.cells.Cells"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cells</span></code></a>(seeds, source, vol_x[, extra_space, ...])</p></td>
+<td><p>Main class for particles with a volume.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class" id="module-iceshot.cells">
+<dt class="sig sig-object py" id="iceshot.cells.DataPoints">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">iceshot.cells.</span></span><span class="sig-name descname"><span class="pre">DataPoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seeds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.DataPoints" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Main class for seeds/source data points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device</strong> – default device for all the tensors (same as <code class="docutils literal notranslate"><span class="pre">seeds</span></code> device)</p></li>
+<li><p><strong>dtype</strong> – data type</p></li>
+<li><p><strong>d</strong> – dimenstion</p></li>
+<li><p><strong>x</strong> – seeds positions</p></li>
+<li><p><strong>y</strong> – source positions</p></li>
+<li><p><strong>bc</strong> – boundary conditions</p></li>
+<li><p><strong>L</strong> – box size as tensor</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.DataPoints.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seeds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.DataPoints.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seeds</strong> (<em>(</em><em>N</em><em>,</em><em>d</em><em>) </em><em>Tensor</em>) – seed points</p></li>
+<li><p><strong>source</strong> (<em>(</em><em>M</em><em>,</em><em>d</em><em>) </em><em>Tensor</em>) – source points</p></li>
+<li><p><strong>bc</strong> (<em>optional</em>) – boundary condition. Defaults to None.</p></li>
+<li><p><strong>box_size</strong> (<em>list</em><em>, </em><em>optional</em>) – Defaults to [1.0,1.0].</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.DataPoints.lazy_XY">
+<span class="sig-name descname"><span class="pre">lazy_XY</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.DataPoints.lazy_XY" title="Link to this definition"></a></dt>
+<dd><p>Return the XY matrix as a LazyTensor.</p>
+<p>The XY matrix is the matrix <span class="math notranslate nohighlight">\((y_j - x_i)_{ij}\)</span> where <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(x\)</span> are respectively the source and seed points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(N,M) LazyTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="iceshot.cells.Cells">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">iceshot.cells.</span></span><span class="sig-name descname"><span class="pre">Cells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seeds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#iceshot.cells.DataPoints" title="iceshot.cells.DataPoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataPoints</span></code></a></p>
+<p>Main class for particles with a volume.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N_cells</strong> – initial number of cells</p></li>
+<li><p><strong>N_crystals</strong> – current number of cells</p></li>
+<li><p><strong>M_grid</strong> – number of source points</p></li>
+<li><p><strong>vol_grid</strong> – volume of a source point (equal to 1/<code class="docutils literal notranslate"><span class="pre">M_grid</span></code>)</p></li>
+<li><p><strong>axis</strong> – (N,d) Tensor of axes</p></li>
+<li><p><strong>ar</strong> – (N,) Tensor of aspect ratios</p></li>
+<li><p><strong>orientation</strong> – (N,d,d) Tensor of orientations</p></li>
+<li><p><strong>f_x</strong> – (N,) Tensor of Kantorovich potentials</p></li>
+<li><p><strong>g_y</strong> – (M,) Tensor of Kantorovich potentials</p></li>
+<li><p><strong>labels</strong> – (M,) Tensor of labels</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.Cells.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seeds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seeds</strong> (<em>(</em><em>N</em><em>,</em><em>d</em><em>) </em><em>Tensor</em>) – seed points</p></li>
+<li><p><strong>source</strong> (<em>(</em><em>M</em><em>,</em><em>d</em><em>) </em><em>Tensor</em>) – source points</p></li>
+<li><p><strong>vol_x</strong> (<em>N Tensor</em>) – volumes of the particles</p></li>
+<li><p><strong>extra_space</strong> (<em>str</em><em>, </em><em>optional</em>) – TBI. Defaults to None.</p></li>
+<li><p><strong>fluid_size</strong> (<em>float</em>) – TBI. Defaults to None.</p></li>
+<li><p><strong>orientation</strong> (<em>(</em><em>N</em><em>,</em><em>d</em><em>,</em><em>d</em><em>) </em><em>Tensor</em><em>, </em><em>optional</em>) – Orientation matrices. Defaults to None (automatically computed from axis and aspect ratio).</p></li>
+<li><p><strong>axis</strong> (<em>(</em><em>N</em><em>,</em><em>d</em><em>) </em><em>Tensor</em><em>, </em><em>optional</em>) – Orientation axis. Defaults to None (random axis).</p></li>
+<li><p><strong>ar</strong> (<em>N tensor</em><em>, </em><em>optional</em>) – Aspect ratios. Defaults to 1.</p></li>
+<li><p><strong>bc</strong> (<em>optional</em>) – boundary condition. Defaults to None.</p></li>
+<li><p><strong>box_size</strong> (<em>list</em><em>, </em><em>optional</em>) – Defaults to [1.0,1.0].</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.Cells.orientation_from_axis">
+<span class="sig-name descname"><span class="pre">orientation_from_axis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.orientation_from_axis" title="Link to this definition"></a></dt>
+<dd><p>Compute the orientation matrices from the axes and aspect ratios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – Only in 2D and 3D</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Orientation matrices</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.Cells.covariance_matrix">
+<span class="sig-name descname"><span class="pre">covariance_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.covariance_matrix" title="Link to this definition"></a></dt>
+<dd><p>Compute the covariance matrices of a particle configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vols</strong> (<em>_type_</em><em>, </em><em>optional</em>) – Input volumes. Defaults to None (automatically computed).</p></li>
+<li><p><strong>bsr</strong> (<em>bool</em><em>, </em><em>optional</em>) – Use Block-Sparse-Reduction (faster). Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – Only in 2D and 3D</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Covariance matrix</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(N,d,d) Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.Cells.allocation_matrix">
+<span class="sig-name descname"><span class="pre">allocation_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lazy'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.allocation_matrix" title="Link to this definition"></a></dt>
+<dd><p>Compute the allocation matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) – Output type. Can be “lazy” for LazyTensor or “dense” for Tensor. Defaults to “lazy”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The <span class="math notranslate nohighlight">\((i,j)\)</span> component of the allocation matrix is 1 if the source point <span class="math notranslate nohighlight">\(j\)</span> belongs to the particle <span class="math notranslate nohighlight">\(i\)</span> and 0 otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(N,M) Tensor or LazyTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.Cells.barycenters">
+<span class="sig-name descname"><span class="pre">barycenters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.barycenters" title="Link to this definition"></a></dt>
+<dd><p>Compute the (weighted) barycenter of each particle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weight</strong> (<em>float</em><em> or </em><em>Tensor</em><em>, </em><em>optional</em>) – Defaults to 1.</p></li>
+<li><p><strong>bsr</strong> (<em>bool</em><em>, </em><em>optional</em>) – Use Block-Sparse-Reduction (faster). Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>barycenters</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(N,d) Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.Cells.lazy_XY">
+<span class="sig-name descname"><span class="pre">lazy_XY</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.lazy_XY" title="Link to this definition"></a></dt>
+<dd><p>Return the XY matrix as a LazyTensor.</p>
+<p>The XY matrix is the matrix <span class="math notranslate nohighlight">\((y_j - x_i)_{ij}\)</span> where <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(x\)</span> are respectively the source and seed points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(N,M) LazyTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.Cells.sort_y">
+<span class="sig-name descname"><span class="pre">sort_y</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.sort_y" title="Link to this definition"></a></dt>
+<dd><p>Sort the source points according to their labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Positions before sorting and <code class="docutils literal notranslate"><span class="pre">ranges_ij</span></code> argument to be passed to the Block-Sparse-Reduction method.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(Tensor, tuple)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../_auto_examples/TissueGrowth_3D.html" class="btn btn-neutral float-left" title="Growth of a 3D cell aggregate" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="costs.html" class="btn btn-neutral float-right" title="Costs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Antoine Diez, Jean Feydy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
