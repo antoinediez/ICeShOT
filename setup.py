@@ -53,6 +53,8 @@ setup(
         "matplotlib",
         "torch",
         "pykeops",
+        "tqdm",
+        "opencv-python"
     ],
     extras_require={
         "full": [
