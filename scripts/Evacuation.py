@@ -1,3 +1,30 @@
+"""
+Crowd evacuation
+============================================
+
+With :math:`p=0.5`
+
+.. video:: ../_static/SMV14_Evacuation_p05.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+With :math:`p=8`
+
+.. video:: ../_static/SMV15_Evacuation_p8.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/evacuation_1.png'
+
 import os 
 import sys
 sys.path.append("..")

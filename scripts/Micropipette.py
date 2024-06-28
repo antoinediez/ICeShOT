@@ -1,3 +1,21 @@
+"""
+Micropipette experiment
+============================================
+
+
+.. video:: ../_static/SMV10_Micropipette.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/Micropipette_eq.png'
+
+
 import os 
 import sys
 sys.path.append("..")

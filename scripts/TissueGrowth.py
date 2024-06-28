@@ -1,3 +1,19 @@
+"""
+Growth of a 2D cell aggregate
+============================================
+
+.. video:: ../_static/SMV3_TissueGrowth.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/TissueGrowth_t442.png'
+
 import os 
 import sys
 sys.path.append("..")

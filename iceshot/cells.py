@@ -6,8 +6,26 @@ from . import sample
 from . import utils
 
 class DataPoints:
+    r"""Main class for seeds/source data points.
+    
+    :ivar device: default device for all the tensors (same as ``seeds`` device)
+    :ivar dtype: data type
+    :ivar d: dimenstion
+    :ivar x: seeds positions
+    :ivar y: source positions
+    :ivar bc: boundary conditions
+    :ivar L: box size as tensor
+    """
     
     def __init__(self,seeds,source,bc=None,box_size=[1.0,1.0]):
+        r"""Initialize
+
+        Args:
+            seeds ((N,d) Tensor): seed points
+            source ((M,d) Tensor): source points
+            bc (optional): boundary condition. Defaults to None.
+            box_size (list, optional): Defaults to [1.0,1.0].
+        """
         self.device = seeds.device
         self.dtype = seeds.dtype
         self.d = seeds.shape[1]
@@ -17,11 +35,31 @@ class DataPoints:
         self.L = torch.tensor(box_size,device=self.device,dtype=self.dtype)
         
     def lazy_XY(self):
+        r"""Return the XY matrix as a LazyTensor.
+        
+        The XY matrix is the matrix :math:`(y_j - x_i)_{ij}` where :math:`y` and :math:`x` are respectively the source and seed points.
+
+        Returns:
+            (N,M) LazyTensor
+        """
         x_i = LazyTensor(self.x[:,None,:])  # (N, 1, D)
         y_j = LazyTensor(self.y[None,:,:])  # (1, M, D)
         return utils.apply_bc(y_j-x_i,bc=self.bc,L=self.L)
 
 class Cells(DataPoints):
+    """Main class for particles with a volume.
+    
+    :ivar N_cells: initial number of cells 
+    :ivar N_crystals: current number of cells
+    :ivar M_grid: number of source points
+    :ivar vol_grid: volume of a source point (equal to 1/``M_grid``)
+    :ivar axis: (N,d) Tensor of axes
+    :ivar ar: (N,) Tensor of aspect ratios
+    :ivar orientation: (N,d,d) Tensor of orientations
+    :ivar f_x: (N,) Tensor of Kantorovich potentials
+    :ivar g_y: (M,) Tensor of Kantorovich potentials
+    :ivar labels: (M,) Tensor of labels
+    """
 
     def __init__(self,
                  seeds,source,
@@ -32,6 +70,20 @@ class Cells(DataPoints):
                  axis=None,ar=None,
                  bc=None,
                  box_size=[1.0,1.0]):
+        """Initialize
+
+        Args:
+            seeds ((N,d) Tensor): seed points
+            source ((M,d) Tensor): source points
+            vol_x (N Tensor): volumes of the particles
+            extra_space (str, optional): TBI. Defaults to None.
+            fluid_size (float): TBI. Defaults to None.
+            orientation ((N,d,d) Tensor, optional): Orientation matrices. Defaults to None (automatically computed from axis and aspect ratio).
+            axis ((N,d) Tensor, optional): Orientation axis. Defaults to None (random axis).
+            ar (N tensor, optional): Aspect ratios. Defaults to 1.
+            bc (optional): boundary condition. Defaults to None.
+            box_size (list, optional): Defaults to [1.0,1.0].
+        """
                 
         DataPoints.__init__(self,seeds,source,bc=bc,box_size=box_size)
         self.N_cells = seeds.shape[0]
@@ -88,6 +140,14 @@ class Cells(DataPoints):
         return self.x.shape[0]
     
     def orientation_from_axis(self):
+        """Compute the orientation matrices from the axes and aspect ratios.
+
+        Raises:
+            NotImplementedError: Only in 2D and 3D
+
+        Returns:
+            Tensor: Orientation matrices
+        """
         if self.d==2:
             th = torch.atan2(self.axis[:,1],self.axis[:,0])
             c = torch.cos(th)
@@ -120,6 +180,18 @@ class Cells(DataPoints):
         return A
     
     def covariance_matrix(self,vols=None,bsr=False,**kwargs):
+        """Compute the covariance matrices of a particle configuration.
+        
+        Args:
+            vols (_type_, optional): Input volumes. Defaults to None (automatically computed).
+            bsr (bool, optional): Use Block-Sparse-Reduction (faster). Defaults to False.
+
+        Raises:
+            NotImplementedError: Only in 2D and 3D
+            
+        Returns:
+            (N,d,d) Tensor: Covariance matrix
+        """
 
         center = self.barycenters(weight=1.0,bsr=bsr)
         
@@ -151,6 +223,14 @@ class Cells(DataPoints):
         return cov
     
     def allocation_matrix(self,type="lazy"):
+        """Compute the allocation matrix
+
+        Args:
+            type (str, optional): Output type. Can be "lazy" for LazyTensor or "dense" for Tensor. Defaults to "lazy".
+
+        Returns:
+            (N,M) Tensor or LazyTensor: The :math:`(i,j)` component of the allocation matrix is 1 if the source point :math:`j` belongs to the particle :math:`i` and 0 otherwise.
+        """
         x = torch.arange(self.N_crystals,device=self.x.device,dtype=self.x.dtype)
         if type=="lazy":
             lazy_x = LazyTensor(x[:,None,None])
@@ -170,6 +250,15 @@ class Cells(DataPoints):
         return ((r**2) - (XY **2).sum(-1)).step()
     
     def barycenters(self,weight=None,bsr=False):
+        """Compute the (weighted) barycenter of each particle.
+
+        Args:
+            weight (float or Tensor, optional): Defaults to 1.
+            bsr (bool, optional): Use Block-Sparse-Reduction (faster). Defaults to False.
+
+        Returns:
+            (N,d) Tensor: barycenters
+        """
         if weight is None:
             weight = 1.0
         if isinstance(weight,torch.Tensor):
@@ -225,6 +314,11 @@ class Cells(DataPoints):
         return uq_output[0], ind_x[uq_output[-1],:]    
     
     def sort_y(self):
+        """Sort the source points according to their labels. 
+
+        Returns:
+            (Tensor, tuple): Positions before sorting and ``ranges_ij`` argument to be passed to the Block-Sparse-Reduction method.
+        """
         sorted_labels, sorting_indices = torch.sort(self.labels)
         y = self.y.detach().clone()
         y_sorted = y[sorting_indices]

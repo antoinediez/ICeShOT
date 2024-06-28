@@ -1,3 +1,41 @@
+"""
+Active Brownian Particles
+============================================
+
+With :math:`p=0.5`
+
+.. video:: ../_static/SMV11_ActiveBrownian_p05.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+With :math:`p=2`
+
+.. video:: ../_static/SMV12_ActiveBrownian_p2.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+With :math:`p=8`
+
+.. video:: ../_static/SMV13_ActiveBrownian_p8.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/ActiveBrownian_p8.png'
+
 import os 
 import sys
 sys.path.append("..")

@@ -1,3 +1,20 @@
+"""
+Growth of a 3D cell aggregate
+============================================
+
+.. video:: ../_static/TissueGrowth_3D.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/tissue_growth_3D.png'
+
+
 import os 
 import sys
 sys.path.append("..")

@@ -1,3 +1,74 @@
+"""
+Falling soft spheres in 2D
+============================================
+
+
+With :math:`p=0.75`
+
+.. video:: ../_static/SMV4_FallingSpheres_p075.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+With :math:`p=2`
+
+.. video:: ../_static/SMV5_FallingSpheres_p2.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+With :math:`p=10`
+
+.. video:: ../_static/SMV6_FallingSpheres_p10.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+
+With :math:`\\tau_o=8` and :math:`\\tau_b=3`
+
+.. video:: ../_static/SMV7_FallingSpheres_tau8.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+With :math:`\\tau_o=3` and :math:`\\tau_b=3`
+
+.. video:: ../_static/SMV8_FallingSpheres_tau3.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+With :math:`\\tau_o=1` and :math:`\\tau_b=3`
+
+.. video:: ../_static/SMV9_FallingSpheres_tau1.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/FallingSpheres_softheavy.png'
+
 import os 
 import sys
 sys.path.append("..")

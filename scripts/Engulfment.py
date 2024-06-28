@@ -1,3 +1,20 @@
+"""
+Engulfment due to surface tension effects
+============================================
+
+.. video:: ../_static/SMV23_Engulfment.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/Engulfment_t500.png'
+
+
 import os 
 import sys
 sys.path.append("..")

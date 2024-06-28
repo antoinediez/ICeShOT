@@ -1,3 +1,28 @@
+"""
+Chemotaxis induced by deformations
+============================================
+
+.. video:: ../_static/SMV17_ChemoDeformation_long.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+.. video:: ../_static/SMV18_ChemoDeformation_fan.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/ChemoDeformation_long.png'
+
 import os 
 import sys
 sys.path.append("..")

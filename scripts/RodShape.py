@@ -1,3 +1,20 @@
+"""
+Emergence of alignment in a system of active rod-shaped particles
+===================================================================
+
+.. video:: ../_static/SMV16_RodShape.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/RodShape_t3000.png'
+
+
 import os 
 import sys
 sys.path.append("..")

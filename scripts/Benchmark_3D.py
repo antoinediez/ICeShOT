@@ -1,3 +1,17 @@
+"""
+Benchmark: 3D Run-and-Tumble with deformations.
+=================================================
+
+.. video:: ../_static/Benchmark_3D.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+""" 
+# sphinx_gallery_thumbnail_path = '_static/final_1000_512.png'
+
 import os 
 import sys
 sys.path.append("..")

@@ -1,3 +1,42 @@
+"""
+Sorting due to surface tension effects
+============================================
+
+Internalization
+
+.. video:: ../_static/SMV20_SurfaceTension_internalization.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+Checkerboard
+
+.. video:: ../_static/SMV21_SurfaceTension_checkerboard.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+Separation
+
+.. video:: ../_static/SMV22_SurfaceTension_separation.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/iceshot_surfacetension_sortingengulfment.png'
+
+
 import os 
 import sys
 sys.path.append("..")
