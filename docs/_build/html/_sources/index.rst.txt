@@ -16,6 +16,10 @@ Incompressible Cell Shapes via Optimal Transport
 
 Many biological systems such as cell aggregates, tissues or bacterial colonies behave as unconventional systems of particles that are strongly constrained by volume exclusion and shape interactions. Understanding how these constraints lead to macroscopic self-organized structures is a fundamental question in e.g. developmental biology. To this end, various types of computational models have been developed: phase fields, cellular automata, vertex models, level-set, finite element simulations, etc. We introduce a new framework based on optimal transport theory to model particle systems with arbitrary dynamical shapes and deformability. Our method builds upon the pioneering work of Brenier on incompressible fluids and its recent applications to materials science. It lets us specify the shapes of individual cells and supports a wide range of interaction mechanisms, while automatically taking care of the volume exclusion constraint at an affordable numerical cost.
 
+.. rst-class:: center
+
+   **Please check the** `gallery of examples <_auto_examples/index.html>`_ **!**
+
 The project is hosted on `GitHub <https://github.com/antoinediez/ICeShOT>`_, under the permissive `MIT license <https://en.wikipedia.org/wiki/MIT_License>`_.
 
 Citation
