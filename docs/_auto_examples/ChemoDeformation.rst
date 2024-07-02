@@ -21,6 +21,17 @@
 Chemotaxis induced by deformations
 ============================================
 
+We consider a chemo-attractant density :math:`u(x)` and we assume that a particle located at :math:`x` can sense the local gradient along the directions :math:`{x}-{x}_i` (defined through a finite difference formula). 
+The only force is the incompresisbility force. We introduce the biased cost potential :math:`arphi = -\log c`
+
+.. math::
+
+    \varphi({x},{x}_i) = \varphi_0({x},{x}_i) + \beta f\left(\frac{u({x} - u({x}_i)}{x - x_i}\right),
+    
+with the base potential :math:`\varphi_0(x,y) = -2\log |x - y|`, a constant :math:`\beta>0` and a function :math:`f` which models how the gradient affects the deformation.
+
+With :math:`f(\delta)= \max(0,\delta)`, particles move with an elongated shape. 
+
 .. video:: ../_static/SMV17_ChemoDeformation_long.mp4
     :autoplay:
     :loop:
@@ -28,6 +39,9 @@ Chemotaxis induced by deformations
     :width: 400
     
 |
+
+With :math:`f(\delta)=  \max(0,-\delta)^2 + \max(0,\delta)`, particles move with a fan-like shape. 
+
 
 .. video:: ../_static/SMV18_ChemoDeformation_fan.mp4
     :autoplay:
@@ -37,7 +51,11 @@ Chemotaxis induced by deformations
     
 |
 
-.. GENERATED FROM PYTHON SOURCE LINES 23-190
+**Related reference**
+
+L. Yang, J. C. Effler, B. L. Kutscher, S. E. Sullivan, D. N. Robinson, and P. A. Iglesias. “Modeling Cellular Deformations Using the Level Set Formalism”. BMC Syst. Biol. 2.1 (2008)
+
+.. GENERATED FROM PYTHON SOURCE LINES 40-207
 
 .. code-block:: Python
 

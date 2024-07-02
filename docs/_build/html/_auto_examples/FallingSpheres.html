@@ -7,7 +7,7 @@
   <title>Falling soft spheres in 2D &mdash; iceshot  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -110,18 +110,25 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="falling-soft-spheres-in-2d">
 <span id="sphx-glr-auto-examples-fallingspheres-py"></span><h1>Falling soft spheres in 2D<a class="headerlink" href="#falling-soft-spheres-in-2d" title="Link to this heading"></a></h1>
-<p>With <span class="math notranslate nohighlight">\(p=0.75\)</span></p>
+<p>We consider falling soft spheres, associated to the power cost</p>
+<div class="math notranslate nohighlight">
+\[c(x,y) = |y-x|^p\]</div>
+<p>where the parameter <span class="math notranslate nohighlight">\(p\)</span> tunes the deformability.</p>
+<p>With <span class="math notranslate nohighlight">\(p=0.75\)</span>, particles can deform easily and end up having elongated columnar shapes.</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV4_FallingSpheres_p075.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>With <span class="math notranslate nohighlight">\(p=2\)</span></p>
+<p>With <span class="math notranslate nohighlight">\(p=2\)</span>, particles are less deformable and end up in a typical Voronoi-like configuration.</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV5_FallingSpheres_p2.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>With <span class="math notranslate nohighlight">\(p=10\)</span></p>
+<p>With <span class="math notranslate nohighlight">\(p=10\)</span>, particles behave as hard-spheres.</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV6_FallingSpheres_p10.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p>Next, we consider two types of spheres: blues particles associated to <span class="math notranslate nohighlight">\(p=2\)</span> and orange particles associated to <span class="math notranslate nohighlight">\(p=1\)</span>.
+We vary the strength <span class="math notranslate nohighlight">\(\tau_o\)</span> of the incompressibility force for the orange spheres, keeping the ones for the blue spheres <span class="math notranslate nohighlight">\(\tau_b\)</span> constant.
+This strength may be interpreted as an inertia parameter (typically the inverse of a mass). We observe a sorting phenomenon which tends to push the lighter particles on top.</p>
 <p>With <span class="math notranslate nohighlight">\(\tau_o=8\)</span> and <span class="math notranslate nohighlight">\(\tau_b=3\)</span></p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV7_FallingSpheres_tau8.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>

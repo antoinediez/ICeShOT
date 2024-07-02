@@ -21,6 +21,18 @@
 Micropipette experiment
 ============================================
 
+Viscoelastic properties of individual biological cells are often quantified using micropipette aspiration techniques: a single cell is first placed at the tip of a thin micropipette tube and a controlled pressure difference then creates an aspiration force which sucks the cell inside the micropipette. 
+The biomechanical properties are quantitatively evaluated by measuring the portion of the cell that effectively travels through the tube. 
+This aspiration length ranges from zero for solid-like cell to the full tube for liquid-like cells. 
+This experiment can be mimicked in silico by considering a micropipette-shaped domain and, for a given set of fixed parameters (cell size, micropipette width, force magnitude τi), increasing the value of the deformability parameter :math:`\alpha` in the power cost
+
+.. math::
+
+    c(x,y) = |y-x|^\alpha
+
+
+Increasing :math:`\alpha` lets us interpolate between liquid and solid particles.
+
 
 .. video:: ../_static/SMV10_Micropipette.mp4
     :autoplay:
@@ -30,7 +42,7 @@ Micropipette experiment
     
 |
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-203
+.. GENERATED FROM PYTHON SOURCE LINES 27-215
 
 .. code-block:: Python
 

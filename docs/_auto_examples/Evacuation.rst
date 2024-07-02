@@ -21,7 +21,17 @@
 Crowd evacuation
 ============================================
 
-With :math:`p=0.5`
+In this experiment, particles represent pedestrians in a crowd who all wish to escape a room via a single exit point located at the center of the right edge of the room.
+
+Particles are subject to a self-propulsion force, with or without noise, and the incompressibility force associated to the power cost
+
+.. math::
+
+    c(x,y) = |y-x|^p
+    
+where the parameter :math:`p` tunes the deformability. 
+
+With :math:`p=0.5` particles are highly deformable and manage to escape the room.
 
 .. video:: ../_static/SMV14_Evacuation_p05.mp4
     :autoplay:
@@ -31,7 +41,7 @@ With :math:`p=0.5`
     
 |
 
-With :math:`p=8`
+With :math:`p=8` particles behave as hard-spheres and end up in a congested state, forming a stable arch around the exit door.
 
 .. video:: ../_static/SMV15_Evacuation_p8.mp4
     :autoplay:
@@ -41,7 +51,11 @@ With :math:`p=8`
     
 |
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-206
+**Related reference**
+
+B. Maury, A. Roudneff-Chupin, F. Santambrogio, and J. Venel. “Handling Congestion in Crowd Motion Modeling”. Networks & Heterogeneous Media 6.3 (2011)
+
+.. GENERATED FROM PYTHON SOURCE LINES 39-220
 
 .. code-block:: Python
 

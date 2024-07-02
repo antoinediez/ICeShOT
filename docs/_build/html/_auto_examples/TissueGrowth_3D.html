@@ -7,7 +7,7 @@
   <title>Growth of a 3D cell aggregate &mdash; iceshot  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -109,6 +109,10 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="growth-of-a-3d-cell-aggregate">
 <span id="sphx-glr-auto-examples-tissuegrowth-3d-py"></span><h1>Growth of a 3D cell aggregate<a class="headerlink" href="#growth-of-a-3d-cell-aggregate" title="Link to this heading"></a></h1>
+<p>We consider a 3D cell aggregate growing according to a basic somatic cell cycle.
+Starting from one cell, each cell grows at a linear speed until a target volume is reached, then it
+divides after a random exponential time producing two daughter cells with identical half volumes.</p>
+<p>We keep a constant resolution throughout the simulation by progressibely zooming out as the aggregate grows.</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/TissueGrowth_3D.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>

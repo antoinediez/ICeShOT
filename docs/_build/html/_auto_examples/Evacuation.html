@@ -7,7 +7,7 @@
   <title>Crowd evacuation &mdash; iceshot  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -110,14 +110,23 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="crowd-evacuation">
 <span id="sphx-glr-auto-examples-evacuation-py"></span><h1>Crowd evacuation<a class="headerlink" href="#crowd-evacuation" title="Link to this heading"></a></h1>
-<p>With <span class="math notranslate nohighlight">\(p=0.5\)</span></p>
+<p>In this experiment, particles represent pedestrians in a crowd who all wish to escape a room via a single exit point located at the center of the right edge of the room.</p>
+<p>Particles are subject to a self-propulsion force, with or without noise, and the incompressibility force associated to the power cost</p>
+<div class="math notranslate nohighlight">
+\[c(x,y) = |y-x|^p\]</div>
+<p>where the parameter <span class="math notranslate nohighlight">\(p\)</span> tunes the deformability.</p>
+<p>With <span class="math notranslate nohighlight">\(p=0.5\)</span> particles are highly deformable and manage to escape the room.</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV14_Evacuation_p05.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>With <span class="math notranslate nohighlight">\(p=8\)</span></p>
+<p>With <span class="math notranslate nohighlight">\(p=8\)</span> particles behave as hard-spheres and end up in a congested state, forming a stable arch around the exit door.</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV15_Evacuation_p8.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p><strong>Related reference</strong></p>
+<ol class="upperalpha simple" start="2">
+<li><p>Maury, A. Roudneff-Chupin, F. Santambrogio, and J. Venel. “Handling Congestion in Crowd Motion Modeling”. Networks &amp; Heterogeneous Media 6.3 (2011)</p></li>
+</ol>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_path = &#39;_static/evacuation_1.png&#39;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>

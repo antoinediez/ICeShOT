@@ -21,6 +21,11 @@
 Benchmark: 3D Run-and-Tumble with deformations.
 =================================================
 
+As a benchmark, we consider a 3D system of self-propelled deformable ellipsoids in a strongly packed domain. Each particle moves in the direction of its principal axis which evolves according to a re-orientation process subject to the deformations caused by the surrounding particles. 
+We consider :math:`N` particles in a 3D bounded box, discretized on a grid of size :math:`M^3`.
+
+Example with :math:`M=512` and :math:`N=1000` 
+
 .. video:: ../_static/Benchmark_3D.mp4
     :autoplay:
     :loop:
@@ -29,7 +34,21 @@ Benchmark: 3D Run-and-Tumble with deformations.
     
 |
 
-.. GENERATED FROM PYTHON SOURCE LINES 13-226
+Using a Nvidia RTX A6000 GPU card, we obtain the following benchmarks (we have excluded the cases where the total number of grid cells to fill the volume of the smallest particle is below 100)
+
++---------+------+---------+---------+--------+
+|         | M=64 | M=128   | M=256   | M=512  |
++=========+======+=========+=========+========+
+| N=10    | 30 s | 1.3 min | 7.4 min | 62 min |
++---------+------+---------+---------+--------+
+| N=100   | 45 s | 1 min   | 4.7 min | 36 min |
++---------+------+---------+---------+--------+
+| N=1000  | NR   | 4 min   | 25 min  | 3 h    |
++---------+------+---------+---------+--------+
+| N=10000 | NR   | NR      | 4.9 h   | 35 h   |
++---------+------+---------+---------+--------+
+
+.. GENERATED FROM PYTHON SOURCE LINES 34-247
 
 .. code-block:: Python
 

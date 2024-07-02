@@ -3,7 +3,7 @@
 Examples
 *************
 
-Some examples for various models. 
+Some examples for various models. The modeling details can be found in the article. 
 
 
 .. raw:: html
@@ -14,7 +14,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="With p=0.5">
+    <div class="sphx-glr-thumbcontainer" tooltip="We consider the motion of N active deformable spheres in a periodic box with different deformab...">
 
 .. only:: html
 
@@ -31,7 +31,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Benchmark: 3D Run-and-Tumble with deformations.">
+    <div class="sphx-glr-thumbcontainer" tooltip="As a benchmark, we consider a 3D system of self-propelled deformable ellipsoids in a strongly p...">
 
 .. only:: html
 
@@ -48,7 +48,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Chemotaxis induced by deformations">
+    <div class="sphx-glr-thumbcontainer" tooltip="We consider a chemo-attractant density u(x) and we assume that a particle located at x can sens...">
 
 .. only:: html
 
@@ -65,7 +65,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Engulfment due to surface tension effects">
+    <div class="sphx-glr-thumbcontainer" tooltip="We consider a two-population system with surface interactions. The main force models surface te...">
 
 .. only:: html
 
@@ -82,7 +82,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="With p=0.5">
+    <div class="sphx-glr-thumbcontainer" tooltip="In this experiment, particles represent pedestrians in a crowd who all wish to escape a room vi...">
 
 .. only:: html
 
@@ -99,7 +99,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip=" With p=0.75">
+    <div class="sphx-glr-thumbcontainer" tooltip="We consider falling soft spheres, associated to the power cost ">
 
 .. only:: html
 
@@ -116,7 +116,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="|">
+    <div class="sphx-glr-thumbcontainer" tooltip="Our framework can handle arbitrary domains by considering appropriately distributed source poin...">
 
 .. only:: html
 
@@ -133,7 +133,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip=" .. video:: ../_static/SMV10_Micropipette.mp4     :autoplay:     :loop:     :muted:     :width:...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Viscoelastic properties of individual biological cells are often quantified using micropipette ...">
 
 .. only:: html
 
@@ -167,7 +167,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Emergence of alignment in a system of active rod-shaped particles">
+    <div class="sphx-glr-thumbcontainer" tooltip="We consider a system of rod-shaped particles defined by their positions x_i and active directio...">
 
 .. only:: html
 
@@ -218,7 +218,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Internalization">
+    <div class="sphx-glr-thumbcontainer" tooltip="We consider a two-population system with surface interactions. The main force models surface te...">
 
 .. only:: html
 
@@ -235,7 +235,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Growth of a 2D cell aggregate">
+    <div class="sphx-glr-thumbcontainer" tooltip="We consider a 2D cell aggregate growing according to a basic somatic cell cycle. Starting from ...">
 
 .. only:: html
 
@@ -252,7 +252,7 @@ Some examples for various models.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Growth of a 3D cell aggregate">
+    <div class="sphx-glr-thumbcontainer" tooltip="We consider a 3D cell aggregate growing according to a basic somatic cell cycle. Starting from ...">
 
 .. only:: html
 

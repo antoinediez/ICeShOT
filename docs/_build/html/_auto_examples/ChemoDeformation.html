@@ -7,7 +7,7 @@
   <title>Chemotaxis induced by deformations &mdash; iceshot  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -23,6 +23,7 @@
         <script src="../_static/documentation_options.js?v=5929fcd5"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -109,12 +110,24 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="chemotaxis-induced-by-deformations">
 <span id="sphx-glr-auto-examples-chemodeformation-py"></span><h1>Chemotaxis induced by deformations<a class="headerlink" href="#chemotaxis-induced-by-deformations" title="Link to this heading"></a></h1>
+<p>We consider a chemo-attractant density <span class="math notranslate nohighlight">\(u(x)\)</span> and we assume that a particle located at <span class="math notranslate nohighlight">\(x\)</span> can sense the local gradient along the directions <span class="math notranslate nohighlight">\({x}-{x}_i\)</span> (defined through a finite difference formula).
+The only force is the incompresisbility force. We introduce the biased cost potential :math:`
+arphi = -log c`</p>
+<div class="math notranslate nohighlight">
+\[\varphi({x},{x}_i) = \varphi_0({x},{x}_i) + \beta f\left(\frac{u({x} - u({x}_i)}{x - x_i}\right),\]</div>
+<p>with the base potential <span class="math notranslate nohighlight">\(\varphi_0(x,y) = -2\log |x - y|\)</span>, a constant <span class="math notranslate nohighlight">\(\beta&gt;0\)</span> and a function <span class="math notranslate nohighlight">\(f\)</span> which models how the gradient affects the deformation.</p>
+<p>With <span class="math notranslate nohighlight">\(f(\delta)= \max(0,\delta)\)</span>, particles move with an elongated shape.</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV17_ChemoDeformation_long.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p>With <span class="math notranslate nohighlight">\(f(\delta)=  \max(0,-\delta)^2 + \max(0,\delta)\)</span>, particles move with a fan-like shape.</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV18_ChemoDeformation_fan.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p><strong>Related reference</strong></p>
+<ol class="upperalpha simple" start="12">
+<li><p>Yang, J. C. Effler, B. L. Kutscher, S. E. Sullivan, D. N. Robinson, and P. A. Iglesias. “Modeling Cellular Deformations Using the Level Set Formalism”. BMC Syst. Biol. 2.1 (2008)</p></li>
+</ol>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_path = &#39;_static/ChemoDeformation_long.png&#39;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>

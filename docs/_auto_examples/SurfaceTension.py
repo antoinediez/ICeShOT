@@ -2,7 +2,11 @@
 Sorting due to surface tension effects
 ============================================
 
-Internalization
+We consider a two-population system with surface interactions. The main force models surface tension-like effects by computing a pressure-like force acting on the centroid of each cell and computed as the sum of elementary forces orthognal to its boundary.
+The different relative magnitudes of the forces produced at the interfaces between different populations or between cells and the medium classicaly leads to various sorting effects. 
+
+
+**Internalization**
 
 .. video:: ../_static/SMV20_SurfaceTension_internalization.mp4
     :autoplay:
@@ -12,7 +16,7 @@ Internalization
     
 |
 
-Checkerboard
+**Checkerboard**
 
 .. video:: ../_static/SMV21_SurfaceTension_checkerboard.mp4
     :autoplay:
@@ -22,7 +26,7 @@ Checkerboard
     
 |
 
-Separation
+**Separation**
 
 .. video:: ../_static/SMV22_SurfaceTension_separation.mp4
     :autoplay:
@@ -32,6 +36,16 @@ Separation
     
 |
 
+**Related references**
+
+G. W. Brodland. “The Differential Interfacial Tension Hypothesis (DITH): A Comprehensive Theory for the Self-Rearrangement of Embryonic Cells and Tissues”. Journal of Biomechanical Engineering 124.2 (2002)
+
+
+R. Z. Mohammad, H. Murakawa, K. Svadlenka, and H. Togashi. “A Numerical Algorithm for Modeling Cellular Rearrangements in Tissue Mor- phogenesis”. Commun. Biol. 5.1 (2022)
+
+F. Graner and J. A. Glazier. “Simulation of Biological Cell Sorting Using a Two-Dimensional Extended Potts Model”. Phys. Rev. Lett. 69.13 (1992)
+
+D. Sulsky, S. Childress, and J. Percus. “A Model of Cell Sorting”. J. Theoret. Biol. 106.3 (1984)
 """ 
 
 # sphinx_gallery_thumbnail_path = '_static/iceshot_surfacetension_sortingengulfment.png'

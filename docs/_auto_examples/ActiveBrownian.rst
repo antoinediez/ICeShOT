@@ -21,7 +21,27 @@
 Active Brownian Particles
 ============================================
 
-With :math:`p=0.5`
+We consider the motion of :math:`N` **active deformable spheres** in a periodic box with different deformability properties.
+The particle are defined by their positions :math:`x_i` and Brownian active directions of motion :math:`n_i`, which follow the following set of stochastic differential equations:
+
+.. math::
+
+    \mathrm{d}{x}_i = c_0 {n}_i\mathrm{d} t - \tau\nabla_{{x}_i}\mathcal{T}_c(\hat{\mu})\mathrm{d} t
+
+.. math::
+
+    \mathrm{d}{n}_i = (\mathrm{Id} - {n}_i{n}_i^\mathrm{T})\circ \sqrt{2\sigma}\mathrm{d} B^i_t,
+
+The incompressibility force :math:`\nabla_{{x}_i}\mathcal{T}_c(\hat{\mu})` is associated to the optimal transport cost
+
+.. math:: 
+
+    c(x,y) = |y-x|^p
+    
+where the coefficient :math:`p` sets the deformability of the particles. Increasing :math:`p` leads to a transition from a liquid-like state to a crystal-like state.
+
+
+With :math:`p=0.5`, particles are easy to deform.
 
 .. video:: ../_static/SMV11_ActiveBrownian_p05.mp4
     :autoplay:
@@ -31,7 +51,7 @@ With :math:`p=0.5`
     
 |
 
-With :math:`p=2`
+With :math:`p=2`, 
 
 .. video:: ../_static/SMV12_ActiveBrownian_p2.mp4
     :autoplay:
@@ -41,7 +61,7 @@ With :math:`p=2`
     
 |
 
-With :math:`p=8`
+With :math:`p=8`, particles behave as hard-spheres. 
 
 .. video:: ../_static/SMV13_ActiveBrownian_p8.mp4
     :autoplay:
@@ -51,7 +71,13 @@ With :math:`p=8`
     
 |
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-195
+**Related references:**
+
+N. Saito and S. Ishihara. “Active Deformable Cells Undergo Cell Shape Transition Associated with Percolation of Topological Defects”, Science Advances 10.19 (2024)
+
+D. Bi, X. Yang, M. C. Marchetti, and M. L. Manning. “Motility-Driven Glass and Jamming Transitions in Biological Tissues”. Physical Review X 6.2 (2016)
+
+.. GENERATED FROM PYTHON SOURCE LINES 61-220
 
 .. code-block:: Python
 

@@ -2,8 +2,15 @@
 Falling soft spheres in 2D
 ============================================
 
+We consider falling soft spheres, associated to the power cost 
 
-With :math:`p=0.75`
+.. math:: 
+
+    c(x,y) = |y-x|^p
+    
+where the parameter :math:`p` tunes the deformability. 
+
+With :math:`p=0.75`, particles can deform easily and end up having elongated columnar shapes. 
 
 .. video:: ../_static/SMV4_FallingSpheres_p075.mp4
     :autoplay:
@@ -13,7 +20,7 @@ With :math:`p=0.75`
     
 |
 
-With :math:`p=2`
+With :math:`p=2`, particles are less deformable and end up in a typical Voronoi-like configuration. 
 
 .. video:: ../_static/SMV5_FallingSpheres_p2.mp4
     :autoplay:
@@ -23,7 +30,7 @@ With :math:`p=2`
     
 |
 
-With :math:`p=10`
+With :math:`p=10`, particles behave as hard-spheres.
 
 .. video:: ../_static/SMV6_FallingSpheres_p10.mp4
     :autoplay:
@@ -33,6 +40,9 @@ With :math:`p=10`
     
 |
 
+Next, we consider two types of spheres: blues particles associated to :math:`p=2` and orange particles associated to :math:`p=1`.
+We vary the strength :math:`\\tau_o` of the incompressibility force for the orange spheres, keeping the ones for the blue spheres :math:`\\tau_b` constant.
+This strength may be interpreted as an inertia parameter (typically the inverse of a mass). We observe a sorting phenomenon which tends to push the lighter particles on top.
 
 With :math:`\\tau_o=8` and :math:`\\tau_b=3`
 

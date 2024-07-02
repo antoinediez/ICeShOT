@@ -21,6 +21,8 @@
 Falling soft spheres in a 3D hourglass domain
 ===============================================
 
+Our framework can handle arbitrary domains by considering appropriately distributed source points. 
+
 .. figure:: ../_static/fallingstuff.gif
     :scale: 100% 
     :alt: Falling Soft Spheres
@@ -28,7 +30,7 @@ Falling soft spheres in a 3D hourglass domain
 
 |
 
-.. GENERATED FROM PYTHON SOURCE LINES 13-290
+.. GENERATED FROM PYTHON SOURCE LINES 15-292
 
 .. code-block:: Python
 

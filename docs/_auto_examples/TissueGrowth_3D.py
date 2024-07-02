@@ -2,6 +2,12 @@
 Growth of a 3D cell aggregate
 ============================================
 
+We consider a 3D cell aggregate growing according to a basic somatic cell cycle.
+Starting from one cell, each cell grows at a linear speed until a target volume is reached, then it 
+divides after a random exponential time producing two daughter cells with identical half volumes.
+
+We keep a constant resolution throughout the simulation by progressibely zooming out as the aggregate grows. 
+
 .. video:: ../_static/TissueGrowth_3D.mp4
     :autoplay:
     :loop:

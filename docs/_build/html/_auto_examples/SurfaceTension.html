@@ -7,7 +7,7 @@
   <title>Sorting due to surface tension effects &mdash; iceshot  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -109,18 +109,39 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="sorting-due-to-surface-tension-effects">
 <span id="sphx-glr-auto-examples-surfacetension-py"></span><h1>Sorting due to surface tension effects<a class="headerlink" href="#sorting-due-to-surface-tension-effects" title="Link to this heading"></a></h1>
-<p>Internalization</p>
+<p>We consider a two-population system with surface interactions. The main force models surface tension-like effects by computing a pressure-like force acting on the centroid of each cell and computed as the sum of elementary forces orthognal to its boundary.
+The different relative magnitudes of the forces produced at the interfaces between different populations or between cells and the medium classicaly leads to various sorting effects.</p>
+<p><strong>Internalization</strong></p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV20_SurfaceTension_internalization.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Checkerboard</p>
+<p><strong>Checkerboard</strong></p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV21_SurfaceTension_checkerboard.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Separation</p>
+<p><strong>Separation</strong></p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV22_SurfaceTension_separation.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p><strong>Related references</strong></p>
+<ol class="upperalpha simple" start="7">
+<li><ol class="upperalpha simple" start="23">
+<li><p>Brodland. “The Differential Interfacial Tension Hypothesis (DITH): A Comprehensive Theory for the Self-Rearrangement of Embryonic Cells and Tissues”. Journal of Biomechanical Engineering 124.2 (2002)</p></li>
+</ol>
+</li>
+</ol>
+<ol class="upperalpha simple" start="18">
+<li><ol class="upperalpha simple" start="26">
+<li><p>Mohammad, H. Murakawa, K. Svadlenka, and H. Togashi. “A Numerical Algorithm for Modeling Cellular Rearrangements in Tissue Mor- phogenesis”. Commun. Biol. 5.1 (2022)</p></li>
+</ol>
+</li>
+</ol>
+<ol class="upperalpha simple" start="6">
+<li><p>Graner and J. A. Glazier. “Simulation of Biological Cell Sorting Using a Two-Dimensional Extended Potts Model”. Phys. Rev. Lett. 69.13 (1992)</p></li>
+</ol>
+<ol class="upperalpha simple" start="4">
+<li><p>Sulsky, S. Childress, and J. Percus. “A Model of Cell Sorting”. J. Theoret. Biol. 106.3 (1984)</p></li>
+</ol>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_path = &#39;_static/iceshot_surfacetension_sortingengulfment.png&#39;</span>
 
 

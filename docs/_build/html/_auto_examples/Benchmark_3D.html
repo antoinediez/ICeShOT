@@ -7,7 +7,7 @@
   <title>Benchmark: 3D Run-and-Tumble with deformations. &mdash; iceshot  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -23,6 +23,7 @@
         <script src="../_static/documentation_options.js?v=5929fcd5"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -109,9 +110,49 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="benchmark-3d-run-and-tumble-with-deformations">
 <span id="sphx-glr-auto-examples-benchmark-3d-py"></span><h1>Benchmark: 3D Run-and-Tumble with deformations.<a class="headerlink" href="#benchmark-3d-run-and-tumble-with-deformations" title="Link to this heading"></a></h1>
+<p>As a benchmark, we consider a 3D system of self-propelled deformable ellipsoids in a strongly packed domain. Each particle moves in the direction of its principal axis which evolves according to a re-orientation process subject to the deformations caused by the surrounding particles.
+We consider <span class="math notranslate nohighlight">\(N\)</span> particles in a 3D bounded box, discretized on a grid of size <span class="math notranslate nohighlight">\(M^3\)</span>.</p>
+<p>Example with <span class="math notranslate nohighlight">\(M=512\)</span> and <span class="math notranslate nohighlight">\(N=1000\)</span></p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/Benchmark_3D.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p>Using a Nvidia RTX A6000 GPU card, we obtain the following benchmarks (we have excluded the cases where the total number of grid cells to fill the volume of the smallest particle is below 100)</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>M=64</p></th>
+<th class="head"><p>M=128</p></th>
+<th class="head"><p>M=256</p></th>
+<th class="head"><p>M=512</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>N=10</p></td>
+<td><p>30 s</p></td>
+<td><p>1.3 min</p></td>
+<td><p>7.4 min</p></td>
+<td><p>62 min</p></td>
+</tr>
+<tr class="row-odd"><td><p>N=100</p></td>
+<td><p>45 s</p></td>
+<td><p>1 min</p></td>
+<td><p>4.7 min</p></td>
+<td><p>36 min</p></td>
+</tr>
+<tr class="row-even"><td><p>N=1000</p></td>
+<td><p>NR</p></td>
+<td><p>4 min</p></td>
+<td><p>25 min</p></td>
+<td><p>3 h</p></td>
+</tr>
+<tr class="row-odd"><td><p>N=10000</p></td>
+<td><p>NR</p></td>
+<td><p>NR</p></td>
+<td><p>4.9 h</p></td>
+<td><p>35 h</p></td>
+</tr>
+</tbody>
+</table>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_path = &#39;_static/final_1000_512.png&#39;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>

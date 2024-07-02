@@ -7,7 +7,7 @@
   <title>Active Brownian Particles &mdash; iceshot  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -110,18 +110,35 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="active-brownian-particles">
 <span id="sphx-glr-auto-examples-activebrownian-py"></span><h1>Active Brownian Particles<a class="headerlink" href="#active-brownian-particles" title="Link to this heading"></a></h1>
-<p>With <span class="math notranslate nohighlight">\(p=0.5\)</span></p>
+<p>We consider the motion of <span class="math notranslate nohighlight">\(N\)</span> <strong>active deformable spheres</strong> in a periodic box with different deformability properties.
+The particle are defined by their positions <span class="math notranslate nohighlight">\(x_i\)</span> and Brownian active directions of motion <span class="math notranslate nohighlight">\(n_i\)</span>, which follow the following set of stochastic differential equations:</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{d}{x}_i = c_0 {n}_i\mathrm{d} t - \tau\nabla_{{x}_i}\mathcal{T}_c(\hat{\mu})\mathrm{d} t\]</div>
+<div class="math notranslate nohighlight">
+\[\mathrm{d}{n}_i = (\mathrm{Id} - {n}_i{n}_i^\mathrm{T})\circ \sqrt{2\sigma}\mathrm{d} B^i_t,\]</div>
+<p>The incompressibility force <span class="math notranslate nohighlight">\(\nabla_{{x}_i}\mathcal{T}_c(\hat{\mu})\)</span> is associated to the optimal transport cost</p>
+<div class="math notranslate nohighlight">
+\[c(x,y) = |y-x|^p\]</div>
+<p>where the coefficient <span class="math notranslate nohighlight">\(p\)</span> sets the deformability of the particles. Increasing <span class="math notranslate nohighlight">\(p\)</span> leads to a transition from a liquid-like state to a crystal-like state.</p>
+<p>With <span class="math notranslate nohighlight">\(p=0.5\)</span>, particles are easy to deform.</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV11_ActiveBrownian_p05.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>With <span class="math notranslate nohighlight">\(p=2\)</span></p>
+<p>With <span class="math notranslate nohighlight">\(p=2\)</span>,</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV12_ActiveBrownian_p2.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>With <span class="math notranslate nohighlight">\(p=8\)</span></p>
+<p>With <span class="math notranslate nohighlight">\(p=8\)</span>, particles behave as hard-spheres.</p>
 <video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../_images/SMV13_ActiveBrownian_p8.mp4" type="video/mp4"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
+<p><strong>Related references:</strong></p>
+<ol class="upperalpha simple" start="14">
+<li><p>Saito and S. Ishihara. “Active Deformable Cells Undergo Cell Shape Transition Associated with Percolation of Topological Defects”, Science Advances 10.19 (2024)</p></li>
+</ol>
+<ol class="upperalpha simple" start="4">
+<li><p>Bi, X. Yang, M. C. Marchetti, and M. L. Manning. “Motility-Driven Glass and Jamming Transitions in Biological Tissues”. Physical Review X 6.2 (2016)</p></li>
+</ol>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_path = &#39;_static/ActiveBrownian_p8.png&#39;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
