@@ -31,7 +31,7 @@ This is in contrast with other approaches which classically preserve volumes usi
 
 To achieve this goal, we rely on the notion of **Laguerre tessellation** 
 which has recently appeared in various different contexts,
-in particular the simulation of incompressible fluid flows, of crowd motion or for the modeling of polycrystalline materials. 
+in particular `the simulation of incompressible fluid flows <https://doi.org/10.1007/s10208-017-9355-y>`_, of `crowd motion <https://doi.org/10.3934/nhm.2011.6.485>`_ or for the `modeling of polycrystalline materials <https://doi.org/10.1080/14786435.2020.1790053>`_. 
 
 For a given set of positions :math:`x_1,\ldots,x_N` in a domain :math:`\Omega` and volumes :math:`v_1,\ldots,v_N`, the :math:`i`-th particle is represented by the Laguerre cell defined by 
 
