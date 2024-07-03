@@ -91,10 +91,50 @@
 <div class="line"><br /></div>
 </div>
 <p>Many biological systems such as cell aggregates, tissues or bacterial colonies behave as unconventional systems of particles that are strongly constrained by volume exclusion and shape interactions. Understanding how these constraints lead to macroscopic self-organized structures is a fundamental question in e.g. developmental biology. To this end, various types of computational models have been developed: phase fields, cellular automata, vertex models, level-set, finite element simulations, etc. We introduce a new framework based on optimal transport theory to model particle systems with arbitrary dynamical shapes and deformability. Our method builds upon the pioneering work of Brenier on incompressible fluids and its recent applications to materials science. It lets us specify the shapes of individual cells and supports a wide range of interaction mechanisms, while automatically taking care of the volume exclusion constraint at an affordable numerical cost.</p>
-<p class="center"><strong>Please check the</strong> <a class="reference external" href="_auto_examples/index.html">gallery of examples</a> <strong>!</strong></p>
 <p>The project is hosted on <a class="reference external" href="https://github.com/antoinediez/ICeShOT">GitHub</a>, under the permissive <a class="reference external" href="https://en.wikipedia.org/wiki/MIT_License">MIT license</a>.</p>
+<section id="please-check-the-gallery-of-examples">
+<h2>Please check the <a class="reference external" href="_auto_examples/index.html">gallery of examples</a> !<a class="headerlink" href="#please-check-the-gallery-of-examples" title="Link to this heading"></a></h2>
+</section>
+<section id="framework">
+<h2>Framework<a class="headerlink" href="#framework" title="Link to this heading"></a></h2>
+<p>As a first description, our method can be seen as a <strong>generalized Voronoi tessellation</strong> method with <strong>strict volume constraints</strong>:
+since volume is most often the easiest experimental quantity to measure, we treat it as a first-class input of the model.
+This is in contrast with other approaches which classically preserve volumes using soft constraints and relaxation forces towards a preferred size.</p>
+<p>To achieve this goal, we rely on the notion of <strong>Laguerre tessellation</strong>
+which has recently appeared in various different contexts,
+in particular the simulation of incompressible fluid flows, of crowd motion or for the modeling of polycrystalline materials.</p>
+<p>For a given set of positions <span class="math notranslate nohighlight">\(x_1,\ldots,x_N\)</span> in a domain <span class="math notranslate nohighlight">\(\Omega\)</span> and volumes <span class="math notranslate nohighlight">\(v_1,\ldots,v_N\)</span>, the <span class="math notranslate nohighlight">\(i\)</span>-th particle is represented by the Laguerre cell defined by</p>
+<div class="math notranslate nohighlight">
+\[\mathscr{L}_i = \{ x\in\Omega,\,c(x,x_i) - w_i \leq c(x,x_j) - w_j\,\,\,\forall j\}\]</div>
+<p>which depends on:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>a cost function</strong> <span class="math notranslate nohighlight">\(c:\Omega\times\Omega\to[0,+\infty)\)</span> which is the main modeling element in our approach: classicaly <span class="math notranslate nohighlight">\(c(x,y) = |y-x|^2\)</span> but other choices are considered to model the physical <strong>deformability properties</strong> of the particles (stiffness, mass, shape etc).</p></li>
+<li><p><strong>a set of Kantorovich potentials</strong> <span class="math notranslate nohighlight">\(w_1,\ldots,w_N\)</span> which can be shown to be uniquely defined to satisfy the volume constraints</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\forall i\in\{1,\ldots,N\},\,\,\,\mathrm{volume}(\mathscr{L}_i) = v_i\]</div>
+<p>Computing these potentials is the main technical part of our model: it is well known that this optimisation problem is equivalent to an <strong>optimal transport</strong> problem.</p>
+</div></blockquote>
+<p>Three examples of Laguerre tessellations which can be compared to three types of biological tissues are shown below.
+We consider three different cost functions and random positions and volumes.</p>
+<table class="borderless docutils align-default" style="width: 100%">
+<tbody>
+<tr class="row-odd"><td><img alt="Voronoi diagram" src="_images/Tessellation_l2.png" />
+</td>
+<td><img alt="Bubbly diagram" src="_images/Tessellation_various_colors.png" />
+</td>
+<td><img alt="Random Voronoi diagram" src="_images/Tessellation_random.png" />
+</td>
+</tr>
+</tbody>
+</table>
+<p>In a dynamical setting, at each discrete time step, we compute and apply forces to the centroid positions <span class="math notranslate nohighlight">\(x_i\)</span> and compute a new Laguerre tessellation of the space.
+The main force that we consider is a so-called <strong>incompressibility force</strong> which models repulsion interaction between neighbouring particles.
+Then, extracting the relevant geometrical information from the Laguerre cells and translating it into biophysical properties and forces is the key modeling task that defines the behaviour of our simulations.
+We can also update the volumes and/or the cost functions to model morphological changes, or to include other events such as the creation or deletion of particles.</p>
 <section id="citation">
-<h2>Citation<a class="headerlink" href="#citation" title="Link to this heading"></a></h2>
+<h3>Citation<a class="headerlink" href="#citation" title="Link to this heading"></a></h3>
 <p>If you use ICeShOT in a research paper, please cite the <a class="reference external" href="https://arxiv.org/abs/2402.17086">arXiv preprint</a> :</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@misc</span><span class="p">{</span><span class="n">diez2024optimaltransportmodeldynamical</span><span class="p">,</span>
 <span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="n">An</span> <span class="n">optimal</span> <span class="n">transport</span> <span class="n">model</span> <span class="k">for</span> <span class="n">dynamical</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">collective</span> <span class="n">motion</span> <span class="ow">and</span> <span class="n">cellular</span> <span class="n">aggregates</span><span class="p">},</span>
@@ -110,12 +150,12 @@
 <p>Diez A., Feydy J., An optimal transport model for dynamical shapes, collective motion and cellular aggregates, arXiv preprint: arXiv2402.17086, 2024</p>
 </section>
 <section id="authors">
-<h2>Authors<a class="headerlink" href="#authors" title="Link to this heading"></a></h2>
+<h3>Authors<a class="headerlink" href="#authors" title="Link to this heading"></a></h3>
 <p><a class="reference external" href="https://antoinediez.gitlab.io/">Antoine Diez</a>, Kyoto University Institute for the Advanced Study of Human Biology (ASHBi)</p>
 <p><a class="reference external" href="https://www.jeanfeydy.com/">Jean Feydy</a>, Inria Paris, HeKA team</p>
 </section>
 <section id="table-of-contents">
-<h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h2>
+<h3>Table of contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h3>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
 <ul>
@@ -148,12 +188,13 @@
 </div>
 </section>
 <section id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h2>
+<h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+</section>
 </section>
 </section>
 
