@@ -47,10 +47,12 @@ from sphinx_gallery.sorting import FileNameSortKey
 sphinx_gallery_conf = {
     # path to your examples scripts
     "examples_dirs": [
+        "../tutorial",
         "../scripts",
         ],
     # path where to save gallery generated examples
     "gallery_dirs": [
+        "./_auto_tutorials",
         "./_auto_examples"],
     # order of the Gallery
     "within_subsection_order": FileNameSortKey,

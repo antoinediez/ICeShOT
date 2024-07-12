@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.000** total execution time for 14 files **from all galleries**:
+**00:00.015** total execution time for 16 files **from all galleries**:
 
 .. container::
 
@@ -32,6 +32,9 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
+   * - :ref:`sphx_glr__auto_tutorials_plot_tutorial.py` (``../tutorial/plot_tutorial.py``)
+     - 00:00.015
+     - 0.0
    * - :ref:`sphx_glr__auto_examples_ActiveBrownian.py` (``../scripts/ActiveBrownian.py``)
      - 00:00.000
      - 0.0
@@ -72,5 +75,8 @@ Computation times
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr__auto_examples_TissueGrowth.py` (``../scripts/TissueGrowth.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr__auto_examples_TissueGrowth_3D.py` (``../scripts/TissueGrowth_3D.py``)
      - 00:00.000
      - 0.0

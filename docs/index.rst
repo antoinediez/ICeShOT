@@ -98,6 +98,13 @@ Table of contents
 
 .. toctree::
    :maxdepth: 2
+   :caption: Tutorial
+
+   _auto_tutorials/index
+
+
+.. toctree::
+   :maxdepth: 2
    :caption: Gallery
 
    _auto_examples/index

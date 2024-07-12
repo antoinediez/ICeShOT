@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; iceshot  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            iceshot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_auto_examples/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/cells.html">Cells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/costs.html">Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/OT.html">Optimal Transport</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">iceshot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_auto_tutorials/plot_tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-tutorials-plot-tutorial-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="tutorial">
+<span id="sphx-glr-auto-tutorials-plot-tutorial-py"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Link to this heading"></a></h1>
+<p>This tutorial shows how to use the main features of the library.
+Most of the examples in the gallery are built on these elements.</p>
+<p>First some standard imports</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;GTK3Agg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-pytb notranslate"><div class="highlight"><pre><span></span><span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;/Users/antoine/Desktop/Projets/ICeShOT/ICeShOT/tutorial/plot_tutorial.py&quot;</span>, line <span class="m">21</span>, in <span class="n">&lt;module&gt;</span>
+<span class="w">    </span><span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;GTK3Agg&#39;</span><span class="p">)</span>
+  File <span class="nb">&quot;/Users/antoine/miniforge3/envs/iceshot/lib/python3.10/site-packages/matplotlib/__init__.py&quot;</span>, line <span class="m">1249</span>, in <span class="n">use</span>
+<span class="w">    </span><span class="n">plt</span><span class="o">.</span><span class="n">switch_backend</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+  File <span class="nb">&quot;/Users/antoine/miniforge3/envs/iceshot/lib/python3.10/site-packages/matplotlib/pyplot.py&quot;</span>, line <span class="m">342</span>, in <span class="n">switch_backend</span>
+<span class="w">    </span><span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">cbook</span><span class="o">.</span><span class="n">_backend_module_name</span><span class="p">(</span><span class="n">newbackend</span><span class="p">))</span>
+  File <span class="nb">&quot;/Users/antoine/miniforge3/envs/iceshot/lib/python3.10/importlib/__init__.py&quot;</span>, line <span class="m">126</span>, in <span class="n">import_module</span>
+<span class="w">    </span><span class="k">return</span> <span class="n">_bootstrap</span><span class="o">.</span><span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">level</span><span class="p">:],</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+  File <span class="nb">&quot;&lt;frozen importlib._bootstrap&gt;&quot;</span>, line <span class="m">1050</span>, in <span class="n">_gcd_import</span>
+  File <span class="nb">&quot;&lt;frozen importlib._bootstrap&gt;&quot;</span>, line <span class="m">1027</span>, in <span class="n">_find_and_load</span>
+  File <span class="nb">&quot;&lt;frozen importlib._bootstrap&gt;&quot;</span>, line <span class="m">1006</span>, in <span class="n">_find_and_load_unlocked</span>
+  File <span class="nb">&quot;&lt;frozen importlib._bootstrap&gt;&quot;</span>, line <span class="m">688</span>, in <span class="n">_load_unlocked</span>
+  File <span class="nb">&quot;&lt;frozen importlib._bootstrap_external&gt;&quot;</span>, line <span class="m">883</span>, in <span class="n">exec_module</span>
+  File <span class="nb">&quot;&lt;frozen importlib._bootstrap&gt;&quot;</span>, line <span class="m">241</span>, in <span class="n">_call_with_frames_removed</span>
+  File <span class="nb">&quot;/Users/antoine/miniforge3/envs/iceshot/lib/python3.10/site-packages/matplotlib/backends/backend_gtk3agg.py&quot;</span>, line <span class="m">4</span>, in <span class="n">&lt;module&gt;</span>
+<span class="w">    </span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">backend_agg</span><span class="p">,</span> <span class="n">backend_gtk3</span>
+  File <span class="nb">&quot;/Users/antoine/miniforge3/envs/iceshot/lib/python3.10/site-packages/matplotlib/backends/backend_gtk3.py&quot;</span>, line <span class="m">24</span>, in <span class="n">&lt;module&gt;</span>
+<span class="w">    </span><span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+<span class="gr">ImportError</span>: <span class="n">Namespace Gtk not available</span>
+</pre></div>
+</div>
+<p>ICeShOT can run on a GPU (much faster) if there is one vailable or on the CPU otherwise.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">use_cuda</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">use_cuda</span><span class="p">:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">set_default_tensor_type</span><span class="p">(</span><span class="s2">&quot;torch.cuda.FloatTensor&quot;</span><span class="p">)</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">set_default_tensor_type</span><span class="p">(</span><span class="s2">&quot;torch.FloatTensor&quot;</span><span class="p">)</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span>
+</pre></div>
+</div>
+<p>Let us first define the domain in which the simulation takes place.
+For this we need to sample the <strong>source points</strong> using the following module.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">sample</span>
+</pre></div>
+</div>
+<p>The main function simply sample a uniform grid of a given size on the unit cube.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="mi">512</span>   <span class="c1"># grid resolution</span>
+<span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>   <span class="c1"># dimension</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample_grid</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">,</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In order to have a more funny case, let us crop the domain in
+a hourglass shape with an obstacle at the end of the funnel.</p>
+<p>The following function returns 0 if the source point does not belong to the domain
+and a positive value otherwise. We keep only the source points in the domain.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">cut</span> <span class="o">=</span> <span class="mf">0.03</span>   <span class="c1"># define the bottom of the domain</span>
+<span class="n">o_cnt</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span>    <span class="c1"># obstacle center</span>
+<span class="n">o_cnt</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">R_o</span> <span class="o">=</span> <span class="mf">0.1</span>   <span class="c1"># obstacle radius</span>
+<span class="n">tunnel_size</span> <span class="o">=</span> <span class="mf">0.04</span>    <span class="c1"># tunnel width</span>
+
+<span class="k">def</span> <span class="nf">crop_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span>
+    <span class="n">xc</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">cnt</span>
+    <span class="n">upper_cone</span> <span class="o">=</span> <span class="p">(</span><span class="n">xc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="n">cut</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">*</span> <span class="p">((</span><span class="n">xc</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;</span><span class="n">xc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    <span class="n">below</span> <span class="o">=</span> <span class="p">(</span><span class="n">xc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="n">cut</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">tunnel_size</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    <span class="n">tunnel</span> <span class="o">=</span> <span class="p">((</span><span class="n">xc</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tunnel_size</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">below</span><span class="p">)</span>
+    <span class="n">obstacle</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span> <span class="o">-</span> <span class="n">o_cnt</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">R_o</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">upper_cone</span> <span class="o">+</span> <span class="n">below</span><span class="o">*</span><span class="n">obstacle</span> <span class="o">+</span> <span class="n">tunnel</span>
+
+<span class="n">real_points</span> <span class="o">=</span> <span class="n">crop_function</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">real_points</span><span class="p">,:]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>One can also use the function</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample_cropped_domain</span><span class="p">(</span><span class="n">crop_function</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">M</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Now we sample N <strong>seed points</strong> in the upper part of the domain</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">cnt_seeds</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span>
+<span class="n">size_seeds</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">cnt_seeds</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">size_seeds</span><span class="o">/</span><span class="mi">2</span>
+
+<span class="n">seeds</span> <span class="o">=</span> <span class="n">size_seeds</span><span class="o">*</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="n">cnt_seeds</span>
+</pre></div>
+</div>
+<p>Most importantly, we give a <strong>volume</strong> to these particles</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">vol_x</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>    <span class="c1"># We sample volumes with a ratio 1/3 between the smaller and larger particles</span>
+<span class="n">vol_x</span> <span class="o">*=</span> <span class="mf">0.25</span><span class="o">/</span><span class="n">vol_x</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>    <span class="c1"># Normalize the volume so that the particles fill 25% of the total volume</span>
+
+<span class="n">vol0</span> <span class="o">=</span> <span class="n">vol_x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>    <span class="c1"># Mean volume</span>
+<span class="n">R0</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vol0</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="k">if</span> <span class="n">dim</span><span class="o">==</span><span class="mi">2</span> <span class="k">else</span> <span class="p">(</span><span class="n">vol0</span><span class="o">/</span><span class="p">(</span><span class="mf">4.</span><span class="o">/</span><span class="mf">3.</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span>   <span class="c1"># Mean particle size</span>
+</pre></div>
+</div>
+<p>We now instantiate a particle system and check that each particle has enough pixels.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">cells</span>
+
+<span class="n">simu</span> <span class="o">=</span> <span class="n">cells</span><span class="o">.</span><span class="n">Cells</span><span class="p">(</span>
+    <span class="n">seeds</span><span class="o">=</span><span class="n">seeds</span><span class="p">,</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+    <span class="n">vol_x</span><span class="o">=</span><span class="n">vol_x</span><span class="p">,</span><span class="n">extra_space</span><span class="o">=</span><span class="s2">&quot;void&quot;</span>
+<span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span>  <span class="nb">int</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">/</span><span class="n">simu</span><span class="o">.</span><span class="n">vol_grid</span><span class="p">)</span>    <span class="c1"># Number of voxels for the smallest particle.</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Minimul number of voxels for one particle: </span><span class="si">{</span><span class="n">res</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">res</span><span class="o">&lt;</span><span class="mi">150</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Resolution is too small!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We also need to introduce a <strong>optimal transport solver</strong>.
+To do so, we first need a <strong>cost function</strong>. We choose a simple power cost with exponent 2.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">costs</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">OT</span>
+<span class="kn">from</span> <span class="nn">iceshot.OT</span> <span class="kn">import</span> <span class="n">OT_solver</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">cost_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;p&quot;</span> <span class="p">:</span> <span class="n">p</span><span class="p">,</span>
+    <span class="s2">&quot;scaling&quot;</span> <span class="p">:</span> <span class="s2">&quot;volume&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;R&quot;</span> <span class="p">:</span> <span class="n">R0</span><span class="p">,</span>
+    <span class="s2">&quot;C&quot;</span> <span class="p">:</span> <span class="mf">0.25</span>
+<span class="p">}</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">OT_solver</span><span class="p">(</span>
+    <span class="n">n_sinkhorn</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">n_sinkhorn_last</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">n_lloyds</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">cost_function</span><span class="o">=</span><span class="n">costs</span><span class="o">.</span><span class="n">power_cost</span><span class="p">,</span><span class="n">cost_params</span><span class="o">=</span><span class="n">cost_params</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The parameters <cite>R</cite> and <cite>C</cite> are scaling factors, they usually do not matter much but might affect the stability of the algorithm.</p>
+<p>The parameters <cite>n_sinkhorn</cite> and <cite>n_lloyds</cite> define the number of iterations and epoch of the optimization algorithms.
+They are important for the Sinkhorn algorithm but are essentially harmless for the preferred LBFGS-B algorithm which usually converges in a few iterations anyway.</p>
+</div>
+<p>We can finally <strong>solve</strong> the optimization problem.
+As it is the initial step, we use Lloyd algorithm to ensure a reasonable initial configuration</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span>
+             <span class="n">sinkhorn_algo</span><span class="o">=</span><span class="n">OT</span><span class="o">.</span><span class="n">LBFGSB</span><span class="p">,</span>
+             <span class="n">tau</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+             <span class="n">to_bary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+             <span class="n">show_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+             <span class="n">bsr</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+             <span class="n">weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can plot this initial configuration.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">plot_cells</span>
+
+<span class="n">simu_plot</span> <span class="o">=</span> <span class="n">plot_cells</span><span class="o">.</span><span class="n">CellPlot</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">hsv</span><span class="p">,</span>
+                 <span class="n">plot_pixels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_scat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_quiv</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">plot_boundary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">scat_size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">scat_color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+                 <span class="n">plot_type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span><span class="n">void_color</span><span class="o">=</span><span class="s1">&#39;tab:grey&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <cite>plot_type</cite> for cropped domain should be <cite>scatter</cite> and <cite>imshow</cite> for the full unit cube.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, the option <cite>plot_boundary</cite> which plots the boundary of the cells is a bit slow.</p>
+</div>
+<p>Let us now assume that the particles simply fall down, with a constant force defined by</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span>
+<span class="n">F</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span>
+</pre></div>
+</div>
+<p>The gradient step in factor of the incompressibilty force is set to</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">tau</span> <span class="o">=</span> <span class="mf">3.0</span><span class="o">/</span><span class="n">R0</span> <span class="k">if</span> <span class="n">dim</span><span class="o">==</span><span class="mi">2</span> <span class="k">else</span> <span class="mf">3.0</span><span class="o">/</span><span class="p">(</span><span class="n">R0</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We need to define some time-stepping parameters</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mf">3.0</span>    <span class="c1"># Simulation time</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.002</span>   <span class="c1"># Time step</span>
+<span class="n">plot_every</span> <span class="o">=</span> <span class="mi">150</span>    <span class="c1"># Do not plot all the time steps</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># Time counter</span>
+<span class="n">t_iter</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># Counter of iterations</span>
+<span class="n">t_plot</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># Counter of plots</span>
+</pre></div>
+</div>
+<p>We simply loop over time.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span><span class="o">.</span><span class="n">n_lloyds</span> <span class="o">=</span> <span class="mi">1</span>   <span class="c1"># Only one epoch is enough since we make small time steps.</span>
+
+<span class="k">while</span> <span class="n">t</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;t=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">plotting_time</span> <span class="o">=</span> <span class="n">t_iter</span><span class="o">%</span><span class="n">plot_every</span><span class="o">==</span><span class="mi">0</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I plot.&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">plotting_time</span> <span class="k">else</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I do not plot.&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">F_inc</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">lloyd_step</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span>
+                <span class="n">sinkhorn_algo</span><span class="o">=</span><span class="n">OT</span><span class="o">.</span><span class="n">LBFGSB</span><span class="p">,</span>
+                <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span>
+                <span class="n">to_bary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">show_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">default_init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">bsr</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">simu</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">F</span><span class="o">*</span><span class="n">dt</span> <span class="o">+</span> <span class="n">F_inc</span><span class="o">*</span><span class="n">dt</span>   <span class="c1"># Sum the incompressibility force and the gravity force.</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximal incompressibility force: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_inc</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plotting_time</span><span class="p">:</span>
+        <span class="n">simu_plot</span><span class="o">.</span><span class="n">update_plot</span><span class="p">(</span><span class="n">simu</span><span class="p">)</span>
+        <span class="n">simu_plot</span><span class="o">.</span><span class="n">fig</span>
+        <span class="n">t_plot</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">t</span> <span class="o">+=</span> <span class="n">dt</span>
+    <span class="n">t_iter</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.015 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-tutorials-plot-tutorial-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/794b6ffcb139e04a62d0114af8bd9692/plot_tutorial.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_tutorial.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/b8e218cfd4df1177b33f7f2e973e0cb2/plot_tutorial.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_tutorial.py</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Antoine Diez, Jean Feydy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
