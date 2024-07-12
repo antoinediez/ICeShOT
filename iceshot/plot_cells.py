@@ -9,7 +9,7 @@ class CellPlot:
                  scat_size=15,scat_color='red',
                  c_quiv='red',pivot="tail",
                  r=None,K=5,boundary_color='k',
-                 plot_type="imshow",void_color=None,vmin0=0.09,shrink_colors=True,M_grid=None):
+                 plot_type="imshow",void_color=None,vmin0=0.00001,shrink_colors=True,M_grid=None):
         self.cmap = cmap
         self.shrink_colors = shrink_colors
         self.vmin0 = vmin0

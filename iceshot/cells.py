@@ -286,7 +286,7 @@ class Cells(DataPoints):
         return result.scatter_(1, indices, km) #Sorted unique values
     
     def extract_boundary(self,r=None,K=10):
-        # Return the indeices of the grid-cells corresponding to a boundary pixel
+        # Return the indices of the grid-cells corresponding to a boundary pixel
         km = self.junctions(r=r,K=K)
         is_boundary = km[:,1]!=-1.0
         return is_boundary.nonzero().squeeze().long(), km[is_boundary.nonzero().squeeze(),:2].long()
@@ -317,7 +317,7 @@ class Cells(DataPoints):
         """Sort the source points according to their labels. 
 
         Returns:
-            (Tensor, tuple): Positions before sorting and ``ranges_ij`` argument to be passed to the Block-Sparse-Reduction method.
+            (Tensor, tuple): Positions before sorting and ``ranges_ij`` argument to be passed to the Block-Sparse-Reduction method. 
         """
         sorted_labels, sorting_indices = torch.sort(self.labels)
         y = self.y.detach().clone()
