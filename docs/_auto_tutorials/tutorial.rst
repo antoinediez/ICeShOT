@@ -24,15 +24,16 @@ Tutorial
 This tutorial shows how to use the main features of the library.
 Most of the examples in the gallery are built on these elements. 
 
-.. GENERATED FROM PYTHON SOURCE LINES 11-12
+.. GENERATED FROM PYTHON SOURCE LINES 12-13
 
 First some standard imports
 
-.. GENERATED FROM PYTHON SOURCE LINES 12-21
+.. GENERATED FROM PYTHON SOURCE LINES 13-23
 
 .. code-block:: Python
 
 
+    # sphinx_gallery_thumbnail_path = '_static/tutorial_plot.png'
     import os 
     import sys
     sys.path.append("..")
@@ -42,11 +43,11 @@ First some standard imports
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-23
+.. GENERATED FROM PYTHON SOURCE LINES 24-25
 
 ICeShOT can run on a GPU (much faster) if there is one vailable or on the CPU otherwise.
 
-.. GENERATED FROM PYTHON SOURCE LINES 23-32
+.. GENERATED FROM PYTHON SOURCE LINES 25-34
 
 .. code-block:: Python
 
@@ -60,12 +61,12 @@ ICeShOT can run on a GPU (much faster) if there is one vailable or on the CPU ot
         device = "cpu"
     
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-35
+.. GENERATED FROM PYTHON SOURCE LINES 35-37
 
 Let us first define the domain in which the simulation takes place.
 For this we need to sample the **source points** using the following module. 
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-38
+.. GENERATED FROM PYTHON SOURCE LINES 37-40
 
 .. code-block:: Python
 
@@ -73,11 +74,11 @@ For this we need to sample the **source points** using the following module.
     from iceshot import sample
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-40
+.. GENERATED FROM PYTHON SOURCE LINES 41-42
 
 The main function simply sample a uniform grid of a given size on the unit cube.
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-45
+.. GENERATED FROM PYTHON SOURCE LINES 42-47
 
 .. code-block:: Python
 
@@ -87,7 +88,7 @@ The main function simply sample a uniform grid of a given size on the unit cube.
     grid = sample.sample_grid(M,dim=dim,device=device)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-51
+.. GENERATED FROM PYTHON SOURCE LINES 48-53
 
 In order to have a more funny case, let us crop the domain in
 a hourglass shape with an obstacle at the end of the funnel.
@@ -95,7 +96,7 @@ a hourglass shape with an obstacle at the end of the funnel.
 The following function returns 0 if the source point does not belong to the domain
 and a positive value otherwise. We keep only the source points in the domain.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-71
+.. GENERATED FROM PYTHON SOURCE LINES 53-73
 
 .. code-block:: Python
 
@@ -120,7 +121,7 @@ and a positive value otherwise. We keep only the source points in the domain.
     source = grid[real_points,:]
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-79
+.. GENERATED FROM PYTHON SOURCE LINES 74-81
 
 .. note:: 
 
@@ -130,11 +131,11 @@ and a positive value otherwise. We keep only the source points in the domain.
 
     source = sample.sample_cropped_domain(crop_function,n=M,dim=dim)
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-82
+.. GENERATED FROM PYTHON SOURCE LINES 83-84
 
 Now we sample N **seed points** in the upper part of the domain 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-90
+.. GENERATED FROM PYTHON SOURCE LINES 84-92
 
 .. code-block:: Python
 
@@ -147,11 +148,11 @@ Now we sample N **seed points** in the upper part of the domain
     seeds = size_seeds*(torch.rand((N,dim))-0.5) + cnt_seeds
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-92
+.. GENERATED FROM PYTHON SOURCE LINES 93-94
 
 Most importantly, we give a **volume** to these particles
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-99
+.. GENERATED FROM PYTHON SOURCE LINES 94-101
 
 .. code-block:: Python
 
@@ -163,11 +164,11 @@ Most importantly, we give a **volume** to these particles
     R0 = math.sqrt(vol0/math.pi) if dim==2 else (vol0/(4./3.*math.pi))**(1./3.)   # Mean particle size 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-101
+.. GENERATED FROM PYTHON SOURCE LINES 102-103
 
 We now instantiate a particle system and check that each particle has enough pixels.
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-116
+.. GENERATED FROM PYTHON SOURCE LINES 103-118
 
 .. code-block:: Python
 
@@ -187,12 +188,12 @@ We now instantiate a particle system and check that each particle has enough pix
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-119
+.. GENERATED FROM PYTHON SOURCE LINES 119-121
 
 We also need to introduce an **optimal transport solver**. 
 To do so, we first need a **cost function**. We choose a simple power cost with exponent 2.
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-138
+.. GENERATED FROM PYTHON SOURCE LINES 121-140
 
 .. code-block:: Python
 
@@ -216,7 +217,7 @@ To do so, we first need a **cost function**. We choose a simple power cost with 
     )
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 139-145
+.. GENERATED FROM PYTHON SOURCE LINES 141-147
 
 .. note:: 
 
@@ -225,12 +226,12 @@ To do so, we first need a **cost function**. We choose a simple power cost with 
   The parameters `n_sinkhorn` and `n_lloyds` define the number of iterations and epoch of the optimization algorithms. 
   They are important for the Sinkhorn algorithm but are essentially harmless for the preferred LBFGS-B algorithm which usually converges in a few iterations anyway.
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-150
+.. GENERATED FROM PYTHON SOURCE LINES 150-152
 
 We can finally **solve** the optimization problem. 
 As it is the initial step, we use Lloyd algorithm to ensure a reasonable initial configuration 
 
-.. GENERATED FROM PYTHON SOURCE LINES 150-159
+.. GENERATED FROM PYTHON SOURCE LINES 152-161
 
 .. code-block:: Python
 
@@ -244,11 +245,11 @@ As it is the initial step, we use Lloyd algorithm to ensure a reasonable initial
                  weight=1.0)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-161
+.. GENERATED FROM PYTHON SOURCE LINES 162-163
 
 We can plot this initial configuration. 
 
-.. GENERATED FROM PYTHON SOURCE LINES 161-171
+.. GENERATED FROM PYTHON SOURCE LINES 163-172
 
 .. code-block:: Python
 
@@ -260,20 +261,28 @@ We can plot this initial configuration.
                      scat_size=15,scat_color='k',
                      plot_type="scatter",void_color='tab:grey')
 
-    simu_plot.fig.show()
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-175
+.. GENERATED FROM PYTHON SOURCE LINES 173-179
+
+This should produce an initial configuration which looks like this:
+
+.. image:: ../_static/tutorial_plot.png
+    :scale: 75% 
+    :alt: Initial configuration expected
+    :align: center
+
+.. GENERATED FROM PYTHON SOURCE LINES 181-184
 
 .. note:: The `plot_type` for cropped domain should be `scatter` and `imshow` for the full unit cube. 
 
 .. note:: Currently, the option `plot_boundary` which plots the boundary of the cells is a bit slow. 
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-179
+.. GENERATED FROM PYTHON SOURCE LINES 187-188
 
 Let us now assume that the particles simply fall down, with a constant force defined by
 
-.. GENERATED FROM PYTHON SOURCE LINES 179-183
+.. GENERATED FROM PYTHON SOURCE LINES 188-192
 
 .. code-block:: Python
 
@@ -282,11 +291,11 @@ Let us now assume that the particles simply fall down, with a constant force def
     F[0,-1] = -0.5
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 184-185
+.. GENERATED FROM PYTHON SOURCE LINES 193-194
 
 The gradient step in factor of the incompressibilty force is set to 
 
-.. GENERATED FROM PYTHON SOURCE LINES 185-188
+.. GENERATED FROM PYTHON SOURCE LINES 194-197
 
 .. code-block:: Python
 
@@ -294,11 +303,11 @@ The gradient step in factor of the incompressibilty force is set to
     tau = 3.0/R0 if dim==2 else 3.0/(R0**2)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 189-190
+.. GENERATED FROM PYTHON SOURCE LINES 198-199
 
 We need to define some time-stepping parameters
 
-.. GENERATED FROM PYTHON SOURCE LINES 190-199
+.. GENERATED FROM PYTHON SOURCE LINES 199-208
 
 .. code-block:: Python
 
@@ -312,11 +321,11 @@ We need to define some time-stepping parameters
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 200-201
+.. GENERATED FROM PYTHON SOURCE LINES 209-210
 
 We simply loop over time. 
 
-.. GENERATED FROM PYTHON SOURCE LINES 201-236
+.. GENERATED FROM PYTHON SOURCE LINES 210-243
 
 .. code-block:: Python
 
@@ -351,10 +360,17 @@ We simply loop over time.
         t_iter += 1
 
 
+    simu_plot.fig
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 244-250
 
+The final configuration should looks like this:
 
+.. image:: ../_static/tutorial_plot_end.png
+    :scale: 75% 
+    :alt: Final configuration expected
+    :align: center
 
 
 .. _sphx_glr_download__auto_tutorials_tutorial.py:

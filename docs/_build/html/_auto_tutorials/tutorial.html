@@ -102,7 +102,8 @@ to download the full example code.</p>
 <p>This tutorial shows how to use the main features of the library.
 Most of the examples in the gallery are built on these elements.</p>
 <p>First some standard imports</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_path = &#39;_static/tutorial_plot.png&#39;</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">math</span>
@@ -238,10 +239,10 @@ As it is the initial step, we use Lloyd algorithm to ensure a reasonable initial
                  <span class="n">plot_pixels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_scat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_quiv</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">plot_boundary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">scat_size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">scat_color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
                  <span class="n">plot_type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span><span class="n">void_color</span><span class="o">=</span><span class="s1">&#39;tab:grey&#39;</span><span class="p">)</span>
-
-<span class="n">simu_plot</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>This should produce an initial configuration which looks like this:</p>
+<a class="reference internal image-reference" href="../_images/tutorial_plot.png"><img alt="Initial configuration expected" class="align-center" src="../_images/tutorial_plot.png" style="width: 507.0px; height: 494.25px;" /></a>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <cite>plot_type</cite> for cropped domain should be <cite>scatter</cite> and <cite>imshow</cite> for the full unit cube.</p>
@@ -297,8 +298,13 @@ As it is the initial step, we use Lloyd algorithm to ensure a reasonable initial
 
     <span class="n">t</span> <span class="o">+=</span> <span class="n">dt</span>
     <span class="n">t_iter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<span class="n">simu_plot</span><span class="o">.</span><span class="n">fig</span>
 </pre></div>
 </div>
+<p>The final configuration should looks like this:</p>
+<a class="reference internal image-reference" href="../_images/tutorial_plot_end.png"><img alt="Final configuration expected" class="align-center" src="../_images/tutorial_plot_end.png" style="width: 507.0px; height: 494.25px;" /></a>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-tutorials-tutorial-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/adc1a61df32066731e27d93de21f7630/tutorial.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial.ipynb</span></code></a></p>

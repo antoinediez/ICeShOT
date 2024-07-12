@@ -7,9 +7,11 @@ Most of the examples in the gallery are built on these elements.
 
 """
 
+
 ##################################################################
 # First some standard imports
 
+# sphinx_gallery_thumbnail_path = '_static/tutorial_plot.png'
 import os 
 import sys
 sys.path.append("..")
@@ -166,7 +168,14 @@ simu_plot = plot_cells.CellPlot(simu,figsize=8,cmap=plt.cm.hsv,
                  scat_size=15,scat_color='k',
                  plot_type="scatter",void_color='tab:grey')
 
-simu_plot.fig.show()
+
+#######################################################################
+# This should produce an initial configuration which looks like this:
+#  
+# .. image:: ../_static/tutorial_plot.png
+#     :scale: 75% 
+#     :alt: Initial configuration expected
+#     :align: center
 
 #########################################################################################################
 # .. note:: The `plot_type` for cropped domain should be `scatter` and `imshow` for the full unit cube. 
@@ -229,7 +238,15 @@ while t<T:
     t_iter += 1
 
 
+simu_plot.fig
 
+#######################################################################
+# The final configuration should looks like this:
+#  
+# .. image:: ../_static/tutorial_plot_end.png
+#     :scale: 75% 
+#     :alt: Final configuration expected
+#     :align: center
 
 
 

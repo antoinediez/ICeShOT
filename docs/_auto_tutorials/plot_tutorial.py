@@ -15,7 +15,6 @@ import sys
 sys.path.append("..")
 import math
 import torch
-import matplotlib
 from matplotlib import pyplot as plt
 
 
@@ -115,7 +114,7 @@ if res<150:
 
 
 #####################################################################
-# We also need to introduce a **optimal transport solver**. 
+# We also need to introduce an **optimal transport solver**. 
 # To do so, we first need a **cost function**. We choose a simple power cost with exponent 2.
 
 from iceshot import costs
@@ -166,6 +165,8 @@ simu_plot = plot_cells.CellPlot(simu,figsize=8,cmap=plt.cm.hsv,
                  plot_pixels=True,plot_scat=True,plot_quiv=False,plot_boundary=False,
                  scat_size=15,scat_color='k',
                  plot_type="scatter",void_color='tab:grey')
+
+simu_plot.fig.show()
 
 #########################################################################################################
 # .. note:: The `plot_type` for cropped domain should be `scatter` and `imshow` for the full unit cube. 
@@ -221,7 +222,7 @@ while t<T:
     
     if plotting_time:
         simu_plot.update_plot(simu)
-        simu_plot.fig
+        simu_plot.fig.show()
         t_plot += 1
     
     t += dt
