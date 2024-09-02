@@ -315,8 +315,8 @@ class Cells(DataPoints):
                         for k in range(M):
                             km = max(k-1,0)
                             kp = min(k+1,M-1)
-                            length = min(K,len(unq))
                             unq = torch.unique(img[im:ip,jm:jp,km:kp])
+                            length = min(K,len(unq))
                             output[i,j,k,:length] = unq[:length]
             return output.reshape((self.M_grid,K))
                     
