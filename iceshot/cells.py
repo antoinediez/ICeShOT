@@ -298,7 +298,7 @@ class Cells(DataPoints):
             result = -torch.ones_like(km)
             return result.scatter_(1, indices, km) #Sorted unique values
         elif self.jct_method=='linear':
-            M = int((self.M_grid) ** (1/2)) if self.d==2 else int((self.M_grid) ** (1/3))
+            M = int((self.M_grid) ** (1/2)) if self.d==2 else round((self.M_grid) ** (1/3))
             output = -torch.ones((M,M,K)) if self.d==2 else -torch.ones((M,M,M,K))
             img = self.labels.reshape((M,M)) if self.d==2 else self.labels.reshape((M,M,M))
             for i in range(M):
