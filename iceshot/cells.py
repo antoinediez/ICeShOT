@@ -69,7 +69,8 @@ class Cells(DataPoints):
                  orientation=None,
                  axis=None,ar=None,
                  bc=None,
-                 box_size=[1.0,1.0]):
+                 box_size=[1.0,1.0],
+                 jct_method='linear'):
         """Initialize
 
         Args:
@@ -83,6 +84,7 @@ class Cells(DataPoints):
             ar (N tensor, optional): Aspect ratios. Defaults to 1.
             bc (optional): boundary condition. Defaults to None.
             box_size (list, optional): Defaults to [1.0,1.0].
+            jct_method (string, optional): The method used to compute junction points. Can be 'linear' or 'Kmin'. Default to 'linear'. 
         """
                 
         DataPoints.__init__(self,seeds,source,bc=bc,box_size=box_size)
@@ -130,6 +132,7 @@ class Cells(DataPoints):
         self.f_x = torch.zeros_like(self.volumes)
         self.g_y = torch.zeros(self.M_grid,device=self.device,dtype=self.dtype)
         self.labels = torch.zeros(self.M_grid,device=self.device,dtype=self.dtype)
+        self.jct_method = jct_method
         
     @property
     def M_grid(self):
@@ -277,16 +280,52 @@ class Cells(DataPoints):
         return utils.apply_bc_inside(bary,bc=self.bc,L=self.L)
     
     def junctions(self,r=None,K=10):
-        # Return a matrix of size MxK containing the cell labels of K neighbours of each pixel
-        lab_neigh = self.y_contact_matrix(r=r) * LazyTensor(-(1.0 + self.labels[None,:,None]))
-        km = -lab_neigh.Kmin(K,dim=1)-1
-        _, indices = torch.unique_consecutive(km, return_inverse=True)
-        indices -= indices.min(dim=1, keepdims=True)[0]
-        result = -torch.ones_like(km)
-        return result.scatter_(1, indices, km) #Sorted unique values
+        """Return a matrix of size MxK containing the cell labels of K neighbours of each pixel, padded with -1
+
+        Args:
+            r (float, optional): The 'vision radius' around each pixel point. Only if the method is 'linear', otherwise, the neighbouring pixels are +/-1. 
+            K (int, optional): Defaults to 10.
+
+        Returns:
+            (Tensor): A matrix of size MxK containing the cell labels of K neighbours of each pixel, padded with -1
+        """
+        
+        if self.jct_method=='Kmin':
+            lab_neigh = self.y_contact_matrix(r=r) * LazyTensor(-(1.0 + self.labels[None,:,None]))
+            km = -lab_neigh.Kmin(K,dim=1)-1
+            _, indices = torch.unique_consecutive(km, return_inverse=True)
+            indices -= indices.min(dim=1, keepdims=True)[0]
+            result = -torch.ones_like(km)
+            return result.scatter_(1, indices, km) #Sorted unique values
+        elif self.jct_method=='linear':
+            M = int((self.M_grid) ** (1/2)) if self.d==2 else int((self.M_grid) ** (1/3))
+            output = -torch.ones((M,M,K)) if self.d==2 else -torch.ones((M,M,M,K))
+            img = self.labels.reshape((M,M)) if self.d==2 else self.labels.reshape((M,M,M))
+            for i in range(M):
+                im = max(i-1,0)
+                ip = min(i+1,M-1)
+                for j in range(M):
+                    jm = max(j-1,0)
+                    jp = min(j+1,M-1)
+                    if self.d==2:
+                        unq = torch.unique(img[im:ip,jm:jp])
+                        length = min(K,len(unq))
+                        output[i,j,:length] = unq[:length]
+                    elif self.d==3:
+                        for k in range(M):
+                            km = max(k-1,0)
+                            kp = min(k+1,M-1)
+                            length = min(K,len(unq))
+                            unq = torch.unique(img[im:ip,jm:jp,km:kp])
+                            output[i,j,k,:length] = unq[:length]
+            return output.reshape((self.M_grid,K))
+                    
+            
+                    
     
     def extract_boundary(self,r=None,K=10):
-        # Return the indices of the grid-cells corresponding to a boundary pixel
+        """Return the indices of the grid-cells corresponding to a boundary pixel.
+        """
         km = self.junctions(r=r,K=K)
         is_boundary = km[:,1]!=-1.0
         return is_boundary.nonzero().squeeze().long(), km[is_boundary.nonzero().squeeze(),:2].long()
