@@ -70,7 +70,7 @@ class Cells(DataPoints):
                  axis=None,ar=None,
                  bc=None,
                  box_size=[1.0,1.0],
-                 jct_method='linear'):
+                 jct_method='Kmin'):
         """Initialize
 
         Args:
@@ -84,7 +84,7 @@ class Cells(DataPoints):
             ar (N tensor, optional): Aspect ratios. Defaults to 1.
             bc (optional): boundary condition. Defaults to None.
             box_size (list, optional): Defaults to [1.0,1.0].
-            jct_method (string, optional): The method used to compute junction points. Can be 'linear' or 'Kmin'. Default to 'linear'. 
+            jct_method (string, optional): The method used to compute junction points. Can be 'linear' (faster on CPU) or 'Kmin' (faster on GPU). Defaults to 'linear'. 
         """
                 
         DataPoints.__init__(self,seeds,source,bc=bc,box_size=box_size)
