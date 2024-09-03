@@ -244,13 +244,31 @@ class Cells(DataPoints):
         else:
             raise ValueError("Unknown type")
     
-    def y_contact_matrix(self,r=None):
-        if r is None:
-            r = 1.1*(1.0/self.M_grid) ** (1.0/self.d)
+    def y_contact_matrix(self,r=None,bsr=False):
+        
         y_i = LazyTensor(self.y[:,None,:])
         y_j = LazyTensor(self.y[None,:,:])
         XY = utils.apply_bc(y_j - y_i,self.bc,self.L)
-        return ((r**2) - (XY **2).sum(-1)).step()
+        if bsr:
+            if r is not None:
+                raise NotImplementedError("1-pixel resolution only.")
+            if self.bc is not None:
+                raise NotImplementedError("Boudned box only.")
+            r = 1.01 * math.sqrt(self.d) * ((1.0/self.M_grid) ** (1.0/self.d))
+            matrix = ((r**2) - (XY **2).sum(-1)).step()
+            i = torch.arange(self.M_grid,device=self.x.device,dtype=torch.int32).reshape((self.M_grid,1))
+            ranges_i = torch.cat((i,i+1),dim=1)
+            M = round((self.M_grid) ** (1/2)) if self.d==2 else round((self.M_grid) ** (1/3))
+            redranges_j = torch.zeros((self.M_grid,2),dtype=torch.int32)
+            redranges_j[i,0] = torch.maximum(i-M-2,torch.tensor(0))
+            redranges_j[i,1] = torch.minimum(i+M+2,torch.tensor(self.M_grid-1))
+            slices_i = (i+1).squeeze() 
+            ranges_ij = (ranges_i,slices_i,redranges_j,ranges_i,slices_i,redranges_j)
+            return matrix, ranges_ij
+        else:
+            if r is None:
+                r = 1.01 * math.sqrt(self.d) * ((1.0/self.M_grid) ** (1.0/self.d))
+            return ((r**2) - (XY **2).sum(-1)).step()
     
     def barycenters(self,weight=None,bsr=False):
         """Compute the (weighted) barycenter of each particle.
@@ -291,14 +309,19 @@ class Cells(DataPoints):
         """
         
         if self.jct_method=='Kmin':
-            lab_neigh = self.y_contact_matrix(r=r) * LazyTensor(-(1.0 + self.labels[None,:,None]))
+            if r is None and self.bc is None:
+                matrix, ranges_ij = self.y_contact_matrix(bsr=True)
+                lab_neigh = matrix * LazyTensor(-(1.0 + self.labels[None,:,None]))
+                lab_neigh.ranges = ranges_ij
+            else:    
+                lab_neigh = self.y_contact_matrix(r=r) * LazyTensor(-(1.0 + self.labels[None,:,None]))
             km = -lab_neigh.Kmin(K,dim=1)-1
             _, indices = torch.unique_consecutive(km, return_inverse=True)
             indices -= indices.min(dim=1, keepdims=True)[0]
             result = -torch.ones_like(km)
             return result.scatter_(1, indices, km) #Sorted unique values
         elif self.jct_method=='linear':
-            M = int((self.M_grid) ** (1/2)) if self.d==2 else round((self.M_grid) ** (1/3))
+            M = round((self.M_grid) ** (1/2)) if self.d==2 else round((self.M_grid) ** (1/3))
             output = -torch.ones((M,M,K)) if self.d==2 else -torch.ones((M,M,M,K))
             img = self.labels.reshape((M,M)) if self.d==2 else self.labels.reshape((M,M,M))
             for i in range(M):
@@ -310,14 +333,14 @@ class Cells(DataPoints):
                     if self.d==2:
                         unq = torch.unique(img[im:ip,jm:jp])
                         length = min(K,len(unq))
-                        output[i,j,:length] = unq[:length]
+                        output[i,j,:length] = torch.flip(unq[:length],dims=(0,))
                     elif self.d==3:
                         for k in range(M):
                             km = max(k-1,0)
                             kp = min(k+1,M-1)
                             unq = torch.unique(img[im:ip,jm:jp,km:kp])
                             length = min(K,len(unq))
-                            output[i,j,k,:length] = unq[:length]
+                            output[i,j,k,:length] = torch.flip(unq[:length],dims=(0,))
             return output.reshape((self.M_grid,K))
                     
             
