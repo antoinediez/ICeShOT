@@ -297,17 +297,18 @@ class Cells(DataPoints):
             bary = self.x + (weight*A*XY).sum(1)/((weight*A).sum(1)+1e-8).view(self.x.shape[0],1)
         return utils.apply_bc_inside(bary,bc=self.bc,L=self.L)
     
-    def junctions(self,r=None,K=10):
+    def junctions(self,r=None,K=None):
         """Return a matrix of size MxK containing the cell labels of K neighbours of each pixel, padded with -1
 
         Args:
-            r (float, optional): The 'vision radius' around each pixel point. Only if the method is 'linear', otherwise, the neighbouring pixels are +/-1. 
-            K (int, optional): Defaults to 10.
+            r (float, optional): The 'vision radius' around each pixel point. By defaults, only the +/-1 neighbouring pixels are considered.
+            K (int, optional): Must be larger than the number of pixels inside the 'vision radius'. By default, it is equal to 3**d + 1.
 
         Returns:
             (Tensor): A matrix of size MxK containing the cell labels of K neighbours of each pixel, padded with -1
         """
-        
+        if K is None:
+            K = (3 ** self.d) + 1
         if self.jct_method=='Kmin':
             if r is None and self.bc is None:
                 matrix, ranges_ij = self.y_contact_matrix(bsr=True)
@@ -316,10 +317,11 @@ class Cells(DataPoints):
             else:    
                 lab_neigh = self.y_contact_matrix(r=r) * LazyTensor(-(1.0 + self.labels[None,:,None]))
             km = -lab_neigh.Kmin(K,dim=1)-1
-            _, indices = torch.unique_consecutive(km, return_inverse=True)
+            km = torch.cat((km,-torch.ones((self.M_grid,1))),dim=1) # Pad with -1. 
+            _, indices = torch.unique_consecutive(km, return_inverse=True) # https://discuss.pytorch.org/t/best-way-to-run-unique-consecutive-on-certain-dimension/112662/3
             indices -= indices.min(dim=1, keepdims=True)[0]
             result = -torch.ones_like(km)
-            return result.scatter_(1, indices, km) #Sorted unique values
+            return result.scatter_(1, indices, km)[:,:-1] # Sorted unique values
         elif self.jct_method=='linear':
             M = round((self.M_grid) ** (1/2)) if self.d==2 else round((self.M_grid) ** (1/3))
             output = -torch.ones((M,M,K)) if self.d==2 else -torch.ones((M,M,M,K))
@@ -346,14 +348,14 @@ class Cells(DataPoints):
             
                     
     
-    def extract_boundary(self,r=None,K=10):
+    def extract_boundary(self,r=None,K=None):
         """Return the indices of the grid-cells corresponding to a boundary pixel.
         """
         km = self.junctions(r=r,K=K)
         is_boundary = km[:,1]!=-1.0
         return is_boundary.nonzero().squeeze().long(), km[is_boundary.nonzero().squeeze(),:2].long()
         
-    def triple_junctions(self,r=None,K=10):
+    def triple_junctions(self,r=None,K=None):
         # Return the list of indices of the grid-cells corresponding to triple junctions and the matrix of indices of corresponding particles
         km = self.junctions(r=r,K=K)
         is_triple = km[:,2]!=-1.0
