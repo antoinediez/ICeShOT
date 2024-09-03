@@ -73,7 +73,7 @@ class CellPlot:
             plots["quiv"] = quiv
         if plot_boundary:
             index_bound, _ = crystals.extract_boundary(r=r,K=K)
-            bnd = ax.scatter(M_grid*crystals.y[index_bound,0].cpu(),M_grid*crystals.y[index_bound,1].cpu(),marker=",",s=1,c=boundary_color)
+            bnd = ax.scatter(M_grid*crystals.y[index_bound,0].cpu(),M_grid*crystals.y[index_bound,1].cpu(),marker=",",s=1,lw=0,c=boundary_color)
             plots["boundary"] = bnd
         return fig, ax, plots
     
