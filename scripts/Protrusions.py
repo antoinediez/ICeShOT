@@ -1,3 +1,19 @@
+"""
+Random protrusions
+============================================
+
+.. video:: ../_static/SMV19_Protrusions.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/random_protrusions.png'
+
 import os 
 import sys
 sys.path.append("..")

@@ -1,3 +1,20 @@
+"""
+Run-and-tumble in 2D with soft spheres in a disk domain
+==========================================================
+
+.. video:: ../_static/SMV2_RunTumbleDisk.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/RunTumbleDisk.png'
+
+
 import os 
 import sys
 sys.path.append("..")

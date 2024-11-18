@@ -8,8 +8,8 @@ class CellPlot:
                  plot_pixels=True,plot_scat=True,plot_quiv=False,plot_boundary=False,
                  scat_size=15,scat_color='red',
                  c_quiv='red',pivot="tail",
-                 r=None,K=5,boundary_color='k',
-                 plot_type="imshow",void_color=None,vmin0=0.09,shrink_colors=True,M_grid=None):
+                 r=None,K=None,boundary_color='k',
+                 plot_type="imshow",void_color=None,vmin0=0.00001,shrink_colors=True,M_grid=None):
         self.cmap = cmap
         self.shrink_colors = shrink_colors
         self.vmin0 = vmin0
@@ -37,7 +37,7 @@ class CellPlot:
                   plot_pixels=True,plot_scat=True,plot_quiv=False,plot_boundary=False,
                   scat_size=15,scat_color='red',
                   c_quiv='red',pivot="tail",
-                  r=None,K=5,boundary_color='k',
+                  r=None,K=None,boundary_color='k',
                   plot_type="imshow"):
         fig, ax = plt.subplots(figsize=(self.figsize,self.figsize))
         M_grid = self.M_grid
@@ -73,11 +73,11 @@ class CellPlot:
             plots["quiv"] = quiv
         if plot_boundary:
             index_bound, _ = crystals.extract_boundary(r=r,K=K)
-            bnd = ax.scatter(M_grid*crystals.y[index_bound,0].cpu(),M_grid*crystals.y[index_bound,1].cpu(),marker=",",s=1,c=boundary_color)
+            bnd = ax.scatter(M_grid*crystals.y[index_bound,0].cpu(),M_grid*crystals.y[index_bound,1].cpu(),marker=",",s=1,lw=0,c=boundary_color)
             plots["boundary"] = bnd
         return fig, ax, plots
     
-    def update_plot(self,crystals,r=None,K=3,shrink_colors=False):
+    def update_plot(self,crystals,r=None,K=None,shrink_colors=False):
         colors = colors = self.colors(crystals)
         M_grid = self.M_grid
         

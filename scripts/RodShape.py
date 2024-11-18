@@ -1,3 +1,25 @@
+"""
+Emergence of alignment in a system of active rod-shaped particles
+===================================================================
+
+We consider a system of rod-shaped particles defined by their positions :math:`x_i` and active directions of motion :math:`n_i`. 
+Each :math:`n_i` is defined at each time step as the maximal eigenvector associated to the PCA of the Laguerre cell (with the correct sign to avoid flipping).
+The collisions between particles thus lead to a local re-orientation process and eventually to the emergence of a globally aligned state. 
+
+
+.. video:: ../_static/SMV16_RodShape.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/RodShape_t3000.png'
+
+
 import os 
 import sys
 sys.path.append("..")

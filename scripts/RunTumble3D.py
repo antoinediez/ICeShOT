@@ -1,3 +1,20 @@
+"""
+Run-and-tumble in 3D with soft spheres
+============================================
+
+.. video:: ../_static/SMV25_RunTumble_3D.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/tumble_bricks.png'
+
+
 import os 
 import sys
 sys.path.append("..")

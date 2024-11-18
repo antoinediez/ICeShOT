@@ -1,3 +1,23 @@
+"""
+Growth of a 2D cell aggregate
+============================================
+
+We consider a 2D cell aggregate growing according to a basic somatic cell cycle.
+Starting from one cell, each cell grows at a linear speed until a target volume is reached, then it 
+divides after a random exponential time producing two daughter cells with identical half volumes.
+
+.. video:: ../_static/SMV3_TissueGrowth.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+""" 
+
+# sphinx_gallery_thumbnail_path = '_static/TissueGrowth_t442.png'
+
 import os 
 import sys
 sys.path.append("..")

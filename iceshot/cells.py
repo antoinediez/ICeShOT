@@ -6,8 +6,26 @@ from . import sample
 from . import utils
 
 class DataPoints:
+    r"""Main class for seeds/source data points.
+    
+    :ivar device: default device for all the tensors (same as ``seeds`` device)
+    :ivar dtype: data type
+    :ivar d: dimenstion
+    :ivar x: seeds positions
+    :ivar y: source positions
+    :ivar bc: boundary conditions
+    :ivar L: box size as tensor
+    """
     
     def __init__(self,seeds,source,bc=None,box_size=[1.0,1.0]):
+        r"""Initialize
+
+        Args:
+            seeds ((N,d) Tensor): seed points
+            source ((M,d) Tensor): source points
+            bc (optional): boundary condition. Defaults to None.
+            box_size (list, optional): Defaults to [1.0,1.0].
+        """
         self.device = seeds.device
         self.dtype = seeds.dtype
         self.d = seeds.shape[1]
@@ -17,11 +35,31 @@ class DataPoints:
         self.L = torch.tensor(box_size,device=self.device,dtype=self.dtype)
         
     def lazy_XY(self):
+        r"""Return the XY matrix as a LazyTensor.
+        
+        The XY matrix is the matrix :math:`(y_j - x_i)_{ij}` where :math:`y` and :math:`x` are respectively the source and seed points.
+
+        Returns:
+            (N,M) LazyTensor
+        """
         x_i = LazyTensor(self.x[:,None,:])  # (N, 1, D)
         y_j = LazyTensor(self.y[None,:,:])  # (1, M, D)
         return utils.apply_bc(y_j-x_i,bc=self.bc,L=self.L)
 
 class Cells(DataPoints):
+    """Main class for particles with a volume.
+    
+    :ivar N_cells: initial number of cells 
+    :ivar N_crystals: current number of cells
+    :ivar M_grid: number of source points
+    :ivar vol_grid: volume of a source point (equal to 1/``M_grid``)
+    :ivar axis: (N,d) Tensor of axes
+    :ivar ar: (N,) Tensor of aspect ratios
+    :ivar orientation: (N,d,d) Tensor of orientations
+    :ivar f_x: (N,) Tensor of Kantorovich potentials
+    :ivar g_y: (M,) Tensor of Kantorovich potentials
+    :ivar labels: (M,) Tensor of labels
+    """
 
     def __init__(self,
                  seeds,source,
@@ -31,7 +69,23 @@ class Cells(DataPoints):
                  orientation=None,
                  axis=None,ar=None,
                  bc=None,
-                 box_size=[1.0,1.0]):
+                 box_size=[1.0,1.0],
+                 jct_method='Kmin'):
+        """Initialize
+
+        Args:
+            seeds ((N,d) Tensor): seed points
+            source ((M,d) Tensor): source points
+            vol_x (N Tensor): volumes of the particles
+            extra_space (str, optional): TBI. Defaults to None.
+            fluid_size (float): TBI. Defaults to None.
+            orientation ((N,d,d) Tensor, optional): Orientation matrices. Defaults to None (automatically computed from axis and aspect ratio).
+            axis ((N,d) Tensor, optional): Orientation axis. Defaults to None (random axis).
+            ar (N tensor, optional): Aspect ratios. Defaults to 1.
+            bc (optional): boundary condition. Defaults to None.
+            box_size (list, optional): Defaults to [1.0,1.0].
+            jct_method (string, optional): The method used to compute junction points. Can be 'linear' (faster on CPU) or 'Kmin' (faster on GPU). Defaults to 'linear'. 
+        """
                 
         DataPoints.__init__(self,seeds,source,bc=bc,box_size=box_size)
         self.N_cells = seeds.shape[0]
@@ -78,6 +132,7 @@ class Cells(DataPoints):
         self.f_x = torch.zeros_like(self.volumes)
         self.g_y = torch.zeros(self.M_grid,device=self.device,dtype=self.dtype)
         self.labels = torch.zeros(self.M_grid,device=self.device,dtype=self.dtype)
+        self.jct_method = jct_method
         
     @property
     def M_grid(self):
@@ -88,6 +143,14 @@ class Cells(DataPoints):
         return self.x.shape[0]
     
     def orientation_from_axis(self):
+        """Compute the orientation matrices from the axes and aspect ratios.
+
+        Raises:
+            NotImplementedError: Only in 2D and 3D
+
+        Returns:
+            Tensor: Orientation matrices
+        """
         if self.d==2:
             th = torch.atan2(self.axis[:,1],self.axis[:,0])
             c = torch.cos(th)
@@ -120,6 +183,18 @@ class Cells(DataPoints):
         return A
     
     def covariance_matrix(self,vols=None,bsr=False,**kwargs):
+        """Compute the covariance matrices of a particle configuration.
+        
+        Args:
+            vols (_type_, optional): Input volumes. Defaults to None (automatically computed).
+            bsr (bool, optional): Use Block-Sparse-Reduction (faster). Defaults to False.
+
+        Raises:
+            NotImplementedError: Only in 2D and 3D
+            
+        Returns:
+            (N,d,d) Tensor: Covariance matrix
+        """
 
         center = self.barycenters(weight=1.0,bsr=bsr)
         
@@ -151,6 +226,14 @@ class Cells(DataPoints):
         return cov
     
     def allocation_matrix(self,type="lazy"):
+        """Compute the allocation matrix
+
+        Args:
+            type (str, optional): Output type. Can be "lazy" for LazyTensor or "dense" for Tensor. Defaults to "lazy".
+
+        Returns:
+            (N,M) Tensor or LazyTensor: The :math:`(i,j)` component of the allocation matrix is 1 if the source point :math:`j` belongs to the particle :math:`i` and 0 otherwise.
+        """
         x = torch.arange(self.N_crystals,device=self.x.device,dtype=self.x.dtype)
         if type=="lazy":
             lazy_x = LazyTensor(x[:,None,None])
@@ -161,15 +244,42 @@ class Cells(DataPoints):
         else:
             raise ValueError("Unknown type")
     
-    def y_contact_matrix(self,r=None):
-        if r is None:
-            r = 1.1*(1.0/self.M_grid) ** (1.0/self.d)
+    def y_contact_matrix(self,r=None,bsr=False):
+        
         y_i = LazyTensor(self.y[:,None,:])
         y_j = LazyTensor(self.y[None,:,:])
         XY = utils.apply_bc(y_j - y_i,self.bc,self.L)
-        return ((r**2) - (XY **2).sum(-1)).step()
+        if bsr:
+            if r is not None:
+                raise NotImplementedError("1-pixel resolution only.")
+            if self.bc is not None:
+                raise NotImplementedError("Boudned box only.")
+            r = 1.01 * math.sqrt(self.d) * ((1.0/self.M_grid) ** (1.0/self.d))
+            matrix = ((r**2) - (XY **2).sum(-1)).step()
+            i = torch.arange(self.M_grid,device=self.x.device,dtype=torch.int32).reshape((self.M_grid,1))
+            ranges_i = torch.cat((i,i+1),dim=1)
+            M = round((self.M_grid) ** (1/2)) if self.d==2 else round((self.M_grid) ** (1/3))
+            redranges_j = torch.zeros((self.M_grid,2),dtype=torch.int32)
+            redranges_j[i,0] = torch.maximum(i-M-2,torch.tensor(0))
+            redranges_j[i,1] = torch.minimum(i+M+2,torch.tensor(self.M_grid-1))
+            slices_i = (i+1).squeeze() 
+            ranges_ij = (ranges_i,slices_i,redranges_j,ranges_i,slices_i,redranges_j)
+            return matrix, ranges_ij
+        else:
+            if r is None:
+                r = 1.01 * math.sqrt(self.d) * ((1.0/self.M_grid) ** (1.0/self.d))
+            return ((r**2) - (XY **2).sum(-1)).step()
     
     def barycenters(self,weight=None,bsr=False):
+        """Compute the (weighted) barycenter of each particle.
+
+        Args:
+            weight (float or Tensor, optional): Defaults to 1.
+            bsr (bool, optional): Use Block-Sparse-Reduction (faster). Defaults to False.
+
+        Returns:
+            (N,d) Tensor: barycenters
+        """
         if weight is None:
             weight = 1.0
         if isinstance(weight,torch.Tensor):
@@ -187,22 +297,65 @@ class Cells(DataPoints):
             bary = self.x + (weight*A*XY).sum(1)/((weight*A).sum(1)+1e-8).view(self.x.shape[0],1)
         return utils.apply_bc_inside(bary,bc=self.bc,L=self.L)
     
-    def junctions(self,r=None,K=10):
-        # Return a matrix of size MxK containing the cell labels of K neighbours of each pixel
-        lab_neigh = self.y_contact_matrix(r=r) * LazyTensor(-(1.0 + self.labels[None,:,None]))
-        km = -lab_neigh.Kmin(K,dim=1)-1
-        _, indices = torch.unique_consecutive(km, return_inverse=True)
-        indices -= indices.min(dim=1, keepdims=True)[0]
-        result = -torch.ones_like(km)
-        return result.scatter_(1, indices, km) #Sorted unique values
+    def junctions(self,r=None,K=None):
+        """Return a matrix of size MxK containing the cell labels of K neighbours of each pixel, padded with -1
+
+        Args:
+            r (float, optional): The 'vision radius' around each pixel point. By defaults, only the +/-1 neighbouring pixels are considered.
+            K (int, optional): Must be larger than the number of pixels inside the 'vision radius'. By default, it is equal to 3**d + 1.
+
+        Returns:
+            (Tensor): A matrix of size MxK containing the cell labels of K neighbours of each pixel, padded with -1
+        """
+        if K is None:
+            K = (3 ** self.d) + 1
+        if self.jct_method=='Kmin':
+            if r is None and self.bc is None:
+                matrix, ranges_ij = self.y_contact_matrix(bsr=True)
+                lab_neigh = matrix * LazyTensor(-(1.0 + self.labels[None,:,None]))
+                lab_neigh.ranges = ranges_ij
+            else:    
+                lab_neigh = self.y_contact_matrix(r=r) * LazyTensor(-(1.0 + self.labels[None,:,None]))
+            km = -lab_neigh.Kmin(K,dim=1)-1
+            km = torch.cat((km,-torch.ones((self.M_grid,1))),dim=1) # Pad with -1. 
+            _, indices = torch.unique_consecutive(km, return_inverse=True) # https://discuss.pytorch.org/t/best-way-to-run-unique-consecutive-on-certain-dimension/112662/3
+            indices -= indices.min(dim=1, keepdims=True)[0]
+            result = -torch.ones_like(km)
+            return result.scatter_(1, indices, km)[:,:-1] # Sorted unique values
+        elif self.jct_method=='linear':
+            M = round((self.M_grid) ** (1/2)) if self.d==2 else round((self.M_grid) ** (1/3))
+            output = -torch.ones((M,M,K)) if self.d==2 else -torch.ones((M,M,M,K))
+            img = self.labels.reshape((M,M)) if self.d==2 else self.labels.reshape((M,M,M))
+            for i in range(M):
+                im = max(i-1,0)
+                ip = min(i+1,M-1)
+                for j in range(M):
+                    jm = max(j-1,0)
+                    jp = min(j+1,M-1)
+                    if self.d==2:
+                        unq = torch.unique(img[im:ip,jm:jp])
+                        length = min(K,len(unq))
+                        output[i,j,:length] = torch.flip(unq[:length],dims=(0,))
+                    elif self.d==3:
+                        for k in range(M):
+                            km = max(k-1,0)
+                            kp = min(k+1,M-1)
+                            unq = torch.unique(img[im:ip,jm:jp,km:kp])
+                            length = min(K,len(unq))
+                            output[i,j,k,:length] = torch.flip(unq[:length],dims=(0,))
+            return output.reshape((self.M_grid,K))
+                    
+            
+                    
     
-    def extract_boundary(self,r=None,K=10):
-        # Return the indeices of the grid-cells corresponding to a boundary pixel
+    def extract_boundary(self,r=None,K=None):
+        """Return the indices of the grid-cells corresponding to a boundary pixel.
+        """
         km = self.junctions(r=r,K=K)
         is_boundary = km[:,1]!=-1.0
         return is_boundary.nonzero().squeeze().long(), km[is_boundary.nonzero().squeeze(),:2].long()
         
-    def triple_junctions(self,r=None,K=10):
+    def triple_junctions(self,r=None,K=None):
         # Return the list of indices of the grid-cells corresponding to triple junctions and the matrix of indices of corresponding particles
         km = self.junctions(r=r,K=K)
         is_triple = km[:,2]!=-1.0
@@ -225,6 +378,11 @@ class Cells(DataPoints):
         return uq_output[0], ind_x[uq_output[-1],:]    
     
     def sort_y(self):
+        """Sort the source points according to their labels. 
+
+        Returns:
+            (Tensor, tuple): Positions before sorting and ``ranges_ij`` argument to be passed to the Block-Sparse-Reduction method. 
+        """
         sorted_labels, sorting_indices = torch.sort(self.labels)
         y = self.y.detach().clone()
         y_sorted = y[sorting_indices]

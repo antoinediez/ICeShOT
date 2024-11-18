@@ -1,3 +1,38 @@
+"""
+Benchmark: 3D Run-and-Tumble with deformations.
+=================================================
+
+As a benchmark, we consider a 3D system of self-propelled deformable ellipsoids in a strongly packed domain. Each particle moves in the direction of its principal axis which evolves according to a re-orientation process subject to the deformations caused by the surrounding particles. 
+We consider :math:`N` particles in a 3D bounded box, discretized on a grid of size :math:`M^3`.
+
+Example with :math:`M=512` and :math:`N=1000` 
+
+.. video:: ../_static/Benchmark_3D.mp4
+    :autoplay:
+    :loop:
+    :muted:
+    :width: 400
+    
+|
+
+Using a Nvidia RTX A6000 GPU card, we obtain the following benchmarks (we have excluded the cases where the total number of grid cells to fill the volume of the smallest particle is below 100)
+
++---------+------+---------+---------+--------+
+|         | M=64 | M=128   | M=256   | M=512  |
++=========+======+=========+=========+========+
+| N=10    | 30 s | 1.3 min | 7.4 min | 62 min |
++---------+------+---------+---------+--------+
+| N=100   | 45 s | 1 min   | 4.7 min | 36 min |
++---------+------+---------+---------+--------+
+| N=1000  | NR   | 4 min   | 25 min  | 3 h    |
++---------+------+---------+---------+--------+
+| N=10000 | NR   | NR      | 4.9 h   | 35 h   |
++---------+------+---------+---------+--------+
+
+
+""" 
+# sphinx_gallery_thumbnail_path = '_static/final_1000_512.png'
+
 import os 
 import sys
 sys.path.append("..")
@@ -6,6 +41,7 @@ import pickle
 import math
 import torch
 import numpy as np
+from matplotlib import pyplot as plt
 from matplotlib import colors
 from matplotlib.colors import ListedColormap
 from iceshot import cells
@@ -35,7 +71,7 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
     d = 3
     
     seeds = torch.rand(N,d)
-    source = sample.sample_grid(M,dim=d)
+    source = sample.sample_grid(M,dim=d,device=seeds.device)
 
     vol_x = 0.2 + 0.8*torch.rand(N)
     vol_x *= 0.8/vol_x.sum()
@@ -60,7 +96,6 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
     cost_params = {
     "p" : p,
     "scaling" : "volume",
-    "R" : simu.R_mean,
     "C" : eng
     }
 
@@ -82,12 +117,14 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
     #==================== Plot config ======================#
     pv.global_theme.volume_mapper = 'fixed_point'
     pv.global_theme.render_lines_as_tubes = True
+    cmap0 = plt.cm.hsv
     
     off_screen = True
     plotter = pv.Plotter(lighting='three lights', off_screen=off_screen, image_scale=2)
     newcolors = np.zeros((N+1, 4))
     for n in range(N):
-        newcolors[n+1,:3] = 0.1 + 0.8*np.random.rand(3)
+        # newcolors[n+1,:3] = 0.1 + 0.8*np.random.rand(3)
+        newcolors[n,:] = np.array(cmap0(n/N))
         newcolors[n+1,3] = 1.0
 
     cmap = ListedColormap(newcolors)
@@ -204,7 +241,7 @@ def benchmark(N,M,T=10,dt=0.005,plot_every=2,bsr=False):
 
 start_time = time.time()
 
-benchmark(N=1000,M=256,T=10,dt=0.005,plot_every=1000000,bsr=True)
+benchmark(N=101,M=128,T=10,dt=0.005,plot_every=2,bsr=True)
 
 print(f"--------------",flush=True)
 print(f"Total computation time: {time.time() - start_time} seconds.",flush=True)

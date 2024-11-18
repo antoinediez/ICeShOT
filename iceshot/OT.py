@@ -5,6 +5,22 @@ from tqdm import tqdm
 from . import utils
 
 def LBFGSB(C_xy,scales,f_x,g_y,a=None,b=None,default_init=False,show_progress=False,max_epoch=10,tol=0.01,stopping_criterion="average",**kwargs):
+    """LBFGS-B solver: update the potentials ``f_x`` and ``g_y``. 
+
+    Args:
+        C_xy ((N,M) LazyTensor): cost matrix
+        scales (Tensor): The number of iterations is the length of ``scales``
+        f_x ((N+1,) Tensor): Kantorovich potentials
+        g_y ((M,) Tensor): Kantorovich potentials
+        a ((N+1,) Tensor, optional): Defaults to 1.
+        b ((M, ) Tensor, optional): Defaults to 1.
+        default_init (bool, optional): Initial point for the solver: 0 (True) or ``f_x`` (False). Defaults to True.
+        max_epoch (int, optional): Defaults to 10.
+        tol (float, optional): Tolerance. Defaults to 0.01.
+        stopping_criterion (str, optional): Can be "maximum" or "average". Defaults to "average".
+
+    """
+    
     n_iter = len(scales)
     N, M = C_xy.shape
     assert f_x.shape == (N+1,), f"`f_x` must be of size {N+1}"
@@ -88,6 +104,19 @@ def annealing_schedule(n_iter,M_grid,s0=4.0,device="cuda",dtype=torch.float32):
 
     
 def sinkhorn(C_xy,scales,f_x,g_y,a=None,b=None,default_init=True,show_progress=False,**kwargs):
+    """Sinkhorn algorithm: update the potentials ``f_x`` and ``g_y``
+
+    Args:
+        C_xy ((N,M) LazyTensor): Cost matrix
+        scales (Tensore): Annealing schedule
+        f_x ((N,) Tensor): Kantorovich potential
+        g_y ((M,) Tensor): Kantorovich potential
+        a (_type_, optional): Defaults to 1/N
+        b (_type_, optional): Defaults to 1/M
+        default_init (bool, optional): Set the potential values to a good initial value. Defaults to True.
+        show_progress (bool, optional): Defaults to False.
+    """
+    
     N, M = C_xy.shape
     assert f_x.shape == (N,), f"`f_x` must be of size {N}"
     assert g_y.shape == (M,), f"`g_y` must be of size {M}"
@@ -127,6 +156,19 @@ def sinkhorn(C_xy,scales,f_x,g_y,a=None,b=None,default_init=True,show_progress=F
         g_y[:] = (g_y + gt_y) / 2
         
 def sinkhorn_zerolast(C_xy,scales,f_x,g_y,a=None,b=None,default_init=True,show_progress=False,**kwargs):
+    """Sinkhorn algorithm with an extra void particle: update the potentials ``f_x`` and ``g_y``
+
+    Args:
+        C_xy ((N,M) LazyTensor): Cost matrix
+        scales (Tensore): Annealing schedule
+        f_x ((N+1,) Tensor): Kantorovich potential
+        g_y ((M,) Tensor): Kantorovich potential
+        a (_type_, optional): Defaults to 1/N
+        b (_type_, optional): Defaults to 1/M
+        default_init (bool, optional): Set the potential values to a good initial value. Defaults to True.
+        show_progress (bool, optional): Defaults to False.
+    """
+    
     N, M = C_xy.shape
     assert f_x.shape == (N+1,), f"`f_x` must be of size {N+1}"
     assert g_y.shape == (M,), f"`g_y` must be of size {M}"
@@ -173,11 +215,30 @@ def sinkhorn_zerolast(C_xy,scales,f_x,g_y,a=None,b=None,default_init=True,show_p
         
         
 class OT_solver:
+    """Optimal Transport solver class.
+    
+        :ivar cost: Cost function
+        :ivar cost_params: Parameters to be passed to the cost function
+        :ivar n_sinkhorn0: Initial number of iterations in the Sinkhorn algorithm or maximal number of iterations per optimization step in the LBFGS-B algorithm.
+        :ivar n_sinkhorn: Number of iterations in the Sinkhorn algorithm or maximal number of iterations per optimization step in the LBFGS-B algorithm.
+        :ivar n_sinkhorn: Final number of iterations in the Sinkhorn algorithm or maximal number of iterations per optimization step in the LBFGS-B algorithm.
+    """
     
     def __init__(self,
         n_sinkhorn=200,n_sinkhorn_last=1000,n_lloyds=5,
         cost_function=None,cost_params={},
         s0=4,default_init=True):
+        """Initialize
+
+        Args:
+            n_sinkhorn (int, optional): Number of iterations in the Sinkhorn algorithm or maximal number of iterations per optimization step in the LBFGS-B algorithm. Defaults to 200.
+            n_sinkhorn_last (int, optional): ``n_sinkhorn`` at the last epoch. Defaults to 1000.
+            n_lloyds (int, optional): Number of Lloyd steps. Defaults to 5.
+            cost_function (fun, optional): Cost function. Defaults to None.
+            cost_params (dict, optional): Parameters to be passed to the cost function. Defaults to {}.
+            s0 (float, optional): Initial range of the annealing schedule. Defaults to 4.
+            default_init (bool, optional): Defaults to True.
+        """
         
         self.cost = cost_function
         self.cost_params = cost_params
@@ -205,6 +266,25 @@ class OT_solver:
                    sinkhorn_algo=sinkhorn,
                    b=None,default_init=False,show_progress=False,
                    tau=0.0,to_bary=False,weight=None,bsr=False,**kwargs):
+        """Solve the OT problem and return the incompressibility forces for the current configuration (using the method ``incompressiblity_force``)
+
+        Args:
+            data (DataPoints)
+            cost_matrix (fun, optional): Specify custom custom matrix. Defaults to None.
+            masks (optional): Boolean masks for multi-cost cases. Defaults to None.
+            cap (float, optional): Maximum value of the cost. Defaults to None.
+            sinkhorn_algo (fun, optional): OT solver algorithm. Defaults to sinkhorn.
+            b (Tensor, optional): To be passed to ``sinkhorn_algo``. Defaults to None.
+            default_init (bool, optional): To be passed to ``sinkhorn_algo``. Defaults to False.
+            show_progress (bool, optional): To be passed to ``sinkhorn_algo``. Defaults to False.
+            tau (float, optional): Gradient-step (multiplicative factor) of the incompressibility force. Defaults to 0.0.
+            to_bary (bool, optional): The incompressibility force is in the direction of the barycenters. Defaults to False.
+            weight (float or Tensor, optional): Weights for the barycenters. Defaults to None.
+            bsr (bool, optional): Use Block-Sparse-Reduction (faster). Defaults to False.
+
+        Returns:
+            (N,d) Tensor: incompressibility force
+        """
         
         cost, grad_cost = self.cost_matrix(data,masks=masks) if cost_matrix is None else cost_matrix
         if cap is not None:
@@ -231,6 +311,22 @@ class OT_solver:
               sinkhorn_algo=sinkhorn,
               b=None,default_init=False,show_progress=False,
               tau=0.0,to_bary=False,weight=None,bsr=False,**kwargs):
+        """Lloyd algorithm: perform ``self.n_lloyds`` times the operation ``data.x + F`` where ``F`` is the incompressibility force computed by `self.lloyd_step`.
+
+        Args:
+            data (DataPoints)
+            cost_matrix (fun, optional): Specify custom custom matrix. Defaults to None.
+            masks (optional): Boolean masks for multi-cost cases. Defaults to None.
+            cap (float, optional): Maximum value of the cost. Defaults to None.
+            sinkhorn_algo (fun, optional): OT solver algorithm. Defaults to sinkhorn.
+            b (Tensor, optional): To be passed to ``sinkhorn_algo``. Defaults to None.
+            default_init (bool, optional): To be passed to ``sinkhorn_algo``. Defaults to False.
+            show_progress (bool, optional): To be passed to ``sinkhorn_algo``. Defaults to False.
+            tau (float, optional): Gradient-step (multiplicative factor) of the incompressibility force. Defaults to 0.0.
+            to_bary (bool, optional): The incompressibility force is in the direction of the barycenters. Defaults to False.
+            weight (float or Tensor, optional): Weights for the barycenters. Defaults to None.
+            bsr (bool, optional): Use Block-Sparse-Reduction (faster). Defaults to False.
+        """
         
         self.n_sinkhorn = self.n_sinkhorn0
         
@@ -249,6 +345,12 @@ class OT_solver:
             data.x[:] = utils.apply_bc_inside(data.x+F,bc=data.bc,L=data.L)
 
     def Laguerre_allocation(self,data,cost_matrix):
+        """Update the label of the source points given the Kantorovich potentials.
+
+        Args:
+            data (DataPoints)
+            cost_matrix ((N,M) LazyTensor)
+        """
         if len(data.f_x) == cost_matrix.shape[0]:
             mat = cost_matrix - LazyTensor(data.f_x[:,None,None])
             data.labels[:] = mat.argmin(axis=0).reshape(data.y.shape[0])
@@ -261,6 +363,20 @@ class OT_solver:
             data.labels[m>-data.f_x[-1]] = data.x.shape[0] + 42.0
         
     def incompressibility_force(self,data,grad_cost,tau=0.0,to_bary=False,weight=None,bsr=False,masks=None):
+        """Compute the incompressibility force given a configuration and a cost. 
+
+        Args:
+            data (DataPoints)
+            grad_cost ((N,M,d)): Gradient of the cost matrix
+            tau (float, optional): Gradient-step (multiplicative factor) of the incompressibility force. Defaults to 0.0.
+            to_bary (bool, optional): The incompressibility force is in the direction of the barycenters. Defaults to False.
+            weight (float or Tensor, optional): Weights for the barycenters. Defaults to None.
+            bsr (bool, optional): Use Block-Sparse-Reduction (faster). Defaults to False.
+            masks (optional): Boolean masks for multi-costs situations. Defaults to None.
+
+        Returns:
+            (N,d) Tensor: Incompressibility force
+        """
         if isinstance(tau,torch.Tensor):
             tau = tau.view(data.x.shape[0],1)
         A = data.allocation_matrix()

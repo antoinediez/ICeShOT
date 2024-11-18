@@ -4,6 +4,24 @@ from pykeops.torch import LazyTensor
 from . import utils
 
 def l2_cost(data,scaling=None,R=1.0,C=1.0,**kwargs):
+    """L2 cost
+    
+    .. math::
+        c(x,y) = |y-x|^2
+
+    Args:
+        data (DataPoints)
+        scaling (str, optional): Defaults to None. If specified, can be one of the following:
+
+            - ``"level_set"`` : The cost is equal to ``C`` at distance ``R``
+            - ``"volume"`` : The integral of the cost on a ball of radius ``R`` is equal to the volume of the ball times ``C``
+            - ``"constant:`` : Multiply the cost by ``C``
+        R (float or Tensor, optional): Defaults to 1.0.
+        C (float or Tensor, optional): Defaults to 1.0.
+
+    Returns:
+        ((N,M)-LazyTensor, (N,M,d)-LazyTensor): cost matrix and its gradient
+    """
     if scaling=="level_set":
         # The cost is equal to `C` at distance `R`
         sc = C/R**2
@@ -22,6 +40,25 @@ def l2_cost(data,scaling=None,R=1.0,C=1.0,**kwargs):
     return cost_matrix, gradient
     
 def power_cost(data,p=2.0,scaling=None,R=1.0,C=1.0,**kwargs):
+    """Power cost.
+    
+    .. math::
+        c(x,y) = \lambda_p |y-x|^p
+
+    Args:
+        data (DataPoints)
+        p (float or Tensor, optional): Exponent. Defaults to 2.0.
+        scaling (str, optional): Defaults to None. If specified, can be one of the following:
+
+            - ``"level_set"`` : The cost is equal to ``C`` at distance ``R``
+            - ``"volume"`` : The integral of the cost on a ball of radius ``R`` is equal to the volume of the ball times ``C``
+            - ``"constant:`` : Multiply the cost by ``C``
+        R (float or Tensor, optional): Defaults to 1.0.
+        C (float or Tensor, optional): Defaults to 1.0.
+
+    Returns:
+        ((N,M)-LazyTensor, (N,M,d)-LazyTensor): cost matrix and its gradient
+    """
     if scaling=="level_set":
         # The cost is equal to `C` at distance `R`
         sc = C/R**p
@@ -41,6 +78,26 @@ def power_cost(data,p=2.0,scaling=None,R=1.0,C=1.0,**kwargs):
     return cost_matrix, gradient
 
 def anisotropic_power_cost(data,p=2.0,scaling=None,b=1.0,ar=None,C=1.0,**kwargs):
+    """Anisotropic power cost with anisotropy matrix ``data.orientation``.
+    
+    .. math::
+        c(x,y) = \lambda_p (y-x)^T A (y-x)
+
+    Args:
+        data (DataPoints)
+        p (float or Tensor, optional): Exponent. Defaults to 2.0.
+        scaling (str, optional): Defaults to None. If specified, can be one of the following:
+
+            - ``"level_set"`` : :math:`c(x,y) = C` is the equation of an ellipse with aspect ratio ``ar`` and short axis ``b``
+            - ``"volume"`` : The integral of the cost on an ellipse of aspect ratio ``ar`` and short axis ``b`` is equal to the volume of the ellipse times ``C``
+            - ``"constant:`` : Multiply the cost by ``C``        
+        b (float or Tensor, optional): short-axis. Defaults to 1.0.
+        ar (Tensor, optional): aspect ratio. Defaults to None.
+        C (float or Tensor, optional): Defaults to 1.0.
+
+    Returns:
+        ((N,M)-LazyTensor, (N,M,d)-LazyTensor): cost matrix and its gradient
+    """
     if ar is None:
         ar = data.ar
     if scaling=="level_set":
@@ -117,6 +174,27 @@ def spherocylinders_cost(data,p=2.0,b=1.0,scaling=None,C=1.0,**kwargs):
     return cost_matrix, gradient
 
 def spherocylinders_2_cost(data,p=2.0,b=1.0,scaling=None,C=1.0,**kwargs):
+    """Spherocylinder cost.
+    
+    The level-sets are spherocylinders with aspect ratio ``data.ar``.
+
+    Args:
+        data (DataPoints)
+        p (float or Tensor, optional): Exponent. Defaults to 2.0.
+        b (float or Tensor, optional): short_axis. Defaults to 1.0.
+        scaling (str, optional): Defaults to None. If specified, can be one of the following:
+
+            - ``"level_set"`` : Short-axis level-set
+            - ``"volume"`` : The integral of the cost on the spherocylinder with short-axis ``b`` is the volume of this spherocylinder. 
+            - ``"constant:`` : Multiply the cost by ``C``     
+        C (float or Tensor, optional): Defaults to 1.0.
+
+    Raises:
+        NotImplementedError: Only in 2D
+
+    Returns:
+        ((N,M)-LazyTensor, (N,M,d)-LazyTensor): cost matrix and its gradient
+    """
     if data.d != 2:
         raise NotImplementedError()
     r_i = LazyTensor(data.ar[:,None,None]) if isinstance(data.ar,torch.Tensor) else data.ar
