@@ -104,7 +104,7 @@ Table of contents
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Gallery
 
    _auto_examples/index

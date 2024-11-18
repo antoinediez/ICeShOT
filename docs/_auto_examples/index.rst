@@ -12,16 +12,32 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. thumbnail-parent-div-open
 
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+2D examples
+------------------
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="We consider the motion of N active deformable spheres in a periodic box with different deformab...">
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_ActiveBrownian_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_ActiveBrownian_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_ActiveBrownian.py`
+  :ref:`sphx_glr__auto_examples_2D_ActiveBrownian.py`
 
 .. raw:: html
 
@@ -31,31 +47,14 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="As a benchmark, we consider a 3D system of self-propelled deformable ellipsoids in a strongly p...">
-
-.. only:: html
-
-  .. image:: /_auto_examples/images/thumb/sphx_glr_Benchmark_3D_thumb.png
-    :alt:
-
-  :ref:`sphx_glr__auto_examples_Benchmark_3D.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Benchmark: 3D Run-and-Tumble with deformations.</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="We consider a chemo-attractant density u(x) and we assume that a particle located at x can sens...">
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_ChemoDeformation_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_ChemoDeformation_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_ChemoDeformation.py`
+  :ref:`sphx_glr__auto_examples_2D_ChemoDeformation.py`
 
 .. raw:: html
 
@@ -69,10 +68,10 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_Engulfment_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_Engulfment_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_Engulfment.py`
+  :ref:`sphx_glr__auto_examples_2D_Engulfment.py`
 
 .. raw:: html
 
@@ -86,10 +85,10 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_Evacuation_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_Evacuation_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_Evacuation.py`
+  :ref:`sphx_glr__auto_examples_2D_Evacuation.py`
 
 .. raw:: html
 
@@ -103,10 +102,10 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_FallingSpheres_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_FallingSpheres_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_FallingSpheres.py`
+  :ref:`sphx_glr__auto_examples_2D_FallingSpheres.py`
 
 .. raw:: html
 
@@ -116,31 +115,14 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Our framework can handle arbitrary domains by considering appropriately distributed source poin...">
-
-.. only:: html
-
-  .. image:: /_auto_examples/images/thumb/sphx_glr_FallingStuff_thumb.png
-    :alt:
-
-  :ref:`sphx_glr__auto_examples_FallingStuff.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Falling soft spheres in a 3D hourglass domain</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="Viscoelastic properties of individual biological cells are often quantified using micropipette ...">
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_Micropipette_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_Micropipette_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_Micropipette.py`
+  :ref:`sphx_glr__auto_examples_2D_Micropipette.py`
 
 .. raw:: html
 
@@ -154,10 +136,10 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_Protrusions_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_Protrusions_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_Protrusions.py`
+  :ref:`sphx_glr__auto_examples_2D_Protrusions.py`
 
 .. raw:: html
 
@@ -171,10 +153,10 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_RodShape_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_RodShape_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_RodShape.py`
+  :ref:`sphx_glr__auto_examples_2D_RodShape.py`
 
 .. raw:: html
 
@@ -184,31 +166,14 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Run-and-tumble in 3D with soft spheres">
-
-.. only:: html
-
-  .. image:: /_auto_examples/images/thumb/sphx_glr_RunTumble3D_thumb.png
-    :alt:
-
-  :ref:`sphx_glr__auto_examples_RunTumble3D.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Run-and-tumble in 3D with soft spheres</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="Run-and-tumble in 2D with soft spheres in a disk domain">
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_RunTumbleDisk_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_RunTumbleDisk_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_RunTumbleDisk.py`
+  :ref:`sphx_glr__auto_examples_2D_RunTumbleDisk.py`
 
 .. raw:: html
 
@@ -222,10 +187,10 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_SurfaceTension_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_SurfaceTension_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_SurfaceTension.py`
+  :ref:`sphx_glr__auto_examples_2D_SurfaceTension.py`
 
 .. raw:: html
 
@@ -239,14 +204,98 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_TissueGrowth_thumb.png
+  .. image:: /_auto_examples/2D/images/thumb/sphx_glr_TissueGrowth_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_TissueGrowth.py`
+  :ref:`sphx_glr__auto_examples_2D_TissueGrowth.py`
 
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Growth of a 2D cell aggregate</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+3D examples
+---------------
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="As a benchmark, we consider a 3D system of self-propelled deformable ellipsoids in a strongly p...">
+
+.. only:: html
+
+  .. image:: /_auto_examples/3D/images/thumb/sphx_glr_Benchmark_3D_thumb.png
+    :alt:
+
+  :ref:`sphx_glr__auto_examples_3D_Benchmark_3D.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Benchmark: 3D Run-and-Tumble with deformations.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This script simulates 3D cell aggregates with the following weighted L^2 cost and force for the...">
+
+.. only:: html
+
+  .. image:: /_auto_examples/3D/images/thumb/sphx_glr_CellSorting3D_thumb.png
+    :alt:
+
+  :ref:`sphx_glr__auto_examples_3D_CellSorting3D.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Cell sorting in 3D</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Our framework can handle arbitrary domains by considering appropriately distributed source poin...">
+
+.. only:: html
+
+  .. image:: /_auto_examples/3D/images/thumb/sphx_glr_FallingStuff_thumb.png
+    :alt:
+
+  :ref:`sphx_glr__auto_examples_3D_FallingStuff.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Falling soft spheres in a 3D hourglass domain</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Run-and-tumble in 3D with soft spheres">
+
+.. only:: html
+
+  .. image:: /_auto_examples/3D/images/thumb/sphx_glr_RunTumble3D_thumb.png
+    :alt:
+
+  :ref:`sphx_glr__auto_examples_3D_RunTumble3D.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Run-and-tumble in 3D with soft spheres</div>
     </div>
 
 
@@ -256,10 +305,10 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. only:: html
 
-  .. image:: /_auto_examples/images/thumb/sphx_glr_TissueGrowth_3D_thumb.png
+  .. image:: /_auto_examples/3D/images/thumb/sphx_glr_TissueGrowth_3D_thumb.png
     :alt:
 
-  :ref:`sphx_glr__auto_examples_TissueGrowth_3D.py`
+  :ref:`sphx_glr__auto_examples_3D_TissueGrowth_3D.py`
 
 .. raw:: html
 
@@ -276,22 +325,11 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. toctree::
    :hidden:
+   :includehidden:
 
-   /_auto_examples/ActiveBrownian
-   /_auto_examples/Benchmark_3D
-   /_auto_examples/ChemoDeformation
-   /_auto_examples/Engulfment
-   /_auto_examples/Evacuation
-   /_auto_examples/FallingSpheres
-   /_auto_examples/FallingStuff
-   /_auto_examples/Micropipette
-   /_auto_examples/Protrusions
-   /_auto_examples/RodShape
-   /_auto_examples/RunTumble3D
-   /_auto_examples/RunTumbleDisk
-   /_auto_examples/SurfaceTension
-   /_auto_examples/TissueGrowth
-   /_auto_examples/TissueGrowth_3D
+
+   /./_auto_examples/2D/index.rst
+   /./_auto_examples/3D/index.rst
 
 
 .. only:: html

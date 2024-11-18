@@ -7,7 +7,7 @@
   <title>Cells &mdash; iceshot  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -28,7 +28,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Costs" href="costs.html" />
-    <link rel="prev" title="Growth of a 3D cell aggregate" href="../_auto_examples/TissueGrowth_3D.html" /> 
+    <link rel="prev" title="Growth of a 3D cell aggregate" href="../_auto_examples/3D/TissueGrowth_3D.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,6 +41,7 @@
           
           <a href="../index.html" class="icon icon-home">
             iceshot
+              <img src="../_static/iceshot_logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -72,6 +73,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.covariance_matrix"><code class="docutils literal notranslate"><span class="pre">Cells.covariance_matrix()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.allocation_matrix"><code class="docutils literal notranslate"><span class="pre">Cells.allocation_matrix()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.barycenters"><code class="docutils literal notranslate"><span class="pre">Cells.barycenters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.junctions"><code class="docutils literal notranslate"><span class="pre">Cells.junctions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.extract_boundary"><code class="docutils literal notranslate"><span class="pre">Cells.extract_boundary()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.lazy_XY"><code class="docutils literal notranslate"><span class="pre">Cells.lazy_XY()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#iceshot.cells.Cells.sort_y"><code class="docutils literal notranslate"><span class="pre">Cells.sort_y()</span></code></a></li>
 </ul>
@@ -168,7 +171,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="iceshot.cells.Cells">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">iceshot.cells.</span></span><span class="sig-name descname"><span class="pre">Cells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seeds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">iceshot.cells.</span></span><span class="sig-name descname"><span class="pre">Cells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seeds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jct_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Kmin'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#iceshot.cells.DataPoints" title="iceshot.cells.DataPoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataPoints</span></code></a></p>
 <p>Main class for particles with a volume.</p>
 <dl class="field-list simple">
@@ -189,7 +192,7 @@
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="iceshot.cells.Cells.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seeds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seeds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jct_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Kmin'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -204,6 +207,7 @@
 <li><p><strong>ar</strong> (<em>N tensor</em><em>, </em><em>optional</em>) – Aspect ratios. Defaults to 1.</p></li>
 <li><p><strong>bc</strong> (<em>optional</em>) – boundary condition. Defaults to None.</p></li>
 <li><p><strong>box_size</strong> (<em>list</em><em>, </em><em>optional</em>) – Defaults to [1.0,1.0].</p></li>
+<li><p><strong>jct_method</strong> (<em>string</em><em>, </em><em>optional</em>) – The method used to compute junction points. Can be ‘linear’ (faster on CPU) or ‘Kmin’ (faster on GPU). Defaults to ‘linear’.</p></li>
 </ul>
 </dd>
 </dl>
@@ -287,6 +291,32 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.Cells.junctions">
+<span class="sig-name descname"><span class="pre">junctions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.junctions" title="Link to this definition"></a></dt>
+<dd><p>Return a matrix of size MxK containing the cell labels of K neighbours of each pixel, padded with -1</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>float</em><em>, </em><em>optional</em>) – The ‘vision radius’ around each pixel point. By defaults, only the +/-1 neighbouring pixels are considered.</p></li>
+<li><p><strong>K</strong> (<em>int</em><em>, </em><em>optional</em>) – Must be larger than the number of pixels inside the ‘vision radius’. By default, it is equal to 3**d + 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A matrix of size MxK containing the cell labels of K neighbours of each pixel, padded with -1</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(Tensor)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="iceshot.cells.Cells.extract_boundary">
+<span class="sig-name descname"><span class="pre">extract_boundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.extract_boundary" title="Link to this definition"></a></dt>
+<dd><p>Return the indices of the grid-cells corresponding to a boundary pixel.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="iceshot.cells.Cells.lazy_XY">
 <span class="sig-name descname"><span class="pre">lazy_XY</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iceshot.cells.Cells.lazy_XY" title="Link to this definition"></a></dt>
 <dd><p>Return the XY matrix as a LazyTensor.</p>
@@ -320,7 +350,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../_auto_examples/TissueGrowth_3D.html" class="btn btn-neutral float-left" title="Growth of a 3D cell aggregate" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../_auto_examples/3D/TissueGrowth_3D.html" class="btn btn-neutral float-left" title="Growth of a 3D cell aggregate" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="costs.html" class="btn btn-neutral float-right" title="Costs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

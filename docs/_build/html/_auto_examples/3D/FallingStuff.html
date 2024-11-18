@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Falling soft spheres in a 3D hourglass domain &mdash; iceshot  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Run-and-tumble in 3D with soft spheres" href="RunTumble3D.html" />
+    <link rel="prev" title="Cell sorting in 3D" href="CellSorting3D.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            iceshot
+              <img src="../../_static/iceshot_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_auto_tutorials/index.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#d-examples">2D examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#id1">3D examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../2D/index.html">2D examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">3D examples</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Benchmark_3D.html">Benchmark: 3D Run-and-Tumble with deformations.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CellSorting3D.html">Cell sorting in 3D</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Falling soft spheres in a 3D hourglass domain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RunTumble3D.html">Run-and-tumble in 3D with soft spheres</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TissueGrowth_3D.html">Growth of a 3D cell aggregate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/cells.html">Cells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/costs.html">Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/OT.html">Optimal Transport</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">iceshot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Examples</a></li>
+          <li class="breadcrumb-item"><a href="index.html">3D examples</a></li>
+      <li class="breadcrumb-item active">Falling soft spheres in a 3D hourglass domain</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/_auto_examples/3D/FallingStuff.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-3d-fallingstuff-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="falling-soft-spheres-in-a-3d-hourglass-domain">
+<span id="sphx-glr-auto-examples-3d-fallingstuff-py"></span><h1>Falling soft spheres in a 3D hourglass domain<a class="headerlink" href="#falling-soft-spheres-in-a-3d-hourglass-domain" title="Link to this heading"></a></h1>
+<p>Our framework can handle arbitrary domains by considering appropriately distributed source points.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/fallingstuff.gif"><img alt="Falling Soft Spheres" src="../../_images/fallingstuff.gif" style="width: 400.0px; height: 300.0px;" /></a>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_path = &#39;_static/FallingStuff_t2.png&#39;</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
+<span class="kn">from</span> <span class="nn">pykeops.torch</span> <span class="kn">import</span> <span class="n">LazyTensor</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">cells</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">costs</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">OT</span>
+<span class="kn">from</span> <span class="nn">iceshot.OT</span> <span class="kn">import</span> <span class="n">OT_solver</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">plot_cells</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">sample</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">import</span> <span class="nn">tifffile</span> <span class="k">as</span> <span class="nn">tif</span>
+<span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
+<span class="kn">import</span> <span class="nn">vtk</span> <span class="k">as</span> <span class="nn">vtk</span>
+<span class="kn">from</span> <span class="nn">pyvista.core</span> <span class="kn">import</span> <span class="n">_vtk_core</span> <span class="k">as</span> <span class="n">_vtk</span>
+<span class="kn">from</span> <span class="nn">pyvista.core.filters</span> <span class="kn">import</span> <span class="n">_get_output</span><span class="p">,</span> <span class="n">_update_alg</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">cast</span>
+<span class="kn">from</span> <span class="nn">pyvista.core.utilities.arrays</span> <span class="kn">import</span> <span class="n">FieldAssociation</span><span class="p">,</span> <span class="n">set_default_active_scalars</span>
+
+<span class="n">use_cuda</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">use_cuda</span><span class="p">:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">set_default_tensor_type</span><span class="p">(</span><span class="s2">&quot;torch.cuda.FloatTensor&quot;</span><span class="p">)</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span>
+
+
+<span class="n">simu_name</span> <span class="o">=</span> <span class="s2">&quot;simu_FallingStuff&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">simu_name</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">simu_name</span><span class="o">+</span><span class="s2">&quot;/frames&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">simu_name</span><span class="o">+</span><span class="s2">&quot;/data&quot;</span><span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">N1</span> <span class="o">=</span> <span class="n">N</span>
+<span class="n">N2</span> <span class="o">=</span> <span class="n">N</span> <span class="o">-</span> <span class="n">N1</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">vol_grid_true</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">M</span><span class="o">**</span><span class="n">dim</span><span class="p">)</span>
+
+<span class="n">cut</span> <span class="o">=</span> <span class="mf">0.03</span>
+<span class="n">o_cnt</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span>
+<span class="n">o_cnt</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.37</span>
+<span class="n">R_o</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="k">def</span> <span class="nf">crop_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span>
+    <span class="n">xc</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">cnt</span>
+    <span class="n">upper_cone</span> <span class="o">=</span> <span class="p">(</span><span class="n">xc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="n">cut</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">*</span> <span class="p">((</span><span class="n">xc</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;</span><span class="n">xc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    <span class="n">below</span> <span class="o">=</span> <span class="p">(</span><span class="n">xc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="n">cut</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    <span class="n">obstacle</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span> <span class="o">-</span> <span class="n">o_cnt</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">R_o</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">upper_cone</span> <span class="o">+</span> <span class="n">below</span><span class="o">*</span><span class="n">obstacle</span>
+
+<span class="n">cnt_seeds</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span>
+<span class="n">size_seeds</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">cnt_seeds</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">size_seeds</span><span class="o">/</span><span class="mi">2</span>
+
+<span class="n">seeds</span> <span class="o">=</span> <span class="n">size_seeds</span><span class="o">*</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="n">cnt_seeds</span>
+<span class="c1"># source = sample.sample_cropped_domain(crop_function,n=M,dim=dim)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample_grid</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>
+<span class="n">real_points</span> <span class="o">=</span> <span class="n">crop_function</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="n">real_points</span><span class="p">,:]</span>
+<span class="n">all_labels</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">M</span><span class="o">**</span><span class="n">dim</span><span class="p">)</span>
+
+<span class="n">N_max</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">vol0</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">/</span><span class="n">N_max</span>
+<span class="n">R0</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vol0</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="k">if</span> <span class="n">dim</span><span class="o">==</span><span class="mi">2</span> <span class="k">else</span> <span class="p">(</span><span class="n">vol0</span><span class="o">/</span><span class="p">(</span><span class="mf">4.</span><span class="o">/</span><span class="mf">3.</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span>
+<span class="n">vol_x</span> <span class="o">=</span> <span class="n">vol0</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+<span class="n">simu</span> <span class="o">=</span> <span class="n">cells</span><span class="o">.</span><span class="n">Cells</span><span class="p">(</span>
+    <span class="n">seeds</span><span class="o">=</span><span class="n">seeds</span><span class="p">,</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+    <span class="n">vol_x</span><span class="o">=</span><span class="n">vol_x</span><span class="p">,</span><span class="n">extra_space</span><span class="o">=</span><span class="s2">&quot;void&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of voxels per particle: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">vol0</span><span class="o">/</span><span class="n">simu</span><span class="o">.</span><span class="n">vol_grid</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="n">p0</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">cost_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;p&quot;</span> <span class="p">:</span> <span class="n">p0</span><span class="p">,</span>
+    <span class="s2">&quot;scaling&quot;</span> <span class="p">:</span> <span class="s2">&quot;volume&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;R&quot;</span> <span class="p">:</span> <span class="n">R0</span><span class="p">,</span>
+    <span class="s2">&quot;C&quot;</span> <span class="p">:</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">p0</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">OT_solver</span><span class="p">(</span>
+    <span class="n">n_sinkhorn</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">n_sinkhorn_last</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">n_lloyds</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">cost_function</span><span class="o">=</span><span class="n">costs</span><span class="o">.</span><span class="n">power_cost</span><span class="p">,</span><span class="n">cost_params</span><span class="o">=</span><span class="n">cost_params</span>
+<span class="p">)</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="mf">100.0</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.005</span>
+<span class="n">plot_every</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">t_iter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">t_plot</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span>
+<span class="c1"># F[0,-1] = -0.5</span>
+<span class="c1"># tau = 3.0/R0 if dim==2 else 3.0/(R0**2)</span>
+<span class="n">F</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.3</span>
+<span class="n">tau</span> <span class="o">=</span> <span class="mf">6.0</span><span class="o">/</span><span class="n">R0</span> <span class="k">if</span> <span class="n">dim</span><span class="o">==</span><span class="mi">2</span> <span class="k">else</span> <span class="mf">6.0</span><span class="o">/</span><span class="p">(</span><span class="n">R0</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">F0_ifc</span> <span class="o">=</span> <span class="mf">0.07</span>
+
+<span class="n">g11</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">g10</span> <span class="o">=</span> <span class="mf">3.0</span>
+
+<span class="n">vol_cone</span> <span class="o">=</span> <span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">y</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="o">+</span><span class="n">cut</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">*</span><span class="n">simu</span><span class="o">.</span><span class="n">vol_grid</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+<span class="c1">#==================== Plot config ======================#</span>
+<span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">volume_mapper</span> <span class="o">=</span> <span class="s1">&#39;fixed_point&#39;</span>
+<span class="n">pv</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">render_lines_as_tubes</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span>
+<span class="n">newcolors_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N_max</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">cmap0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">hsv</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_max</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># newcolors_all[n,:3] = 0.1 + 0.8*np.random.rand(3)</span>
+    <span class="n">newcolors_all</span><span class="p">[</span><span class="n">n</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cmap0</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="n">N_max</span><span class="p">))</span>
+    <span class="n">newcolors_all</span><span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">newcolors_all</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">])</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">ListedColormap</span><span class="p">(</span><span class="n">newcolors_all</span><span class="p">)</span>
+<span class="n">lut</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">LookupTable</span><span class="p">(</span><span class="n">ListedColormap</span><span class="p">(</span><span class="n">newcolors_all</span><span class="p">),</span><span class="n">scalar_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="n">N_max</span><span class="o">-</span><span class="mf">0.5</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">plot_cells</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">img</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;tab20b&quot;</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span><span class="n">constant_values</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">N_max</span><span class="o">-</span><span class="mi">1</span>    <span class="c1"># PyVista developers should be in prison for that</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_volume</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="n">opacity</span><span class="o">=</span><span class="s1">&#39;foreground&#39;</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="n">box</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="n">x_length</span><span class="o">=</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">y_length</span><span class="o">=</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">z_length</span><span class="o">=</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cone</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Cone</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.75</span><span class="o">*</span><span class="n">M</span><span class="p">),</span><span class="n">direction</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="n">height</span><span class="o">=</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">angle</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span><span class="n">resolution</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">clipped_cone</span> <span class="o">=</span> <span class="n">cone</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span><span class="n">normal</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span><span class="n">origin</span><span class="o">=</span><span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">*</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">cut</span><span class="p">)))</span>
+<span class="n">sphere</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">R_o</span><span class="o">*</span><span class="n">M</span><span class="p">,</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">o_cnt</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">*</span><span class="n">M</span><span class="p">,</span><span class="n">o_cnt</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">*</span><span class="n">M</span><span class="p">,</span><span class="n">o_cnt</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">*</span><span class="n">M</span><span class="p">))</span>
+<span class="n">plane</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plane</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">*</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">cut</span><span class="p">)),</span><span class="n">direction</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">i_size</span><span class="o">=</span><span class="n">M</span><span class="p">,</span><span class="n">j_size</span><span class="o">=</span><span class="n">M</span><span class="p">)</span>
+
+
+<span class="n">off_screen</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">plotter</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plotter</span><span class="p">(</span><span class="n">lighting</span><span class="o">=</span><span class="s1">&#39;three lights&#39;</span><span class="p">,</span> <span class="n">off_screen</span><span class="o">=</span><span class="n">off_screen</span><span class="p">,</span> <span class="n">image_scale</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">#======================================================#</span>
+
+
+<span class="k">def</span> <span class="nf">sample_unit</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">d</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">/=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">size_seeds</span><span class="o">*</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="n">cnt_seeds</span><span class="p">),</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.95</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span><span class="n">sample_unit</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">simu</span><span class="o">.</span><span class="n">d</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">ar</span> <span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">ar</span><span class="p">,</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])))</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">orientation_from_axis</span><span class="p">()</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">vol_particles</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">vol0</span><span class="p">])))</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">vol_particles</span><span class="p">,</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="o">-</span><span class="n">vol_particles</span><span class="o">.</span><span class="n">sum</span><span class="p">()])))</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">f_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">f_x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.0</span><span class="p">]))),</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">simu</span><span class="o">.</span><span class="n">f_x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])))</span>
+
+
+<span class="c1">#======================= INITIALISE ========================#</span>
+
+<span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span>
+             <span class="n">sinkhorn_algo</span><span class="o">=</span><span class="n">OT</span><span class="o">.</span><span class="n">LBFGSB</span><span class="p">,</span>
+             <span class="n">tau</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+             <span class="n">to_bary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+             <span class="n">show_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+             <span class="n">bsr</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+             <span class="n">weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span>
+<span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="o">==</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+<span class="n">all_labels</span><span class="p">[</span><span class="n">real_points</span><span class="p">]</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">labels</span>
+<span class="n">all_labels</span><span class="p">[</span><span class="o">~</span><span class="n">real_points</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">all_labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="n">plot_cells</span><span class="p">(</span><span class="n">plotter</span><span class="p">,</span><span class="n">img</span><span class="p">,</span><span class="n">shade</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">diffuse</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">lut</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;wireframe&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">remove_scalar_bar</span><span class="p">()</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">clipped_cone</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;wireframe&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">sphere</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;wireframe&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">interactive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">screenshot</span><span class="o">=</span><span class="n">simu_name</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/frames/t_</span><span class="si">{</span><span class="n">t_plot</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">,</span>
+    <span class="n">cpos</span><span class="o">=</span><span class="p">[(</span><span class="mf">2.4</span><span class="o">*</span><span class="n">M</span><span class="p">,</span> <span class="mf">2.4</span><span class="o">*</span><span class="n">M</span><span class="p">,</span> <span class="mf">1.2</span><span class="o">*</span><span class="n">M</span><span class="p">),(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">),(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)],</span>
+    <span class="n">return_viewer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">auto_close</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">clear_actors</span><span class="p">()</span>
+
+<span class="n">t</span> <span class="o">+=</span> <span class="n">dt</span>
+<span class="n">t_iter</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">t_plot</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">solver</span><span class="o">.</span><span class="n">n_lloyds</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">cost_params</span><span class="p">[</span><span class="s2">&quot;p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">simu_name</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;/params.pkl&quot;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">solver</span><span class="p">,</span><span class="n">file</span><span class="p">)</span>
+
+<span class="c1">#=========================== RUN ===========================#</span>
+
+<span class="k">while</span> <span class="n">t</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;t=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">plotting_time</span> <span class="o">=</span> <span class="n">t_iter</span><span class="o">%</span><span class="n">plot_every</span><span class="o">==</span><span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">plotting_time</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I plot.&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">n_sinkhorn_last</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">n_sinkhorn</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">s0</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I do not plot.&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">n_sinkhorn_last</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">n_sinkhorn</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">s0</span> <span class="o">=</span> <span class="mf">2.3</span><span class="o">*</span><span class="n">simu</span><span class="o">.</span><span class="n">R_mean</span>
+
+    <span class="c1"># if simu.N_cells &lt; N_max:</span>
+    <span class="c1">#     if (simu.x[:,-1]&gt;0.5+cut).sum()*vol0 &lt; 0.85*vol_cone:</span>
+    <span class="c1">#         if torch.rand(1)&gt;0.42:</span>
+    <span class="c1">#             insert(simu,1)</span>
+    <span class="c1">#             print(&quot;+1&quot;,flush=True)</span>
+    <span class="c1">#             print(f&quot;N = {simu.N_cells}&quot;,flush=True)</span>
+
+    <span class="n">F_inc</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">lloyd_step</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span>
+                <span class="n">sinkhorn_algo</span><span class="o">=</span><span class="n">OT</span><span class="o">.</span><span class="n">LBFGSB</span><span class="p">,</span>
+                <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span>
+                <span class="n">to_bary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">show_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">default_init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">bsr</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">simu</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">F</span><span class="o">*</span><span class="n">dt</span> <span class="o">+</span> <span class="n">F_inc</span><span class="o">*</span><span class="n">dt</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximal incompressibility force: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_inc</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plotting_time</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span>
+        <span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="o">==</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+        <span class="n">all_labels</span><span class="p">[</span><span class="n">real_points</span><span class="p">]</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">labels</span>
+        <span class="n">all_labels</span><span class="p">[</span><span class="o">~</span><span class="n">real_points</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">all_labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">plot_cells</span><span class="p">(</span><span class="n">plotter</span><span class="p">,</span><span class="n">img</span><span class="p">,</span><span class="n">shade</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">diffuse</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">lut</span><span class="p">)</span>
+        <span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;wireframe&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">plotter</span><span class="o">.</span><span class="n">remove_scalar_bar</span><span class="p">()</span>
+        <span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">clipped_cone</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;wireframe&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">sphere</span><span class="p">)</span>
+        <span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;wireframe&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">plotter</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+            <span class="n">interactive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">screenshot</span><span class="o">=</span><span class="n">simu_name</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/frames/t_</span><span class="si">{</span><span class="n">t_plot</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">,</span>
+            <span class="n">cpos</span><span class="o">=</span><span class="p">[(</span><span class="mf">2.4</span><span class="o">*</span><span class="n">M</span><span class="p">,</span> <span class="mf">2.4</span><span class="o">*</span><span class="n">M</span><span class="p">,</span> <span class="mf">1.2</span><span class="o">*</span><span class="n">M</span><span class="p">),(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">),(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)],</span>
+            <span class="n">return_viewer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">auto_close</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">plotter</span><span class="o">.</span><span class="n">clear_actors</span><span class="p">()</span>
+        <span class="n">t_plot</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+    <span class="n">t</span> <span class="o">+=</span> <span class="n">dt</span>
+    <span class="n">t_iter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span><span class="o">&lt;=</span><span class="n">N_max</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">T</span> <span class="o">+=</span> <span class="n">dt</span>
+
+<span class="n">utils</span><span class="o">.</span><span class="n">make_video</span><span class="p">(</span><span class="n">simu_name</span><span class="o">=</span><span class="n">simu_name</span><span class="p">,</span><span class="n">video_name</span><span class="o">=</span><span class="n">simu_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-3d-fallingstuff-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/13307c43e6897526a7669882dae4b128/FallingStuff.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">FallingStuff.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/826e3ee1bc2de41b193fdcb9e4708005/FallingStuff.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">FallingStuff.py</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CellSorting3D.html" class="btn btn-neutral float-left" title="Cell sorting in 3D" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="RunTumble3D.html" class="btn btn-neutral float-right" title="Run-and-tumble in 3D with soft spheres" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Antoine Diez, Jean Feydy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -48,12 +48,13 @@ sphinx_gallery_conf = {
     # path to your examples scripts
     "examples_dirs": [
         "../tutorial",
-        "../scripts",
+        "../scripts"
         ],
     # path where to save gallery generated examples
     "gallery_dirs": [
         "./_auto_tutorials",
-        "./_auto_examples"],
+        "./_auto_examples"
+        ],
     # order of the Gallery
     "within_subsection_order": FileNameSortKey,
 }
@@ -76,6 +77,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+html_logo = "_static/iceshot_logo.png"
 
 def skip(app, what, name, obj, would_skip, options):
     if name == "__init__":

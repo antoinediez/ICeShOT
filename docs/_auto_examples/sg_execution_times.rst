@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.000** total execution time for 14 files **from _auto_examples**:
+**00:00.000** total execution time for 0 files **from _auto_examples**:
 
 .. container::
 
@@ -32,45 +32,6 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr__auto_examples_ActiveBrownian.py` (``ActiveBrownian.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_Benchmark_3D.py` (``Benchmark_3D.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_ChemoDeformation.py` (``ChemoDeformation.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_Engulfment.py` (``Engulfment.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_Evacuation.py` (``Evacuation.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_FallingSpheres.py` (``FallingSpheres.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_FallingStuff.py` (``FallingStuff.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_Micropipette.py` (``Micropipette.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_Protrusions.py` (``Protrusions.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_RodShape.py` (``RodShape.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_RunTumble3D.py` (``RunTumble3D.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_RunTumbleDisk.py` (``RunTumbleDisk.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_SurfaceTension.py` (``SurfaceTension.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr__auto_examples_TissueGrowth.py` (``TissueGrowth.py``)
-     - 00:00.000
-     - 0.0
+   * - N/A
+     - N/A
+     - N/A
