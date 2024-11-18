@@ -108,3 +108,4 @@ venv.bak/
 _test*.ipynb
 simu*
 .DS_Store
+*.out
