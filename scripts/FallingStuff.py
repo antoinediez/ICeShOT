@@ -101,8 +101,10 @@ t = 0.0
 t_iter = 0
 t_plot = 0
 F = torch.zeros((1,dim))
-F[0,-1] = -0.5
-tau = 3.0/R0 if dim==2 else 3.0/(R0**2)
+# F[0,-1] = -0.5
+# tau = 3.0/R0 if dim==2 else 3.0/(R0**2)
+F[0,-1] = -0.3
+tau = 6.0/R0 if dim==2 else 6.0/(R0**2)
 
 F0_ifc = 0.07
 
@@ -198,7 +200,7 @@ t_iter += 1
 t_plot += 1
 
 solver.n_lloyds = 1
-solver.cost_params["p"] = p0
+solver.cost_params["p"] = 10.0
 
 with open(simu_name + f"/params.pkl",'wb') as file:
     pickle.dump(solver,file)
@@ -224,12 +226,12 @@ while t<T:
         solver.n_sinkhorn = 100
         solver.s0 = 2.3*simu.R_mean
         
-    if simu.N_cells < N_max:
-        if (simu.x[:,-1]>0.5+cut).sum()*vol0 < 0.85*vol_cone:
-            if torch.rand(1)>0.42:
-                insert(simu,1)
-                print("+1",flush=True)
-                print(f"N = {simu.N_cells}",flush=True)
+    # if simu.N_cells < N_max:
+    #     if (simu.x[:,-1]>0.5+cut).sum()*vol0 < 0.85*vol_cone:
+    #         if torch.rand(1)>0.42:
+    #             insert(simu,1)
+    #             print("+1",flush=True)
+    #             print(f"N = {simu.N_cells}",flush=True)
     
     F_inc = solver.lloyd_step(simu,
                 sinkhorn_algo=OT.LBFGSB,
