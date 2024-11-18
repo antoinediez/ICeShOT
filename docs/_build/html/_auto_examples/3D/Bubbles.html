@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bubbles &mdash; iceshot  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cell sorting in 3D" href="CellSorting3D.html" />
+    <link rel="prev" title="Benchmark: 3D Run-and-Tumble with deformations." href="Benchmark_3D.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            iceshot
+              <img src="../../_static/iceshot_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_auto_tutorials/index.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#d-examples">2D examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#id1">3D examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../2D/index.html">2D examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">3D examples</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Benchmark_3D.html">Benchmark: 3D Run-and-Tumble with deformations.</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Bubbles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CellSorting3D.html">Cell sorting in 3D</a></li>
+<li class="toctree-l4"><a class="reference internal" href="FallingStuff.html">Falling soft spheres in a 3D hourglass domain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RunTumble3D.html">Run-and-tumble in 3D with soft spheres</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TissueGrowth_3D.html">Growth of a 3D cell aggregate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/cells.html">Cells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/costs.html">Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/OT.html">Optimal Transport</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">iceshot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Examples</a></li>
+          <li class="breadcrumb-item"><a href="index.html">3D examples</a></li>
+      <li class="breadcrumb-item active">Bubbles</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/_auto_examples/3D/Bubbles.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-3d-bubbles-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="bubbles">
+<span id="sphx-glr-auto-examples-3d-bubbles-py"></span><h1>Bubbles<a class="headerlink" href="#bubbles" title="Link to this heading"></a></h1>
+<p>This is a non-scientific experiment with bubbles.</p>
+<p>Bubbles are generated randomly within the lower half of the domain (fluid) where they are subject to a buoyancy force. In the upper half of the domain (air) they are subject to gravity so the bubbles are constrained to stay at the surface. Bubbles can explode (with a higher probability when they are big) and fuse. Otherwise, they interact according to the force describe in the 3D cell sorting experiment with all parameters equal in order to ensure the (first two) Plateau conditions.</p>
+<video autoplay="True" controls="True" loop="True" muted="True" preload="auto" width="400"><source src="../../_images/SMV23_Bubbles.mp4" type="video/mp4"></video><div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_path = &#39;_static/bubbles.png&#39;</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">cells</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">costs</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">OT</span>
+<span class="kn">from</span> <span class="nn">iceshot.OT</span> <span class="kn">import</span> <span class="n">OT_solver</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">plot_cells</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">sample</span>
+<span class="kn">from</span> <span class="nn">iceshot</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">import</span> <span class="nn">tifffile</span> <span class="k">as</span> <span class="nn">tif</span>
+<span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
+<span class="kn">import</span> <span class="nn">vtk</span> <span class="k">as</span> <span class="nn">vtk</span>
+<span class="kn">from</span> <span class="nn">pyvista.core</span> <span class="kn">import</span> <span class="n">_vtk_core</span> <span class="k">as</span> <span class="n">_vtk</span>
+<span class="kn">from</span> <span class="nn">pyvista.core.filters</span> <span class="kn">import</span> <span class="n">_get_output</span><span class="p">,</span> <span class="n">_update_alg</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">cast</span>
+<span class="kn">from</span> <span class="nn">pyvista.core.utilities.arrays</span> <span class="kn">import</span> <span class="n">FieldAssociation</span><span class="p">,</span> <span class="n">set_default_active_scalars</span>
+
+
+<span class="n">pv</span><span class="o">.</span><span class="n">start_xvfb</span><span class="p">()</span>
+<span class="n">pv</span><span class="o">.</span><span class="n">set_jupyter_backend</span><span class="p">(</span><span class="s1">&#39;static&#39;</span><span class="p">)</span>
+
+<span class="n">use_cuda</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">use_cuda</span><span class="p">:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">set_default_tensor_type</span><span class="p">(</span><span class="s2">&quot;torch.cuda.FloatTensor&quot;</span><span class="p">)</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span>
+
+<span class="n">simu_name</span> <span class="o">=</span> <span class="s2">&quot;simu_foam&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">simu_name</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">simu_name</span><span class="o">+</span><span class="s2">&quot;/frames&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">simu_name</span><span class="o">+</span><span class="s2">&quot;/data&quot;</span><span class="p">)</span>
+
+<span class="c1"># ot_algo = OT.sinkhorn_zerolast</span>
+<span class="n">ot_algo</span> <span class="o">=</span> <span class="n">OT</span><span class="o">.</span><span class="n">LBFGSB</span>
+
+<span class="k">def</span> <span class="nf">radius</span><span class="p">(</span><span class="n">simu</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="k">if</span> <span class="n">simu</span><span class="o">.</span><span class="n">d</span><span class="o">==</span><span class="mi">2</span> <span class="k">else</span> <span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mf">4.</span><span class="o">/</span><span class="mf">3.</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">R00</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">vol_max</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">R0</span> <span class="o">=</span> <span class="mf">0.021</span>
+<span class="n">vol0</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">R0</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">dim</span><span class="o">==</span><span class="mi">2</span> <span class="k">else</span> <span class="mf">4.</span><span class="o">/</span><span class="mf">3.</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">R0</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">seeds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span>
+<span class="n">seeds</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="mf">0.4</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample_grid</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>
+<span class="n">vol_x</span> <span class="o">=</span> <span class="n">vol0</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+
+<span class="n">simu</span> <span class="o">=</span> <span class="n">cells</span><span class="o">.</span><span class="n">Cells</span><span class="p">(</span>
+    <span class="n">seeds</span><span class="o">=</span><span class="n">seeds</span><span class="p">,</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+    <span class="n">vol_x</span><span class="o">=</span><span class="n">vol_x</span><span class="p">,</span><span class="n">extra_space</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="p">,</span><span class="n">jct_method</span><span class="o">=</span><span class="s1">&#39;Kmin&#39;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of pixels min: </span><span class="si">{</span><span class="n">vol0</span><span class="o">/</span><span class="n">simu</span><span class="o">.</span><span class="n">vol_grid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">vol0</span><span class="o">/</span><span class="n">simu</span><span class="o">.</span><span class="n">vol_grid</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not enough pixels&quot;</span><span class="p">)</span>
+
+<span class="n">cost_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;p&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;scaling&quot;</span> <span class="p">:</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;C&quot;</span> <span class="p">:</span> <span class="n">R00</span><span class="o">/</span><span class="n">radius</span><span class="p">(</span><span class="n">simu</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">OT_solver</span><span class="p">(</span>
+    <span class="n">n_sinkhorn</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span><span class="n">n_sinkhorn_last</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span><span class="n">n_lloyds</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">s0</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">cost_function</span><span class="o">=</span><span class="n">costs</span><span class="o">.</span><span class="n">power_cost</span><span class="p">,</span><span class="n">cost_params</span><span class="o">=</span><span class="n">cost_params</span>
+<span class="p">)</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="mf">120.0</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.0025</span>
+<span class="n">plot_every</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">save_every</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">t_iter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">t_plot</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">g12</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="n">g11</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="n">g22</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="n">g02</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="n">g01</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="n">gb</span> <span class="o">=</span> <span class="mf">5.0</span>
+
+<span class="n">b12</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="n">b11</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="n">b22</span> <span class="o">=</span> <span class="mf">0.7</span>
+
+<span class="n">tau</span>  <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="n">pop_rate</span> <span class="o">=</span> <span class="mf">120.0</span>
+<span class="n">scale_prob_fuse</span> <span class="o">=</span> <span class="mf">6.0</span>
+<span class="n">dying_rate</span> <span class="o">=</span> <span class="mf">85.0</span>
+
+<span class="c1">#===========================================================#</span>
+
+
+
+<span class="k">def</span> <span class="nf">compute_mesh</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span><span class="n">constant_values</span><span class="o">=-</span><span class="mf">2.0</span><span class="p">)</span>
+    <span class="n">vol</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">alg</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSurfaceNets3D</span><span class="p">()</span>
+    <span class="c1"># alg = vtk.vtkDiscreteFlyingEdges3D()</span>
+    <span class="n">set_default_active_scalars</span><span class="p">(</span><span class="n">vol</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+    <span class="n">field</span><span class="p">,</span> <span class="n">scalars</span> <span class="o">=</span> <span class="n">vol</span><span class="o">.</span><span class="n">active_scalars_info</span>  <span class="c1"># type: ignore</span>
+
+    <span class="c1"># args: (idx, port, connection, field, name)</span>
+    <span class="n">alg</span><span class="o">.</span><span class="n">SetInputArrayToProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">scalars</span><span class="p">)</span>
+    <span class="n">alg</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">vol</span><span class="p">)</span>
+    <span class="n">alg</span><span class="o">.</span><span class="n">GenerateValues</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Suppress improperly used INFO for debugging messages in vtkSurfaceNets3D</span>
+    <span class="n">verbosity</span> <span class="o">=</span> <span class="n">_vtk</span><span class="o">.</span><span class="n">vtkLogger</span><span class="o">.</span><span class="n">GetCurrentVerbosityCutoff</span><span class="p">()</span>
+    <span class="n">_vtk</span><span class="o">.</span><span class="n">vtkLogger</span><span class="o">.</span><span class="n">SetStderrVerbosity</span><span class="p">(</span><span class="n">_vtk</span><span class="o">.</span><span class="n">vtkLogger</span><span class="o">.</span><span class="n">VERBOSITY_OFF</span><span class="p">)</span>
+    <span class="n">_update_alg</span><span class="p">(</span><span class="n">alg</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;Performing Labeled Surface Extraction&#39;</span><span class="p">)</span>
+    <span class="c1"># Restore the original vtkLogger verbosity level</span>
+    <span class="n">_vtk</span><span class="o">.</span><span class="n">vtkLogger</span><span class="o">.</span><span class="n">SetStderrVerbosity</span><span class="p">(</span><span class="n">verbosity</span><span class="p">)</span>
+    <span class="n">surfaces</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">pv</span><span class="o">.</span><span class="n">PolyData</span><span class="p">,</span> <span class="n">pv</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">alg</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()))</span>
+    <span class="n">surfaces</span> <span class="o">=</span> <span class="n">surfaces</span><span class="o">.</span><span class="n">smooth_taubin</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">pass_band</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">normalize_coordinates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">surfaces</span> <span class="o">=</span> <span class="n">surfaces</span><span class="o">.</span><span class="n">compute_normals</span><span class="p">(</span><span class="n">consistent_normals</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                        <span class="n">auto_orient_normals</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                        <span class="n">flip_normals</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                        <span class="n">non_manifold_traversal</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">surfaces</span> <span class="o">=</span> <span class="n">surfaces</span><span class="o">.</span><span class="n">compute_cell_sizes</span><span class="p">()</span>
+    <span class="n">surfaces</span><span class="p">[</span><span class="s2">&quot;Curvature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">surfaces</span><span class="o">.</span><span class="n">curvature</span><span class="p">()</span>
+    <span class="n">surfaces</span> <span class="o">=</span> <span class="n">surfaces</span><span class="o">.</span><span class="n">point_data_to_cell_data</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">surfaces</span>
+
+<span class="k">def</span> <span class="nf">extract_stuff</span><span class="p">(</span><span class="n">surfaces</span><span class="p">,</span><span class="n">M</span><span class="o">=</span><span class="n">M</span><span class="p">,</span><span class="n">simu</span><span class="o">=</span><span class="n">simu</span><span class="p">,</span><span class="n">eps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">normals</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">surfaces</span><span class="p">[</span><span class="s2">&quot;Normals&quot;</span><span class="p">])</span>
+    <span class="n">normals</span> <span class="o">/=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">normals</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
+    <span class="n">lab</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">surfaces</span><span class="p">[</span><span class="s2">&quot;BoundaryLabels&quot;</span><span class="p">])</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">surfaces</span><span class="p">[</span><span class="s2">&quot;Area&quot;</span><span class="p">])</span><span class="o">/</span><span class="p">((</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">curv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">surfaces</span><span class="p">[</span><span class="s2">&quot;Curvature&quot;</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">centers</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">((</span><span class="n">surfaces</span><span class="o">.</span><span class="n">cell_centers</span><span class="p">()</span><span class="o">.</span><span class="n">points</span> <span class="o">-</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="n">M</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">good_stuff</span><span class="p">(</span><span class="n">simu</span><span class="p">,(</span><span class="n">normals</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="n">curv</span><span class="p">,</span> <span class="n">centers</span><span class="p">),</span><span class="n">eps</span><span class="o">=</span><span class="n">eps</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">good_stuff</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">stuff</span><span class="p">,</span><span class="n">eps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">reorient_normals</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">stuff</span><span class="p">,</span><span class="n">eps</span><span class="o">=</span><span class="n">eps</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">belongs_to</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">M_grid</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">simu</span><span class="o">.</span><span class="n">d</span><span class="p">))</span>
+    <span class="n">ijk</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">M</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+    <span class="n">ijk</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">ijk</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">M</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">lab</span> <span class="o">=</span> <span class="n">ijk</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">M</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">ijk</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">M</span> <span class="o">+</span> <span class="n">ijk</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">lab</span><span class="p">]</span>
+    <span class="n">labels</span><span class="p">[</span><span class="n">labels</span> <span class="o">&gt;</span> <span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+    <span class="k">return</span> <span class="n">labels</span>
+
+<span class="k">def</span> <span class="nf">reorient_normals</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">stuff</span><span class="p">,</span><span class="n">eps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># normals should go from lab[:,0] to lab[:,1]</span>
+    <span class="n">normals</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="n">curv</span><span class="p">,</span> <span class="n">centers</span> <span class="o">=</span> <span class="n">stuff</span>
+    <span class="k">if</span> <span class="n">eps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">3.0</span><span class="o">/</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">M_grid</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="n">simu</span><span class="o">.</span><span class="n">d</span><span class="p">))</span>
+    <span class="n">test_m</span> <span class="o">=</span> <span class="n">centers</span> <span class="o">-</span> <span class="n">eps</span><span class="o">*</span><span class="n">normals</span>
+    <span class="n">test_p</span> <span class="o">=</span> <span class="n">centers</span> <span class="o">+</span> <span class="n">eps</span><span class="o">*</span><span class="n">normals</span>
+    <span class="n">lab_test_m</span> <span class="o">=</span> <span class="n">belongs_to</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">test_m</span><span class="p">)</span>
+    <span class="n">lab_test_p</span> <span class="o">=</span> <span class="n">belongs_to</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">test_p</span><span class="p">)</span>
+    <span class="n">tm_fst</span> <span class="o">=</span> <span class="n">lab_test_m</span> <span class="o">==</span> <span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tm_scd</span> <span class="o">=</span> <span class="n">lab_test_m</span> <span class="o">==</span> <span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">tp_fst</span> <span class="o">=</span> <span class="n">lab_test_p</span> <span class="o">==</span> <span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tp_scd</span> <span class="o">=</span> <span class="n">lab_test_p</span> <span class="o">==</span> <span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">tm_out</span> <span class="o">=</span> <span class="p">((</span><span class="n">test_m</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">test_m</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">tp_out</span> <span class="o">=</span> <span class="p">((</span><span class="n">test_p</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">test_p</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="n">tm_out</span> <span class="o">&amp;</span> <span class="n">tp_scd</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">tm_out</span> <span class="o">&amp;</span> <span class="n">tp_fst</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">tm_fst</span> <span class="o">&amp;</span> <span class="n">tp_out</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">tm_scd</span> <span class="o">&amp;</span> <span class="n">tp_out</span><span class="p">)</span>
+
+    <span class="n">good</span> <span class="o">=</span> <span class="p">(((</span><span class="n">tm_fst</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">tp_scd</span><span class="p">))</span> <span class="o">|</span> <span class="p">((</span><span class="n">tm_scd</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">tp_fst</span><span class="p">))</span> <span class="o">|</span> <span class="n">out</span><span class="p">)</span>
+
+    <span class="n">to_reorient</span> <span class="o">=</span> <span class="p">((</span><span class="n">tm_scd</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">tp_fst</span><span class="p">))</span> <span class="o">|</span> <span class="p">(</span><span class="n">tp_out</span><span class="p">)</span>
+    <span class="n">normals</span><span class="p">[</span><span class="n">to_reorient</span><span class="p">,:]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">curv</span><span class="p">[</span><span class="n">to_reorient</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">normals</span><span class="p">[</span><span class="n">good</span><span class="p">],</span> <span class="n">lab</span><span class="p">[</span><span class="n">good</span><span class="p">],</span> <span class="n">area</span><span class="p">[</span><span class="n">good</span><span class="p">],</span> <span class="n">curv</span><span class="p">[</span><span class="n">good</span><span class="p">],</span> <span class="n">centers</span><span class="p">[</span><span class="n">good</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">compute_forces</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">normals</span><span class="p">,</span><span class="n">lab</span><span class="p">,</span><span class="n">area</span><span class="p">,</span><span class="n">curv</span><span class="p">,</span><span class="n">centers</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">g_ij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lab</span><span class="p">))</span>
+
+
+    <span class="n">g_ij</span><span class="p">[(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">g12</span>
+
+    <span class="n">g_ij</span><span class="p">[(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">g01</span>
+    <span class="n">g_ij</span><span class="p">[(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">g01</span>
+
+    <span class="n">g_ij</span><span class="p">[(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">==-</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==-</span><span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">gb</span>
+
+
+    <span class="n">b_ij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lab</span><span class="p">))</span>
+    <span class="n">b_ij</span><span class="p">[(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">b12</span>
+    <span class="n">b_ij</span><span class="p">[(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">==-</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==-</span><span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">gb</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">fst</span> <span class="o">=</span> <span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span>
+        <span class="n">scd</span> <span class="o">=</span> <span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span>
+
+        <span class="c1"># Curvature force</span>
+        <span class="n">F_crv_fst</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">normals</span><span class="p">[</span><span class="n">fst</span><span class="p">,:]</span><span class="o">*</span><span class="n">curv</span><span class="p">[</span><span class="n">fst</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">*</span><span class="n">area</span><span class="p">[</span><span class="n">fst</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="n">g_ij</span><span class="p">[</span><span class="n">fst</span><span class="p">,</span><span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">F_crv_scd</span> <span class="o">=</span> <span class="p">(</span><span class="n">normals</span><span class="p">[</span><span class="n">scd</span><span class="p">,:]</span><span class="o">*</span><span class="n">curv</span><span class="p">[</span><span class="n">scd</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">*</span><span class="n">area</span><span class="p">[</span><span class="n">scd</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="n">g_ij</span><span class="p">[</span><span class="n">scd</span><span class="p">,</span><span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">F_crv</span> <span class="o">=</span> <span class="n">F_crv_fst</span> <span class="o">+</span> <span class="n">F_crv_scd</span>
+
+        <span class="c1"># Boundary force</span>
+        <span class="n">fst_bnd</span> <span class="o">=</span> <span class="n">fst</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">scd_bnd</span> <span class="o">=</span> <span class="n">scd</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">==-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">F_bnd_fst</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">normals</span><span class="p">[</span><span class="n">fst_bnd</span><span class="p">,:]</span><span class="o">*</span><span class="n">area</span><span class="p">[</span><span class="n">fst_bnd</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="n">g_ij</span><span class="p">[</span><span class="n">fst_bnd</span><span class="p">,</span><span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">F_bnd_scd</span> <span class="o">=</span> <span class="p">(</span><span class="n">normals</span><span class="p">[</span><span class="n">scd_bnd</span><span class="p">,:]</span><span class="o">*</span><span class="n">area</span><span class="p">[</span><span class="n">scd_bnd</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="n">g_ij</span><span class="p">[</span><span class="n">scd_bnd</span><span class="p">,</span><span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">F_bnd</span> <span class="o">=</span> <span class="n">F_bnd_fst</span> <span class="o">+</span> <span class="n">F_bnd_scd</span>
+
+        <span class="c1"># Positional force</span>
+
+        <span class="n">fst_ij</span> <span class="o">=</span> <span class="n">fst</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">scd_ji</span> <span class="o">=</span> <span class="n">scd</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">d_ij</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">-</span> <span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">lab</span><span class="p">[</span><span class="n">fst_ij</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">int</span><span class="p">(),:],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.01</span><span class="p">))</span>
+        <span class="n">F_pos_ij</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">normals</span><span class="p">[</span><span class="n">fst_ij</span><span class="p">,:]</span><span class="o">*</span><span class="n">area</span><span class="p">[</span><span class="n">fst_ij</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="mf">1.0</span><span class="o">/</span><span class="n">d_ij</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="n">b_ij</span><span class="p">[</span><span class="n">fst_ij</span><span class="p">,</span><span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">d_ji</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">-</span> <span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">lab</span><span class="p">[</span><span class="n">scd_ji</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">int</span><span class="p">(),:],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.01</span><span class="p">))</span>
+        <span class="n">F_pos_ji</span> <span class="o">=</span> <span class="p">(</span><span class="n">normals</span><span class="p">[</span><span class="n">scd_ji</span><span class="p">,:]</span><span class="o">*</span><span class="n">area</span><span class="p">[</span><span class="n">scd_ji</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="mf">1.0</span><span class="o">/</span><span class="n">d_ji</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="n">b_ij</span><span class="p">[</span><span class="n">scd_ji</span><span class="p">,</span><span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">F_pos</span> <span class="o">=</span> <span class="n">F_pos_ij</span> <span class="o">+</span> <span class="n">F_pos_ji</span>
+
+        <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">F_pos</span> <span class="o">+</span> <span class="n">F_crv</span> <span class="o">+</span> <span class="n">F_bnd</span>
+
+    <span class="k">return</span> <span class="n">F</span>
+
+<span class="k">def</span> <span class="nf">neigh_list_to_cc</span><span class="p">(</span><span class="n">neigh_list</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">cc</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">cc_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">neigh_list</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">seen</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">index</span><span class="p">,</span><span class="n">cc</span><span class="p">,</span><span class="n">cc_index</span><span class="p">,</span><span class="n">seen</span><span class="p">):</span>
+        <span class="n">cc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">seen</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">cc_index</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span>
+
+    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">cc</span><span class="p">,</span><span class="n">cc_index</span><span class="p">):</span>
+        <span class="n">cc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">cc</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">cc</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">component</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cc</span><span class="p">):</span>
+            <span class="n">cc_index</span><span class="p">[</span><span class="n">component</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">neigh_list</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">seen</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">seen</span><span class="p">[</span><span class="n">b</span><span class="p">]):</span>
+            <span class="n">add</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">cc_index</span><span class="p">[</span><span class="n">a</span><span class="p">],</span><span class="n">cc</span><span class="p">,</span><span class="n">cc_index</span><span class="p">,</span><span class="n">seen</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">seen</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">seen</span><span class="p">[</span><span class="n">a</span><span class="p">]):</span>
+            <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">cc_index</span><span class="p">[</span><span class="n">b</span><span class="p">],</span><span class="n">cc</span><span class="p">,</span><span class="n">cc_index</span><span class="p">,</span><span class="n">seen</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="o">~</span><span class="n">seen</span><span class="p">[</span><span class="n">a</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">seen</span><span class="p">[</span><span class="n">b</span><span class="p">]):</span>
+            <span class="n">cc</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">])</span>
+            <span class="n">cc_index</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">cc_index</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">seen</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">seen</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">cc_index</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">!=</span> <span class="n">cc_index</span><span class="p">[</span><span class="n">b</span><span class="p">]):</span>
+                <span class="n">merge</span><span class="p">(</span><span class="n">cc_index</span><span class="p">[</span><span class="n">a</span><span class="p">],</span><span class="n">cc_index</span><span class="p">[</span><span class="n">b</span><span class="p">],</span><span class="n">cc</span><span class="p">,</span><span class="n">cc_index</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cc</span><span class="p">,</span> <span class="n">cc_index</span>
+
+<span class="k">def</span> <span class="nf">correction_force</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">lab</span><span class="p">):</span>
+    <span class="n">F_correction</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+    <span class="n">only_particles</span> <span class="o">=</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lab</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">lab_particles</span> <span class="o">=</span> <span class="n">lab</span><span class="p">[</span><span class="n">only_particles</span><span class="p">,:]</span>
+    <span class="n">neigh_list</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">lab_particles</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">lab</span><span class="o">.</span><span class="n">device</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+    <span class="n">cc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">neigh_list_to_cc</span><span class="p">(</span><span class="n">neigh_list</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">F</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">cc</span><span class="p">:</span>
+        <span class="n">F_correction</span><span class="p">[</span><span class="n">component</span><span class="p">,:]</span> <span class="o">=</span> <span class="o">-</span><span class="n">F</span><span class="p">[</span><span class="n">component</span><span class="p">,:]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="kc">None</span><span class="p">,:]</span>
+    <span class="k">return</span> <span class="n">F_correction</span>
+
+<span class="k">def</span> <span class="nf">boundary_attraction</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">F_bnd_att</span><span class="o">=</span><span class="mf">0.015</span><span class="p">):</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">surf</span> <span class="o">=</span> <span class="p">(((</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.45</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="mf">0.55</span><span class="p">)))</span> <span class="o">|</span> <span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span> <span class="o">&gt;</span> <span class="mf">0.22</span><span class="p">)</span>
+    <span class="n">touching</span> <span class="o">=</span> <span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span> <span class="o">&gt;</span> <span class="mf">0.24</span>
+    <span class="n">F</span><span class="p">[(</span><span class="n">surf</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="o">~</span><span class="n">touching</span><span class="p">)</span> <span class="p">,:]</span> <span class="o">=</span> <span class="n">F_bnd_att</span> <span class="o">*</span> <span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[(</span><span class="n">surf</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="o">~</span><span class="n">touching</span><span class="p">),:]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">F</span>
+
+
+<span class="k">def</span> <span class="nf">force</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">F_buo</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">F_gra</span><span class="o">=-</span><span class="mf">0.15</span><span class="p">,</span><span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">R0</span><span class="p">):</span>
+    <span class="n">N</span><span class="p">,</span><span class="n">d</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">((</span><span class="n">F_gra</span> <span class="o">-</span> <span class="n">F_buo</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">),</span><span class="nb">min</span><span class="o">=</span><span class="n">F_gra</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="n">F_buo</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">d</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span><span class="n">F</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))),</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">sample_unit</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">d</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">/=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">new_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">dim</span><span class="p">))</span>
+    <span class="n">new_x</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="mf">0.3</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">new_x</span><span class="p">),</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span><span class="n">sample_unit</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">simu</span><span class="o">.</span><span class="n">d</span><span class="p">)),</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">ar</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">ar</span><span class="p">,</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">orientation_from_axis</span><span class="p">()</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span> <span class="o">+=</span> <span class="n">n</span>
+    <span class="n">vol_particles</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">vol0</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">vol_particles</span><span class="p">,</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="o">-</span><span class="n">vol_particles</span><span class="o">.</span><span class="n">sum</span><span class="p">()])))</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">f_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">simu</span><span class="o">.</span><span class="n">f_x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">))),</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">simu</span><span class="o">.</span><span class="n">f_x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])))</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="o">==</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">42</span>
+
+<span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">who</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span><span class="n">cost_matrix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">who_p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">who</span><span class="p">,</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span><span class="n">device</span><span class="o">=</span><span class="n">who</span><span class="o">.</span><span class="n">device</span><span class="p">)))</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">~</span><span class="n">who</span><span class="p">]</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">f_x</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">f_x</span><span class="p">[</span><span class="o">~</span><span class="n">who_p</span><span class="p">]</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="n">who_p</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="o">~</span><span class="n">who_p</span><span class="p">]</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="o">~</span><span class="n">who</span><span class="p">]</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">ar</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">ar</span><span class="p">[</span><span class="o">~</span><span class="n">who</span><span class="p">]</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">orientation</span><span class="p">[</span><span class="o">~</span><span class="n">who</span><span class="p">]</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span> <span class="o">-=</span> <span class="nb">int</span><span class="p">(</span><span class="n">who</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="o">==</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">42</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span><span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">who</span><span class="p">)[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">42</span>
+
+<span class="k">def</span> <span class="nf">fusion</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">ind1</span><span class="p">,</span><span class="n">ind2</span><span class="p">):</span>
+    <span class="n">N_ind</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind1</span><span class="p">)</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">ind1</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="n">ind1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N_ind</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">ind1</span><span class="p">,:]</span> <span class="o">+</span> <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="n">ind2</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N_ind</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">ind2</span><span class="p">,:])</span><span class="o">/</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="n">ind1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N_ind</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="n">ind2</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N_ind</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="n">ind1</span><span class="p">]</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="n">ind1</span><span class="p">]</span> <span class="o">+</span> <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="n">ind2</span><span class="p">]</span>
+    <span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">ind2</span><span class="p">]</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">ind1</span><span class="p">]</span>
+    <span class="n">who_kill</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+    <span class="n">who_kill</span><span class="p">[</span><span class="n">ind2</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">kill</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">who_kill</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">filter_by_fusion_probability</span><span class="p">(</span><span class="n">unq_bnd</span><span class="p">,</span><span class="n">prob_fuse</span><span class="p">):</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ind_prob_fuse</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">prob_fuse</span><span class="p">,</span><span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">sorted</span> <span class="o">=</span> <span class="n">unq_bnd</span><span class="p">[</span><span class="n">ind_prob_fuse</span><span class="p">,:]</span>
+    <span class="n">keep</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">filtered_prob</span> <span class="o">=</span> <span class="n">prob_fuse</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">sorted</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="nb">sorted</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,:],</span><span class="n">keep</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">keep</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">keep</span><span class="p">,</span><span class="nb">sorted</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+            <span class="n">filtered_prob</span> <span class="o">=</span>  <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">filtered_prob</span><span class="p">,</span><span class="n">prob_fuse</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">keep</span><span class="p">,</span><span class="n">filtered_prob</span>
+
+
+<span class="c1">#======================= 3D PLOTTING ========= =============#</span>
+
+<span class="n">box</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="n">x_length</span><span class="o">=</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">y_length</span><span class="o">=</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">z_length</span><span class="o">=</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">off_screen</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">plotter</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plotter</span><span class="p">(</span><span class="n">off_screen</span><span class="o">=</span><span class="n">off_screen</span><span class="p">,</span> <span class="n">image_scale</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">enable_ssao</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">enable_anti_aliasing</span><span class="p">(</span><span class="s2">&quot;ssaa&quot;</span><span class="p">)</span>
+<span class="c1"># cpos = [(0.5*M, -2*M, 0.5*M),(M/2, M/2, M/2),(0.0, 0.0, 1.0)]</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">camera_position</span> <span class="o">=</span> <span class="p">[(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">*</span><span class="n">M</span><span class="p">),</span> <span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span>
+<span class="n">water</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">M</span><span class="o">/</span><span class="mi">4</span><span class="p">),</span><span class="n">x_length</span><span class="o">=</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">y_length</span><span class="o">=</span><span class="n">M</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">z_length</span><span class="o">=</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cpos</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">2.4</span><span class="o">*</span><span class="n">M</span><span class="p">,</span> <span class="mf">2.8</span><span class="o">*</span><span class="n">M</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">M</span><span class="p">),(</span><span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="o">/</span><span class="mi">2</span><span class="p">),(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)]</span>
+
+<span class="c1">#======================= INITIALISE ========================#</span>
+
+<span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span>
+             <span class="n">sinkhorn_algo</span><span class="o">=</span><span class="n">ot_algo</span><span class="p">,</span>
+             <span class="n">tau</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+             <span class="n">to_bary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+             <span class="n">show_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+             <span class="n">default_init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+             <span class="n">weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+             <span class="n">bsr</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plotter</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plotter</span><span class="p">(</span><span class="n">lighting</span><span class="o">=</span><span class="s1">&#39;three lights&#39;</span><span class="p">,</span> <span class="n">image_scale</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="n">img</span><span class="p">[</span><span class="n">img</span><span class="o">==</span><span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+<span class="c1"># plot_cells(plotter,img,shade=True,diffuse=0.85)</span>
+<span class="n">surfaces</span> <span class="o">=</span> <span class="n">compute_mesh</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
+        <span class="n">surfaces</span><span class="p">,</span>
+        <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;gouraud&quot;</span><span class="p">,</span>
+        <span class="n">roughness</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">ambient</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">diffuse</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">opacity</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:cyan&quot;</span><span class="p">],</span>
+        <span class="n">specular</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">show_edges</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;wireframe&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">water</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:cyan&#39;</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">specular</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">line_width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">show_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">remove_scalar_bar</span><span class="p">()</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">interactive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">screenshot</span><span class="o">=</span><span class="n">simu_name</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/frames/t_</span><span class="si">{</span><span class="n">t_plot</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">,</span>
+    <span class="n">cpos</span><span class="o">=</span><span class="n">cpos</span><span class="p">,</span>
+    <span class="n">return_viewer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">auto_close</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+
+<span class="c1">#=========================== RUN ===========================#</span>
+
+<span class="k">while</span> <span class="n">t</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;t=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">plotting_time</span> <span class="o">=</span> <span class="n">t_iter</span><span class="o">%</span><span class="n">plot_every</span><span class="o">==</span><span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">plotting_time</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I plot.&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">n_sinkhorn_last</span> <span class="o">=</span> <span class="mi">2000</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">n_sinkhorn</span> <span class="o">=</span> <span class="mi">2000</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">s0</span> <span class="o">=</span> <span class="mf">2.0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I do not plot.&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">n_sinkhorn_last</span> <span class="o">=</span> <span class="mi">250</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">n_sinkhorn</span> <span class="o">=</span> <span class="mi">250</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">s0</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">simu</span><span class="o">.</span><span class="n">R_mean</span>
+
+    <span class="n">who_dies</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">dt</span><span class="o">*</span><span class="n">dying_rate</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.45</span><span class="p">)</span>
+    <span class="n">kill</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">who_dies</span><span class="p">)</span>
+
+    <span class="n">y_ind</span><span class="p">,</span> <span class="n">x_ind</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">extract_boundary</span><span class="p">()</span>
+
+    <span class="n">medium_bnd</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_ind</span> <span class="o">==</span> <span class="n">simu</span><span class="o">.</span><span class="n">N_cells</span> <span class="o">+</span> <span class="mf">42.0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y_ind</span> <span class="o">=</span> <span class="n">y_ind</span><span class="p">[</span><span class="n">medium_bnd</span><span class="o">&lt;</span><span class="mf">0.1</span><span class="p">]</span>
+    <span class="n">x_ind</span> <span class="o">=</span> <span class="n">x_ind</span><span class="p">[</span><span class="n">medium_bnd</span><span class="o">&lt;</span><span class="mf">0.1</span><span class="p">,:]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_ind</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">unq_bnd</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">x_ind</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">prob_fuse</span> <span class="o">=</span> <span class="n">scale_prob_fuse</span><span class="o">/</span><span class="n">count</span> <span class="o">*</span> <span class="n">dt</span>
+        <span class="n">ind_to_fusion</span><span class="p">,</span> <span class="n">filtered_prob</span> <span class="o">=</span> <span class="n">filter_by_fusion_probability</span><span class="p">(</span><span class="n">unq_bnd</span><span class="p">,</span><span class="n">prob_fuse</span><span class="p">)</span>
+        <span class="n">to_fuse</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ind_to_fusion</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">filtered_prob</span>
+        <span class="n">fusion</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">ind_to_fusion</span><span class="p">[</span><span class="n">to_fuse</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">ind_to_fusion</span><span class="p">[</span><span class="n">to_fuse</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">simu</span><span class="o">.</span><span class="n">volumes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">&lt;</span><span class="n">vol_max</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">pop_rate</span><span class="o">*</span><span class="n">dt</span><span class="p">)</span>
+    <span class="n">insert</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="n">F_ext</span> <span class="o">=</span> <span class="n">force</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">solver</span><span class="o">.</span><span class="n">cost_params</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">R00</span><span class="o">/</span><span class="n">radius</span><span class="p">(</span><span class="n">simu</span><span class="p">)</span>
+
+    <span class="n">F_inc</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">lloyd_step</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span>
+                <span class="n">sinkhorn_algo</span><span class="o">=</span><span class="n">OT</span><span class="o">.</span><span class="n">LBFGSB</span><span class="p">,</span>
+                <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="o">/</span><span class="p">(</span><span class="n">radius</span><span class="p">(</span><span class="n">simu</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">d</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span>
+                <span class="n">to_bary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">show_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">default_init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">bsr</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">img</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">img</span><span class="p">[</span><span class="n">img</span><span class="o">==</span><span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+    <span class="n">surfaces</span> <span class="o">=</span> <span class="n">compute_mesh</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">stuff</span> <span class="o">=</span> <span class="n">extract_stuff</span><span class="p">(</span><span class="n">surfaces</span><span class="p">)</span>
+
+    <span class="n">F_att</span> <span class="o">=</span> <span class="n">compute_forces</span><span class="p">(</span><span class="n">simu</span><span class="p">,</span><span class="o">*</span><span class="n">stuff</span><span class="p">)</span>
+    <span class="n">F_correct</span> <span class="o">=</span> <span class="n">correction_force</span><span class="p">(</span><span class="n">F_att</span><span class="p">,</span><span class="n">stuff</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">F_bnd</span> <span class="o">=</span> <span class="n">boundary_attraction</span><span class="p">(</span><span class="n">simu</span><span class="p">)</span>
+
+    <span class="n">F_tot</span> <span class="o">=</span> <span class="n">F_att</span> <span class="o">+</span> <span class="n">F_inc</span> <span class="o">+</span> <span class="n">F_ext</span> <span class="o">+</span> <span class="n">F_bnd</span> <span class="o">+</span> <span class="n">F_correct</span>
+
+    <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="mf">0.02</span><span class="p">,</span><span class="mf">0.98</span><span class="p">,</span><span class="n">out</span><span class="o">=</span><span class="n">simu</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximal incompressibility force: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_inc</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximal attraction force: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_att</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximal external force: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_ext</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximal boundary force: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_bnd</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximal force: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_tot</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">nan_check</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">F_tot</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of NaN: </span><span class="si">{</span><span class="n">nan_check</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">F_tot</span><span class="p">[</span><span class="n">nan_check</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="n">simu</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">F_tot</span><span class="o">*</span><span class="n">dt</span>
+
+
+    <span class="k">if</span> <span class="n">plotting_time</span><span class="p">:</span>
+        <span class="c1"># stime = time.time()</span>
+        <span class="c1"># plotter.add_mesh(</span>
+        <span class="c1">#         surfaces,</span>
+        <span class="c1">#         interpolation=&quot;gouraud&quot;,</span>
+        <span class="c1">#         roughness=1.0,</span>
+        <span class="c1">#         ambient=0.8,</span>
+        <span class="c1">#         diffuse=0.2,</span>
+        <span class="c1">#         opacity=0.3,</span>
+        <span class="c1">#         cmap=[&quot;tab:cyan&quot;],</span>
+        <span class="c1">#         specular=1.0,</span>
+        <span class="c1">#         show_edges=True</span>
+        <span class="c1">#     )</span>
+        <span class="c1"># plotter.add_mesh(box, color=&#39;k&#39;, style=&#39;wireframe&#39;, line_width=1.2)</span>
+        <span class="c1"># plotter.add_mesh(water,color=&#39;tab:cyan&#39;, opacity=0.2, specular=1.0,line_width=1.0,show_edges=True)</span>
+        <span class="c1"># plotter.remove_scalar_bar()</span>
+        <span class="c1"># plotter.show(</span>
+        <span class="c1">#     interactive=False,</span>
+        <span class="c1">#     screenshot=simu_name + f&#39;/frames/t_{t_plot}.png&#39;,</span>
+        <span class="c1">#     cpos=cpos,</span>
+        <span class="c1">#     return_viewer=False,</span>
+        <span class="c1">#     auto_close=False</span>
+        <span class="c1"># )</span>
+        <span class="c1"># plotter.clear_actors()</span>
+        <span class="c1"># ptime = time.time() - stime</span>
+        <span class="c1"># print(f&quot;Plotting time: {ptime} seconds for {simu.N_cells} cells&quot;)</span>
+        <span class="k">if</span> <span class="n">t_plot</span><span class="o">%</span><span class="n">save_every</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">surfaces</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">simu_name</span> <span class="o">+</span> <span class="s2">&quot;/data/&quot;</span><span class="o">+</span><span class="sa">f</span><span class="s2">&quot;t_</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">t_plot</span><span class="o">/</span><span class="n">save_every</span><span class="p">)</span><span class="si">}</span><span class="s2">.vtk&quot;</span><span class="p">)</span>
+        <span class="n">t_plot</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">t</span> <span class="o">+=</span> <span class="n">dt</span>
+    <span class="n">t_iter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">utils</span><span class="o">.</span><span class="n">make_video</span><span class="p">(</span><span class="n">simu_name</span><span class="o">=</span><span class="n">simu_name</span><span class="p">,</span><span class="n">video_name</span><span class="o">=</span><span class="n">simu_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-3d-bubbles-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/ff1b11a2dde13d832a69ffe26d9a0d9a/Bubbles.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">Bubbles.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/087f1804ae9489bdc742a86dc3e4a5f9/Bubbles.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">Bubbles.py</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Benchmark_3D.html" class="btn btn-neutral float-left" title="Benchmark: 3D Run-and-Tumble with deformations." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CellSorting3D.html" class="btn btn-neutral float-right" title="Cell sorting in 3D" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Antoine Diez, Jean Feydy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

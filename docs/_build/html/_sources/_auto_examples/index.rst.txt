@@ -250,6 +250,23 @@ Some examples for various models. The modeling details can be found in the artic
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This is a non-scientific experiment with bubbles. ">
+
+.. only:: html
+
+  .. image:: /_auto_examples/3D/images/thumb/sphx_glr_Bubbles_thumb.png
+    :alt:
+
+  :ref:`sphx_glr__auto_examples_3D_Bubbles.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Bubbles</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="This script simulates 3D cell aggregates with the following weighted L^2 cost and force for the...">
 
 .. only:: html
